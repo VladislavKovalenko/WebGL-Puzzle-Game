@@ -4,3 +4,37 @@
 .GlobalCursor {
     cursor: url("project://database/Assets/UI/Art/Cursors/Cursor3.png?fileID=2800000&guid=350e1fab28674ab40b10fbb18a826c19&type=3#Cursor3");
 }
+
+.Cell {
+    flex-grow: 1;
+    width: 16%;
+    height: 16%;
+    flex-direction: column;
+    aspect-ratio: 1;
+    background-color: rgb(255, 249, 162);
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    border-right-width: 3px;
+    padding-right: 0;
+    margin-right: 20px;
+    margin-left: 20px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-top-left-radius: 16px;
+    border-top-color: rgb(0, 0, 0);
+    border-left-width: 3px;
+    border-left-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    background-image: url("project://database/Assets/Art/UI/CellTexture%20256.png?fileID=2800000&guid=6af01290554a4704388c17630585752e&type=3#CellTexture 256");
+}
+
+.Text {
+    font-size: 60px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    height: 100%;
+    width: 100%;
+    background-size: 100% 100%;
+}
