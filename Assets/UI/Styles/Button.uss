@@ -1,0 +1,6 @@
+:root {
+}
+
+.GlobalCursor {
+    cursor: url("project://database/Assets/UI/Art/Cursors/Cursor3.png?fileID=2800000&guid=350e1fab28674ab40b10fbb18a826c19&type=3#Cursor3");
+}
