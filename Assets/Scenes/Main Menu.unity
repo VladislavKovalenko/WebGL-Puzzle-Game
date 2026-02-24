@@ -589,6 +589,7 @@ GameObject:
   - component: {fileID: 2060978243}
   - component: {fileID: 2060978246}
   - component: {fileID: 2060978247}
+  - component: {fileID: 2060978248}
   m_Layer: 0
   m_Name: GlobalManagers
   m_TagString: Untagged
@@ -647,6 +648,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCursorManager
   cursorTexture: {fileID: 2800000, guid: 350e1fab28674ab40b10fbb18a826c19, type: 3}
+--- !u!114 &2060978248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060978242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825ac06a632f4534d90568d217b8535d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PuzzleGame.UI.ScreenManager
+  mainMenuScreen: {fileID: 9197481963319205126, guid: 70838a18bcfda6543ab6ff9658ab2ebb, type: 3}
+  shopScreen: {fileID: 9197481963319205126, guid: 5ef25d74953924345a54bf46bbdadc8f, type: 3}
+  playScreen: {fileID: 9197481963319205126, guid: 0e86e07b2141bef43b0f7a86f1666828, type: 3}
+  backgroundName: Background
+  contentRootName: ScreenRoot
+  toMainMenuButtonName: ToMainMenuButton
+  toShopButtonName: ToShopButton
+  toPlayButtonName: ToPlayButton
+  startScreen: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -161,7 +161,7 @@ namespace PuzzleGame.WordSearch
 
         private void OnCellPointerDown(PointerDownEvent evt)
         {
-            if (evt.target is not Label cell || cell.userData is not (int x, int y) c)
+            if (evt.target is not Label cell || cell.userData is not (int x, int y))
             {
                 return;
             }
@@ -169,18 +169,18 @@ namespace PuzzleGame.WordSearch
             _isDragging = true;
             _pointerId = evt.pointerId;
             cell.CapturePointer(_pointerId);
-            StartSelection(c.Item1, c.Item2);
+            StartSelection(x, y);
             evt.StopPropagation();
         }
 
         private void OnCellPointerEnter(PointerEnterEvent evt)
         {
-            if (!_isDragging || evt.target is not Label cell || cell.userData is not (int x, int y) c)
+            if (!_isDragging || evt.target is not Label cell || cell.userData is not (int x, int y))
             {
                 return;
             }
 
-            TryExtendSelection(c.Item1, c.Item2);
+            TryExtendSelection(x, y);
         }
 
         private void OnCellPointerUp(PointerUpEvent evt)
