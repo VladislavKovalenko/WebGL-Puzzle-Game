@@ -1,0 +1,24 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/1GameProject/UI/Styles/MenuButton.uss?fileID=7433441132597879392&amp;guid=25a81bb84c0544e4292adfbf04e7dc40&amp;type=3#MenuButton"/>
+    <Style src="project://database/Assets/1GameProject/UI/Styles/Tab.uss?fileID=7433441132597879392&amp;guid=91b69f1917acf4845903113f92ce4eb7&amp;type=3#Tab"/>
+    <ui:VisualElement enabled="true" style="flex-grow: 1; background-color: rgb(54, 176, 119); background-image: url(&quot;project://database/Assets/1GameProject/Art/Background%20Art/ChatGPT%20Image%20Feb%2023,%202026,%2003_10_25%20PM.png?fileID=2800000&amp;guid=2ae0db7ab9a701d44b4b68c7d9a4f2e7&amp;type=3#ChatGPT Image Feb 23, 2026, 03_10_25 PM&quot;); flex-basis: auto; display: flex;">
+        <ui:VisualElement name="PlayScreen" style="flex-grow: 1; flex-direction: column; align-items: center; justify-content: space-between; align-self: stretch; transform-origin: center; padding-left: 0; width: auto; height: auto; display: flex;">
+            <ui:VisualElement enabled="true" style="flex-grow: 1; position: relative; height: 0; width: 100px; top: auto; left: auto; background-image: url(&quot;project://database/Assets/1GameProject/Art/UI/Logo%201.png?fileID=2800000&amp;guid=ca5bcbd9c26a1b94c9550d3fefd47afa&amp;type=3#Logo 1&quot;); -unity-background-scale-mode: scale-to-fit; flex-wrap: nowrap; justify-content: center; align-items: auto; align-self: center; align-content: center; display: flex; visibility: visible; overflow: visible; opacity: 1; flex-direction: column; aspect-ratio: 1.777778; background-position-x: center; -unity-slice-scale: 1px; background-size: 100% 94%; background-position-y: center; border-left-width: 0; background-repeat: no-repeat no-repeat; -unity-slice-type: sliced; border-top-left-radius: 0; flex-basis: auto; min-width: initial; max-width: initial; min-height: 0; max-height: 410px; margin-top: 130px;"/>
+            <ui:VisualElement name="VisEl" enabled="true" style="flex-grow: 1; align-items: center; flex-direction: column; justify-content: center; align-self: center; position: relative; height: auto; width: auto; top: auto; left: auto; right: auto; bottom: 120px; background-color: rgba(55, 55, 55, 0); transform-origin: center; translate: 0 0; scale: 1 1; background-size: 100% 100%; min-height: auto; flex-basis: auto; padding-bottom: 0;">
+                <ui:Button text="Новая игра" view-data-key="ToPlayButton" class="MenuButton Text"/>
+                <ui:Button text="Магазин" view-data-key="ToShopButton" class="MenuButton Text" style="background-image: url(&quot;project://database/Assets/1GameProject/Art/UI/Button%201.png?fileID=2800000&amp;guid=7d225d5e047f70544a28684b330a9100&amp;type=3#Button 1&quot;); text-overflow: ellipsis; top: 66px;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="RankedScreen" enabled="true" style="flex-grow: 1; display: none;">
+            <ui:Label text="Я экран Ранговых игр" style="font-size: 30px; color: rgb(255, 255, 255); -unity-text-align: middle-center;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="ShopScreen" style="flex-grow: 1; display: none;">
+            <ui:Label text="Я экран магазина" style="font-size: 30px; color: rgb(255, 255, 255); -unity-text-align: middle-center;"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Tabs" enabled="true" focusable="false" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: center; align-self: stretch; flex-basis: auto; width: auto; height: auto; display: flex;">
+            <ui:Button text="Play" view-data-key="" name="PlayButton"/>
+            <ui:Button text="Shop" name="ShopButton"/>
+            <ui:Button text="Ranking" name="RankingSystemButton"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

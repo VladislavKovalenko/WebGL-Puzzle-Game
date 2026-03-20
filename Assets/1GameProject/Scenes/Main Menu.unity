@@ -602,7 +602,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060978242}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 423187e8e4bc2ae47a338b7f6446ffb5, type: 3}
   m_Name: 
@@ -621,14 +621,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleGame.UI.ScreenManager
   mainMenuScreen: {fileID: 9197481963319205126, guid: 70838a18bcfda6543ab6ff9658ab2ebb, type: 3}
-  shopScreen: {fileID: 9197481963319205126, guid: 5ef25d74953924345a54bf46bbdadc8f, type: 3}
-  playScreen: {fileID: 9197481963319205126, guid: 0e86e07b2141bef43b0f7a86f1666828, type: 3}
-  backgroundName: Background
-  contentRootName: ScreenRoot
-  toMainMenuButtonName: ToMainMenuButton
-  toShopButtonName: ToShopButton
-  toPlayButtonName: ToPlayButton
-  startScreen: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

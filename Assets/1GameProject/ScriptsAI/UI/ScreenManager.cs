@@ -2,118 +2,103 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace PuzzleGame.UI
+namespace _1GameProject.ScriptsAI.UI
 {
     [RequireComponent(typeof(UIDocument))]
     public sealed class ScreenManager : MonoBehaviour
     {
-        public enum ScreenId
-        {
-            MainMenu,
-            Shop,
-            Play
-        }
-
         [Header("Screens UXML")]
         [SerializeField] private VisualTreeAsset mainMenuScreen;
-        [SerializeField] private VisualTreeAsset shopScreen;
-        [SerializeField] private VisualTreeAsset playScreen;
-
-        [Header("Root Names")]
-        [SerializeField] private string backgroundName = "Background";
-        [SerializeField] private string contentRootName = "ScreenRoot";
-
-        [Header("Buttons")]
-        [SerializeField] private string toMainMenuButtonName = "ToMainMenuButton";
-        [SerializeField] private string toShopButtonName = "ToShopButton";
-        [SerializeField] private string toPlayButtonName = "ToPlayButton";
-
-        [Header("Start")]
-        [SerializeField] private ScreenId startScreen = ScreenId.MainMenu;
-
+        
         private UIDocument _document;
         private VisualElement _root;
-        private VisualElement _contentRoot;
-        private VisualElement _activeScreen;
+        
+        [Header("Buttons")]
+        private Button playButton;
+        private Button shopButton;
+        private Button rankingSystemButton;
+
+        [Header("ToggleVisualElements")]
+        private VisualElement playVisualElement;
+        private VisualElement shopVisualElement;
+        private VisualElement rankingSystemVisualElement;
+        
+        
+        private VisualElement elementToToggle;
+
+        private bool isVisible = true;
 
         private void Awake()
         {
             _document = GetComponent<UIDocument>();
             _root = _document.rootVisualElement;
-
+            
+            playButton =  _root.Q<Button>("PlayButton");
+            shopButton =  _root.Q<Button>("ShopButton");
+            rankingSystemButton =  _root.Q<Button>("RankingSystemButton");
+            
+            playVisualElement = _root.Q<VisualElement>("PlayScreen");
+            shopVisualElement = _root.Q<VisualElement>("ShopScreen");
+            rankingSystemVisualElement = _root.Q<VisualElement>("RankedScreen");
+            
             // Keep shared background in root and swap only content container.
-            _ = FindOrCreate(backgroundName);
-            _contentRoot = FindOrCreate(contentRootName);
+            //_ = FindOrCreate(backgroundName);
+            //_contentRoot = FindOrCreate(contentRootName);
+            
         }
+        
 
-        private void Start()
+        private void OnEnable()
         {
-            ShowScreen(startScreen);
+            playButton.clicked += TogglePlayScreen;
+            shopButton.clicked += ToggleShopScreen;
+            rankingSystemButton.clicked += ToggleRankingScreen;
+
         }
 
-        public void ShowScreen(ScreenId screen)
+
+        private void OnDisable()
         {
-            if (_activeScreen != null)
-            {
-                _activeScreen.RemoveFromHierarchy();
-                _activeScreen = null;
-            }
+            if (playButton != null) playButton.clicked -= TogglePlayScreen;
+            if (shopButton != null) shopButton.clicked -= ToggleShopScreen;
+            if (rankingSystemButton != null) rankingSystemButton.clicked -= ToggleRankingScreen;
 
-            var asset = GetAsset(screen);
-            if (asset == null)
-            {
-                Debug.LogError($"Screen asset is not assigned: {screen}");
-                return;
-            }
-
-            _activeScreen = asset.Instantiate();
-            _contentRoot.Add(_activeScreen);
-            BindNavigation(_activeScreen);
         }
 
-        private void BindNavigation(VisualElement screenRoot)
+        private void ToggleRankingScreen()
         {
-            BindButton(screenRoot, toMainMenuButtonName, () => ShowScreen(ScreenId.MainMenu));
-            BindButton(screenRoot, toShopButtonName, () => ShowScreen(ScreenId.Shop));
-            BindButton(screenRoot, toPlayButtonName, () => ShowScreen(ScreenId.Play));
+            rankingSystemVisualElement.style.display = DisplayStyle.None;
+            playVisualElement.style.display  = DisplayStyle.None;
+            shopVisualElement.style.display = DisplayStyle.None;
+            
+            rankingSystemVisualElement.style.display = DisplayStyle.Flex;
+            Debug.Log("Ранговый экран");
+            
         }
 
-        private void BindButton(VisualElement root, string buttonName, Action onClick)
+        private void ToggleShopScreen()
         {
-            if (string.IsNullOrWhiteSpace(buttonName))
-            {
-                return;
-            }
-
-            var button = root.Q<Button>(buttonName);
-            if (button != null)
-            {
-                button.clicked += onClick;
-            }
+            rankingSystemVisualElement.style.display = DisplayStyle.None;
+            playVisualElement.style.display  = DisplayStyle.None;
+            shopVisualElement.style.display = DisplayStyle.None;
+            
+            shopVisualElement.style.display = DisplayStyle.Flex;
+            Debug.Log("Магазин открыт");
+            //shopVisualElement.visible = !shopVisualElement.visible;
+            
+            
         }
-
-        private VisualTreeAsset GetAsset(ScreenId screen)
+        
+        private void TogglePlayScreen()
         {
-            return screen switch
-            {
-                ScreenId.MainMenu => mainMenuScreen,
-                ScreenId.Shop => shopScreen,
-                ScreenId.Play => playScreen,
-                _ => null
-            };
+            rankingSystemVisualElement.style.display = DisplayStyle.None;
+            playVisualElement.style.display  = DisplayStyle.None;
+            shopVisualElement.style.display = DisplayStyle.None;
+            
+            playVisualElement.style.display  = DisplayStyle.Flex;
+            Debug.Log("Игровой экран");
+            
         }
-
-        private VisualElement FindOrCreate(string name)
-        {
-            var element = _root.Q<VisualElement>(name);
-            if (element != null)
-            {
-                return element;
-            }
-
-            var created = new VisualElement { name = name };
-            _root.Add(created);
-            return created;
-        }
+        
     }
 }

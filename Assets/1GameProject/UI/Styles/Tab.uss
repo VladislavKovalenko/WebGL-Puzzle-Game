@@ -1,0 +1,10 @@
+:root {
+}
+
+.Tab {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    width: 20%;
+    height: 20%;
+}
