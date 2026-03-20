@@ -119,27 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &566706239 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7598939451855821838, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
-  m_PrefabInstance: {fileID: 2108802181}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &566706242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 566706239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c5cf3e51cf24d899274df4150c06c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.Bootstrap.BootstrapOrchestrator
-  loadingScreenPrefab: {fileID: 2290821059263939870, guid: 46aab5a80d6039143ac03ac113450977, type: 3}
-  systemPrefabs:
-  - {fileID: 1415570417500093334, guid: 9c55fbaf6c4121a4faed3b60028675e9, type: 3}
-  - {fileID: 2136360696307566098, guid: b4e3252b7f8231b44b23bd77368012b5, type: 3}
 --- !u!1001 &2108802181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,10 +186,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7598939451855821838, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 566706242}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

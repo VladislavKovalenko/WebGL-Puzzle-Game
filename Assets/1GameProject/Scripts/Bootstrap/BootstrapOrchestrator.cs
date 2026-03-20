@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
+using TouchPhase = UnityEngine.TouchPhase;
 
 namespace _1GameProject.Scripts.Bootstrap
 {
@@ -11,13 +16,14 @@ namespace _1GameProject.Scripts.Bootstrap
         [Header("Загрузочный экран")]
         public GameObject loadingScreenPrefab;
         private LoadingScreenUI _loadingUI;
+        private GameObject uiInstance;
         
         [Header("Загрузчик")] 
         [SerializeField] private GameObject[] systemPrefabs;   
         
         [Header("Настройки сцены")]
         [ShowNonSerializedField]
-        private string targetScene = "MainMenu";
+        private string targetScene = "Main Menu";
         
         private List<IBootLoadable> _loadables = new List<IBootLoadable>();
         private bool _allSystemsReady = false;
@@ -32,7 +38,7 @@ namespace _1GameProject.Scripts.Bootstrap
         {
             // UI должен быть готов до Start других
             if (loadingScreenPrefab == null) Debug.LogError("[BootstrapOrchestrator] loadingScreenPrefab не назначен!");
-            var uiInstance = Instantiate(loadingScreenPrefab);
+            uiInstance = Instantiate(loadingScreenPrefab);
             _loadingUI =  uiInstance.GetComponent<LoadingScreenUI>();
             
         }
@@ -41,6 +47,7 @@ namespace _1GameProject.Scripts.Bootstrap
         {
             InstanceAndLink();
             SystemsInitialize();
+            
         }
 
         void Update()
@@ -54,10 +61,10 @@ namespace _1GameProject.Scripts.Bootstrap
 
         private void InstanceAndLink()
         {
+            _loadables.Clear();
+            
             foreach (var prefab in systemPrefabs)
             {
-                _loadables.Clear();
-                
                 if (prefab  == null) continue;
                 
                 var instance = Instantiate(prefab);
@@ -93,7 +100,7 @@ namespace _1GameProject.Scripts.Bootstrap
 
             foreach (var loadable in _loadables)
             {
-                if (loadable.IsReady()) 
+                if (loadable.IsReady) 
                     readyCount++;
                 else
                 {
@@ -116,37 +123,33 @@ namespace _1GameProject.Scripts.Bootstrap
         
         private void CheckForUserInput()
         {
-            throw new System.NotImplementedException();
+            //Надо поискать еще способы, почему в остальных играх запуск и звук происходит без "Press any key"
+            bool anyKeyboardKeyPressed = Keyboard.current?.anyKey.wasPressedThisFrame ?? false;
+            if(anyKeyboardKeyPressed) Debug.Log("Клавиатура нажата");
+            bool anyMouse = Mouse.current?.leftButton.wasPressedThisFrame ?? false; 
+            bool anyTouch = Touchscreen.current?.primaryTouch.press.wasPressedThisFrame ?? false;
+            
+            if(!(anyKeyboardKeyPressed || anyMouse || anyTouch)) return;
+            
+            _userIsClicked = true;
+            Debug.Log("[Пользователь] нажал кнопку");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            try
+            {
+                FMODResumeAudioContext();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning($"FMODResumeAudioContext failed: {ex.Message}");
+            }
+#endif
+            
+            uiInstance.SetActive(false); // как альтернатива _loadingUI.Hide()
+            SceneManager.LoadScene(targetScene);
         }
         
         
         
     }
 }
-
-
-// private void CheckForUserInput()
-// {
-//     bool interacted =
-//         Input.anyKeyDown ||
-//         Input.GetMouseButtonDown(0) ||
-//         (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began);
-//
-//     if (!interacted) return;
-//
-//     _userHasClicked = true;
-//
-// #if UNITY_WEBGL && !UNITY_EDITOR
-//             try
-//             {
-//                 FMODResumeAudioContext();
-//             }
-//             catch (System.Exception ex)
-//             {
-//                 Debug.LogWarning($"FMODResumeAudioContext failed: {ex.Message}");
-//             }
-// #endif
-//
-//     loadingScreenUI?.Hide();
-//     SceneManager.LoadScene(targetScene);
-// }

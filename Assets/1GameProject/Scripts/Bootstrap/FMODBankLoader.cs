@@ -18,7 +18,7 @@
             };
 
             public string LoadingLabel => _currentStatus;
-            public bool IsReady() => _isReady;
+            public bool IsReady => _isReady;
 
             private string _currentStatus = "FMOD waiting,,,";
             private bool _isReady = false;

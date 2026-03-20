@@ -7,7 +7,7 @@ namespace _1GameProject.Scripts.Bootstrap
     {
         string LoadingLabel { get; }
         
-        bool IsReady();
+        bool IsReady { get; }
         
         void Initialize();
         

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1626204004821419161}
+  - component: {fileID: 2228400536204812301}
   m_Layer: 0
   m_Name: MainOrchestrator
   m_TagString: Untagged
@@ -31,3 +32,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2228400536204812301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7598939451855821838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c5cf3e51cf24d899274df4150c06c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.Bootstrap.BootstrapOrchestrator
+  loadingScreenPrefab: {fileID: 2290821059263939870, guid: 46aab5a80d6039143ac03ac113450977, type: 3}
+  systemPrefabs:
+  - {fileID: 1415570417500093334, guid: 9c55fbaf6c4121a4faed3b60028675e9, type: 3}
+  - {fileID: 2136360696307566098, guid: b4e3252b7f8231b44b23bd77368012b5, type: 3}

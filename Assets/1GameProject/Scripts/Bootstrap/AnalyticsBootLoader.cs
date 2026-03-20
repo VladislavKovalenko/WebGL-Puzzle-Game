@@ -8,7 +8,7 @@ namespace _1GameProject.Scripts.Bootstrap
     public class AnalyticsBootLoader : MonoBehaviour, IBootLoadable
     {
         public string LoadingLabel => _currentStatus;
-        public bool IsReady() => _isReady;
+        public bool IsReady => _isReady;
 
         private bool _isReady = false;
         private string _currentStatus = "Analytics: Waiting...";
