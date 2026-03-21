@@ -17,6 +17,7 @@ namespace _1GameProject.ScriptsAI.UI
         private Button playButton;
         private Button shopButton;
         private Button rankingSystemButton;
+        private Button BackToMenuButton;
 
         [Header("ToggleVisualElements")]
         private VisualElement playVisualElement;
@@ -33,9 +34,10 @@ namespace _1GameProject.ScriptsAI.UI
             _document = GetComponent<UIDocument>();
             _root = _document.rootVisualElement;
             
-            playButton =  _root.Q<Button>("PlayButton");
-            shopButton =  _root.Q<Button>("ShopButton");
-            rankingSystemButton =  _root.Q<Button>("RankingSystemButton");
+            playButton =  _root.Q<Button>("GameButton");
+            shopButton =  _root.Q<Button>("StoreButton");
+            rankingSystemButton =  _root.Q<Button>("RankButton");
+            BackToMenuButton = _root.Q<Button>("BackToMenuButton");
             
             playVisualElement = _root.Q<VisualElement>("PlayScreen");
             shopVisualElement = _root.Q<VisualElement>("ShopScreen");
@@ -50,22 +52,38 @@ namespace _1GameProject.ScriptsAI.UI
 
         private void OnEnable()
         {
-            playButton.clicked += TogglePlayScreen;
-            shopButton.clicked += ToggleShopScreen;
-            rankingSystemButton.clicked += ToggleRankingScreen;
+            playButton.clicked += ShowPlayScreen;
+            shopButton.clicked += ShowShopScreen;
+            rankingSystemButton.clicked += ShowRankingScreen;
+            //BackToMenuButton.clicked += TogglePlayScreen;
+            
+            var backButtons = _root.Query<Button>("BackToMenuButton").ToList();
+        
+            foreach (var button in backButtons)
+            {
+                button.clicked += ShowPlayScreen;
+            }
 
         }
 
 
         private void OnDisable()
         {
-            if (playButton != null) playButton.clicked -= TogglePlayScreen;
-            if (shopButton != null) shopButton.clicked -= ToggleShopScreen;
-            if (rankingSystemButton != null) rankingSystemButton.clicked -= ToggleRankingScreen;
+            if (playButton != null) playButton.clicked -= ShowPlayScreen;
+            if (shopButton != null) shopButton.clicked -= ShowShopScreen;
+            if (rankingSystemButton != null) rankingSystemButton.clicked -= ShowRankingScreen;
+            if (BackToMenuButton != null) BackToMenuButton.clicked -= ShowRankingScreen;
+            
+            var backButtons = _root.Query<Button>("BackToMenuButton").ToList();
+        
+            foreach (var button in backButtons)
+            {
+                button.clicked += ShowPlayScreen;
+            }
 
         }
 
-        private void ToggleRankingScreen()
+        private void ShowRankingScreen()
         {
             rankingSystemVisualElement.style.display = DisplayStyle.None;
             playVisualElement.style.display  = DisplayStyle.None;
@@ -76,7 +94,7 @@ namespace _1GameProject.ScriptsAI.UI
             
         }
 
-        private void ToggleShopScreen()
+        private void ShowShopScreen()
         {
             rankingSystemVisualElement.style.display = DisplayStyle.None;
             playVisualElement.style.display  = DisplayStyle.None;
@@ -89,7 +107,7 @@ namespace _1GameProject.ScriptsAI.UI
             
         }
         
-        private void TogglePlayScreen()
+        private void ShowPlayScreen()
         {
             rankingSystemVisualElement.style.display = DisplayStyle.None;
             playVisualElement.style.display  = DisplayStyle.None;
