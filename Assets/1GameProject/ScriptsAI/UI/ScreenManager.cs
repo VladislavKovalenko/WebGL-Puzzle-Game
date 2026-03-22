@@ -1,5 +1,7 @@
 using System;
+using Unity.VectorGraphics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace _1GameProject.ScriptsAI.UI
@@ -52,7 +54,7 @@ namespace _1GameProject.ScriptsAI.UI
 
         private void OnEnable()
         {
-            playButton.clicked += ShowPlayScreen;
+            playButton.clicked += StartGame;
             shopButton.clicked += ShowShopScreen;
             rankingSystemButton.clicked += ShowRankingScreen;
             //BackToMenuButton.clicked += TogglePlayScreen;
@@ -69,7 +71,7 @@ namespace _1GameProject.ScriptsAI.UI
 
         private void OnDisable()
         {
-            if (playButton != null) playButton.clicked -= ShowPlayScreen;
+            if (playButton != null) playButton.clicked -= StartGame;
             if (shopButton != null) shopButton.clicked -= ShowShopScreen;
             if (rankingSystemButton != null) rankingSystemButton.clicked -= ShowRankingScreen;
             if (BackToMenuButton != null) BackToMenuButton.clicked -= ShowRankingScreen;
@@ -114,8 +116,14 @@ namespace _1GameProject.ScriptsAI.UI
             shopVisualElement.style.display = DisplayStyle.None;
             
             playVisualElement.style.display  = DisplayStyle.Flex;
+            
             Debug.Log("Игровой экран");
             
+        }
+
+        private void StartGame()
+        {
+            SceneManager.LoadScene("GamePlay");
         }
         
     }
