@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccce90c6fb64c4a82357282e7072545, type: 3}
+  m_Name: SoundLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::Audio.SoundLibrarySO
+  mainMenu:
+    Guid:
+      Data1: -550798744
+      Data2: 1224162278
+      Data3: 10462611
+      Data4: -1037978169
+    Path: event:/Background Music/MainMenu
+  game:
+    Guid:
+      Data1: 384959004
+      Data2: 1178599527
+      Data3: -673222494
+      Data4: 664044986
+    Path: event:/Background Music/MainMenuAlternative
+  hover:
+    Guid:
+      Data1: 816311682
+      Data2: 1146004536
+      Data3: 2055323302
+      Data4: 2003687469
+    Path: event:/Background Music/Lose
+  click:
+    Guid:
+      Data1: 816311682
+      Data2: 1146004536
+      Data3: 2055323302
+      Data4: 2003687469
+    Path: event:/Background Music/Lose
+  successSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  failSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
