@@ -13,18 +13,7 @@ namespace _1GameProject.Scripts.UI.Test
 
         void Start()
         {
-            image = GetComponent<Image>();
-            button = GetComponent<Button>();
             
-            image.color = Color.red;
-
-            button.transition = Selectable.Transition.SpriteSwap;
-
-            var colors = new ColorBlock();
-
-            button.colors = colors;
-    
-
 
         }
         
