@@ -1,9 +1,8 @@
 ﻿using _1GameProject.Scripts.Audio;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using VContainer;
 
-namespace _1GameProject.Scripts.UI.Button
+namespace _1GameProject.Scripts.UI.Buttons
 {
     public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
