@@ -11,7 +11,7 @@ namespace _1GameProject.Scripts.UI.Buttons
         private void Start()
         {
             if(soundLibrary == null) 
-                soundLibrary = Resources.Load<SoundLibrarySO>("SoundLibrary");
+                soundLibrary = Resources.Load<SoundLibrarySO>("Sound/SoundLibrary");
         }
         
         public void OnPointerEnter(PointerEventData eventData)

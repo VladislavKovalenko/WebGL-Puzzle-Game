@@ -19,7 +19,7 @@ MonoBehaviour:
     swipeSameState: 1
     swipeSelectionOnly: 1
     depthMode: 0
-    tagLayerLayout: 0
+    tagLayerLayout: 2
     tagSettings:
       show: 1
       colorSettings:

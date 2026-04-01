@@ -12,7 +12,7 @@ namespace _1GameProject.Scripts.Audio
         private void Start()
         {
             if(soundLibrary == null) 
-                soundLibrary = Resources.Load<SoundLibrarySO>("SoundLibrary");
+                soundLibrary = Resources.Load<SoundLibrarySO>("Sound/SoundLibrary");
         
             musicInstance = RuntimeManager.CreateInstance(soundLibrary.mainMenu);
             musicInstance.start();
