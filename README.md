@@ -1,3 +1,5 @@
+[🇷🇺 Читать на русском](README-RU.md)
+
 # Product Specifications
 **Platform**: Web (Yandex Games).
 
