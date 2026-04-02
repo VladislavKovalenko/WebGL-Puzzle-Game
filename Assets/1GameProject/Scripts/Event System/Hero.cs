@@ -33,7 +33,11 @@ namespace _1GameProject.Scripts.Event_System
 
             if (Input.GetKeyDown(KeyCode.C))
             {
-                EventBus<PlayerEvent>.Raise(new PlayerEvent());
+                EventBus<PlayerEvent>.Raise(new PlayerEvent
+                {
+                    health = hp,
+                    mana = mana
+                });
             }
         }
 
