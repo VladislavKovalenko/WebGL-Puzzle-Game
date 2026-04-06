@@ -16,6 +16,9 @@
 
 [VContainer](https://vcontainer.hadashikick.jp) - DI 
 
+[R3](https://github.com/Cysharp/R3) - Event System for event arhitecture
+
+
 # Architecture
 1. Bootstrap scene is loaded.
 2. DI is connected.
