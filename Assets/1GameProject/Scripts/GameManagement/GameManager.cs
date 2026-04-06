@@ -1,5 +1,4 @@
-﻿using _1GameProject.Scripts.EventSystem;
-using UnityEngine;
+﻿    using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _1GameProject.Scripts.GameManagement
@@ -14,21 +13,21 @@ namespace _1GameProject.Scripts.GameManagement
         private GameState _currentState = GameState.MainMenu;
         private int _foundWordsCount = 0;
         
-        private EventBinding<WordFoundEvent> _wordFoundBinding;
-        private EventBinding<GameRestartRequestEvent> _restartBinding;
+        // private EventBinding<WordFoundEvent> _wordFoundBinding;
+        // private EventBinding<GameRestartRequestEvent> _restartBinding;
         
         private void OnEnable()
         {
-            _wordFoundBinding = new EventBinding<WordFoundEvent>(OnWordFound);
-            EventBus<WordFoundEvent>.Register(_wordFoundBinding);
-            _restartBinding = new EventBinding<GameRestartRequestEvent>(OnRestartRequested);
-            EventBus<GameRestartRequestEvent>.Register(_restartBinding);
+            // _wordFoundBinding = new EventBinding<WordFoundEvent>(OnWordFound);
+            // EventBus<WordFoundEvent>.Register(_wordFoundBinding);
+            // _restartBinding = new EventBinding<GameRestartRequestEvent>(OnRestartRequested);
+            // EventBus<GameRestartRequestEvent>.Register(_restartBinding);
         }
 
         private void OnDisable()
         {
-            EventBus<WordFoundEvent>.Deregister(_wordFoundBinding);
-            EventBus<GameRestartRequestEvent>.Deregister(_restartBinding);
+            // EventBus<WordFoundEvent>.Deregister(_wordFoundBinding);
+            // EventBus<GameRestartRequestEvent>.Deregister(_restartBinding);
         }
         
         private void Start()
@@ -51,26 +50,26 @@ namespace _1GameProject.Scripts.GameManagement
         }
 
         // Обработчик найденного слова
-        private void OnWordFound(WordFoundEvent evt)
-        {
-            if (_currentState != GameState.Playing) return;
-
-            _foundWordsCount++;
-            if (_foundWordsCount >= wordsToWin)
-            {
-                SetState(GameState.Victory);
-                EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent());
-            }
-        }
+        // private void OnWordFound(WordFoundEvent evt)
+        // {
+        //     if (_currentState != GameState.Playing) return;
+        //
+        //     _foundWordsCount++;
+        //     if (_foundWordsCount >= wordsToWin)
+        //     {
+        //         SetState(GameState.Victory);
+        //         EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent());
+        //     }
+        // }
 
         // Перезапуск (например, после победы нажали кнопку "Играть снова")
-        private void OnRestartRequested(GameRestartRequestEvent evt)
-        {
-            if (_currentState == GameState.Victory || _currentState == GameState.MainMenu)
-            {
-                StartGame();
-            }
-        }
+        // private void OnRestartRequested(GameRestartRequestEvent evt)
+        // {
+        //     if (_currentState == GameState.Victory || _currentState == GameState.MainMenu)
+        //     {
+        //         StartGame();
+        //     }
+        // }
 
         // Смена состояния с публикацией события
         private void SetState(GameState newState)
@@ -81,11 +80,11 @@ namespace _1GameProject.Scripts.GameManagement
             _currentState = newState;
             
             // Оповещаем всех о смене состояния
-            EventBus<GameStateChangedEvent>.Raise(new GameStateChangedEvent
-            {
-                //NewState = newState,
-                //OldState = oldState
-            });
+            // EventBus<GameStateChangedEvent>.Raise(new GameStateChangedEvent
+            // {
+            //     //NewState = newState,
+            //     //OldState = oldState
+            // });
             
             Debug.Log($"GameManager: состояние изменено с {oldState} на {newState}");
         }

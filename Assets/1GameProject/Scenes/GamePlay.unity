@@ -3011,7 +3011,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1680565843}
-  - component: {fileID: 1680565842}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -3019,20 +3018,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1680565842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680565841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e3695b638814fa8a6001666a8389a19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: EventSystem::_1GameProject.Scripts.Event_System.Hero
-  hp: 100
-  mana: 100
 --- !u!224 &1680565843
 RectTransform:
   m_ObjectHideFlags: 0
