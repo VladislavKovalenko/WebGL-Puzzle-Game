@@ -29,7 +29,7 @@ namespace _1GameProject.ScriptsAI.UI
         
         private VisualElement elementToToggle;
 
-        private bool isVisible = true;
+        //private bool isVisible = true;
 
         private void Awake()
         {
