@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -22,7 +21,6 @@ namespace _1GameProject.Scripts.Bootstrap
         [SerializeField] private GameObject[] systemPrefabs;   
         
         [Header("Настройки сцены")]
-        [ShowNonSerializedField]
         private string targetScene = "Main Menu";
         
         private List<IBootLoadable> _loadables = new List<IBootLoadable>();

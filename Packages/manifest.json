@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-    "com.dbrizov.naughtyattributes": "https://github.com/dbrizov/NaughtyAttributes.git#upm",
+    "com.svermeulen.extenject": "https://github.com/Mathijs-Bakker/Extenject.git?path=UnityProject/Assets/Plugins/Zenject/Source",
     "com.unity.2d.animation": "14.0.3",
     "com.unity.2d.aseprite": "4.0.1",
     "com.unity.2d.psdimporter": "13.0.2",
@@ -10,6 +10,7 @@
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.2d.tilemap.extras": "7.0.1",
     "com.unity.2d.tooling": "2.0.1",
+    "com.unity.addressables": "2.9.1",
     "com.unity.collab-proxy": "2.11.4",
     "com.unity.editorcoroutines": "1.0.1",
     "com.unity.ide.rider": "3.0.39",
@@ -22,7 +23,6 @@
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.10",
     "com.wooshii.hierarchydecorator": "https://github.com/WooshiiDev/HierarchyDecorator.git",
-    "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.ai": "1.0.0",

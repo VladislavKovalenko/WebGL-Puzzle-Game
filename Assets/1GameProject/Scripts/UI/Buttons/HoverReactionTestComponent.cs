@@ -3,7 +3,7 @@ using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
+using Zenject;
 
 namespace _1GameProject.Scripts.UI.Buttons
 {
