@@ -1,6 +1,7 @@
 ﻿using System;
 using _1GameProject.Scripts.Audio;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,6 +9,8 @@ namespace _1GameProject.Scripts.UI.Buttons
 {
     public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
+        private IDisposable DContainter;
+        
         private bool IsHovered = false;
         private static SoundLibrarySO soundLibrary;
         public ReactiveProperty<bool> IsHover;
@@ -17,6 +20,7 @@ namespace _1GameProject.Scripts.UI.Buttons
 
         private void Start()
         {
+            var d = DContainter;
             if(soundLibrary == null) 
                 soundLibrary = Resources.Load<SoundLibrarySO>("Sound/SoundLibrary");
             
@@ -24,9 +28,10 @@ namespace _1GameProject.Scripts.UI.Buttons
             
             OnSimpleR3Event.OnNext(IsHovered);
             
-            Observable.Interval(TimeSpan.FromMilliseconds(250)).Subscribe(_=>Text());
+            DContainter = Observable.Interval(TimeSpan.FromMilliseconds(250)).Subscribe(_=>Text()).AddTo(this);
         }
         
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             soundLibrary.PlayOneShot(soundLibrary.hover);

@@ -1,83 +1,74 @@
-﻿    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using _1GameProject.Scripts.Bootstrap;
-    using FMOD.Studio;
-    using FMODUnity;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using FMOD.Studio;
+using FMODUnity;
+using UnityEngine;
 
-    namespace Audio
+namespace Audio
+{
+    public class FMODBankLoader : MonoBehaviour
     {
-        public class FMODBankLoader : MonoBehaviour, IBootLoadable
+        [Header("Банки для загрузки в порядке загрузки")]
+        public List<string> banksToLoad = new()
         {
-            [Header("Банки для загрузки в порядке загрузки")]
-            public List<String> banksToLoad = new List<string>()
+            "MasterBank.strings",
+            "MasterBank",
+        };
+
+        public string LoadingLabel { get; private set; } = "FMOD: Waiting...";
+        public bool IsReady { get; private set; }
+
+        public async UniTask LoadAsync()
+        {
+            await LoadBanks();
+            await WaitForSampleData();
+
+            LoadingLabel = "FMOD: Ready";
+            IsReady = true;
+        }
+
+        private async UniTask LoadBanks()
+        {
+            for (int i = 0; i < banksToLoad.Count; i++)
             {
-                "MasterBank.strings",
-                "MasterBank",
-            };
+                string bankName = banksToLoad[i];
+                LoadingLabel = $"FMOD: Loading {bankName} ({i + 1}/{banksToLoad.Count})";
 
-            public string LoadingLabel => _currentStatus;
-            public bool IsReady => _isReady;
+                RuntimeManager.LoadBank(bankName, true);
 
-            private string _currentStatus = "FMOD waiting,,,";
-            private bool _isReady = false;
-
-            public void Initialize()
-            {
-                StartCoroutine(LoadBanks());
-            }
-
-            private IEnumerator LoadBanks()
-            {
-                for (int i = 0; i < banksToLoad.Count; i++)
+                while (!RuntimeManager.HasBankLoaded(bankName))
                 {
-                    string bankName = banksToLoad[i];
-                    _currentStatus = $"FMOD: Loading {bankName} ({i + 1}/{banksToLoad.Count})";
-
-                    RuntimeManager.LoadBank(bankName, true);
-                    while (!RuntimeManager.HasBankLoaded(bankName))
-                    {
-                        yield return null;
-                    }
+                    await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
                 }
-
-                _currentStatus = "FMOD: Loading sample data...";
-                yield return StartCoroutine(WaitForSampleData());
-
-                _currentStatus = "FMOD: Ready";
-                _isReady = true;
-
             }
 
-            private IEnumerator WaitForSampleData()
+            LoadingLabel = "FMOD: Loading sample data...";
+        }
+
+        private async UniTask WaitForSampleData()
+        {
+            bool allLoaded = false;
+            while (!allLoaded)
             {
-                bool allLoaded = false;
-                while (!allLoaded)
+                allLoaded = true;
+                foreach (string bankName in banksToLoad)
                 {
-                    allLoaded = true;
-                    foreach (string bankName in banksToLoad)
+                    var result = RuntimeManager.StudioSystem.getBank("bank:/" + bankName, out Bank bank);
+
+                    if (result == FMOD.RESULT.OK)
                     {
-                        Bank bank;
-
-                        var result = RuntimeManager.StudioSystem.getBank("bank:/" + bankName, out bank);
-
-                        if (result == FMOD.RESULT.OK)
+                        bank.getSampleLoadingState(out LOADING_STATE state);
+                        if (state != LOADING_STATE.LOADED)
                         {
-                            bank.getSampleLoadingState(out LOADING_STATE sampleState);
-                            if (sampleState != LOADING_STATE.LOADED)
-                            {
-                                allLoaded = false;
-                                break;
-                            }
+                            allLoaded = false;
+                            break;
                         }
-
                     }
-                    
-                    yield return null;
                 }
+
+                if (!allLoaded)
+                    await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             }
         }
     }
-            
-     
+}

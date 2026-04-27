@@ -843,6 +843,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1767764710}
+  - {fileID: 1377664309}
   m_Father: {fileID: 1216690560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &313301692
@@ -860,6 +861,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1767764711}
+  - {fileID: 1377664310}
   _installerPrefabs: []
   _findSiblingMonoInstallers: 0
   _autoRun: 1
@@ -1491,6 +1493,7 @@ GameObject:
   - component: {fileID: 513531882}
   - component: {fileID: 513531881}
   - component: {fileID: 513531884}
+  - component: {fileID: 513531885}
   m_Layer: 5
   m_Name: Image (7)
   m_TagString: Untagged
@@ -1569,6 +1572,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a924abc2844676b61aba388dea19da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.UI.Test.LearningUiComponents
+  rectTransform: {fileID: 513531883}
+--- !u!114 &513531885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513531880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09b9cad0c0b44baab4a36734b627337e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UiTestExtentions::_1GameProject.Scripts.UI.Test.TestSignalEvents
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,6 +2358,50 @@ Transform:
   - {fileID: 362575856}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1377664308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1377664309}
+  - component: {fileID: 1377664310}
+  m_Layer: 0
+  m_Name: Signals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1377664309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377664308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 313301691}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1377664310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377664308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69186e9b787f4f1699160ed79cb6a3c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.DI.GameSignalsInstaller
 --- !u!1 &1388378205
 GameObject:
   m_ObjectHideFlags: 0
