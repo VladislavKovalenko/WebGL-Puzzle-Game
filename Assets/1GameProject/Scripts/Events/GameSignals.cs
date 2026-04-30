@@ -8,6 +8,15 @@ namespace _1GameProject.Scripts.Events
     //Marker-Interface
     public interface IEvent { }
     
+    //Main Menu Signals
+    public class GameStartSignal { }
+    public class RanksMenuOpenSignal { }
+    public class StoreOpenSignal { }
+    public class BackToMainMenuSignal { }
+    
+    //Settings Signals
+    public class SettingsMenuOpenSignal { }
+    
     //Game Events
     #region Game Flow
     public class GameStateChangedEvent : IEvent { }
