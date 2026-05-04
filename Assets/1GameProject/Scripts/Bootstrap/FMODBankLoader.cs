@@ -10,71 +10,42 @@ namespace Audio
 {
     public class FMODBankLoader : MonoBehaviour, IAsyncInitService
     {
-        [Header("Банки для загрузки в порядке загрузки")]
-        public List<string> banksToLoad = new()
-        {
-            "MasterBank.strings",
-            "MasterBank",
-        };
         
-        [Header("Вариант с банками 2")]
+        
+        [Header("Банки для загрузки")]
         [FMODUnity.BankRef]
         public List<string> banks;
-
-        public string LoadingLabel { get; private set; } = "FMOD: Waiting...";
-        public bool IsReady { get; private set; }
+        
 
         public async UniTask Initialize()
         {
-            await LoadBanks();
-            await WaitForSampleData();
-
-            LoadingLabel = "FMOD: Ready";
-            IsReady = true;
+            LoadBanks();
+            await CheckBanksLoaded();
         }
 
-        private async UniTask LoadBanks()
+        private void LoadBanks()
         {
-            for (int i = 0; i < banksToLoad.Count; i++)
+            foreach (string b in banks)
             {
-                string bankName = banksToLoad[i];
-                LoadingLabel = $"FMOD: Loading {bankName} ({i + 1}/{banksToLoad.Count})";
-
-                RuntimeManager.LoadBank(bankName, true);
-
-                while (!RuntimeManager.HasBankLoaded(bankName))
-                {
-                    await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-                }
+                FMODUnity.RuntimeManager.LoadBank(b,true);
+                Debug.Log("Loaded bank " + b);
             }
-
-            LoadingLabel = "FMOD: Loading sample data...";
+            
+            //For Chrome / Safari browsers / WebGL.  Reset audio on response to user interaction (LoadBanks is called from a button press), to allow audio to be heard.
+            
+            FMODUnity.RuntimeManager.CoreSystem.mixerSuspend();
+            FMODUnity.RuntimeManager.CoreSystem.mixerResume();
         }
+        
 
-        private async UniTask WaitForSampleData()
+        private async UniTask CheckBanksLoaded()
         {
-            bool allLoaded = false;
-            while (!allLoaded)
+            while (!FMODUnity.RuntimeManager.HaveAllBanksLoaded)
             {
-                allLoaded = true;
-                foreach (string bankName in banksToLoad)
-                {
-                    var result = RuntimeManager.StudioSystem.getBank("bank:/" + bankName, out Bank bank);
-
-                    if (result == FMOD.RESULT.OK)
-                    {
-                        bank.getSampleLoadingState(out LOADING_STATE state);
-                        if (state != LOADING_STATE.LOADED)
-                        {
-                            allLoaded = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (!allLoaded)
-                    await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+                await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             }
+            
+            
         }
     }
 }

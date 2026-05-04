@@ -37,7 +37,6 @@ namespace _1GameProject.Scripts.Bootstrap
 
             Debug.Log("[LoadingFlow] User gesture detected. Starting game...");
             
-            ResumeFmodAudio();
             SceneManager.LoadScene(targetScene);
         }
         
@@ -60,24 +59,5 @@ namespace _1GameProject.Scripts.Bootstrap
                 await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             }
         }
-
-        private void ResumeFmodAudio()
-        {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            try
-            {
-                FMODResumeAudioContext();
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogWarning($"[LoadingFlow] FMOD Resume failed: {ex.Message}");
-            }
-#endif
-        }
-
-#if UNITY_WEBGL && !UNITY_EDITOR
-        [System.Runtime.InteropServices.DllImport("__Internal")]
-        private static extern void FMODResumeAudioContext();
-#endif
     }
 }

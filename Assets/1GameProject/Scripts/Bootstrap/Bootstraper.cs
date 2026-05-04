@@ -39,11 +39,6 @@ namespace _1GameProject.Scripts.Bootstrap
 
         private async UniTask InitializeBootstrap()
         {
-            // _loadingUI = _container.InstantiatePrefabForComponent<LoadingScreenManager>(loadingScreenPrefab); //спорная строка, у меня есть инсталлер для этой сцены.
-            //
-            // if (!_loadingUI)
-            //     throw new InvalidOperationException("LoadingScreenUgui не найден на префабе not found on prefab.");
-            
             _loadingUI.UpdateProgress(0f, "Загрузка...");
             
             //перебираем все сервисы
@@ -79,3 +74,5 @@ namespace _1GameProject.Scripts.Bootstrap
 
 //Loading Screen и Load Manager существуют только в bootstrap сцене и менеджатся через реактивку
 //Fmod, аналитика ... более управляем, потому что персистентны.
+
+

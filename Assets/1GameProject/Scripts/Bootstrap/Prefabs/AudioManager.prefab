@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3bccd70ab9e42aababd7e3c34fd9bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Audio.FMODBankLoader
-  banksToLoad:
-  - MasterBank.strings
-  - MasterBank
   banks:
-  - 
+  - MasterBank
+  - MasterBank.strings
