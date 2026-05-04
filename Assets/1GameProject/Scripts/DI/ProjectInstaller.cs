@@ -13,18 +13,19 @@ namespace _1GameProject.Scripts.DI
 
         public override void InstallBindings()
         {
-            Container.Bind<IAnalyticsService>()
+            Container.Bind<IAsyncInitService>()
                 .To<AnalyticsService>()
                 .AsSingle()
                 .NonLazy();
-
-
+            
+            //можно и без префаба, но настраивать FMOD будет неудобно
             Container.Bind<FMODBankLoader>()
                 .FromComponentInNewPrefab(audioManagerPrefab)
                 .AsSingle()
                 .NonLazy();
 
-
+            Container.Bind<IAsyncInitService>().To<FMODBankLoader>().FromResolve();
+            
 
         }
     }

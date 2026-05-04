@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -9,15 +10,19 @@ namespace _1GameProject.Scripts.Bootstrap
 {
     public class Bootstraper : MonoBehaviour
     {
+        //DI
+        [Inject] private DiContainer _container; //для проверки UI, но спорно
+        [Inject] private SignalBus _signalBus;
+        
+        //все наши сервисы
+        [Inject] private List<IAsyncInitService> _asyncInitServices;
+        
+        
         [Header("UI")]
         [SerializeField] private GameObject loadingScreenPrefab;
-
-        [Inject] private DiContainer _container;
-        [Inject] private SignalBus _signalBus;
-        [Inject] private IAnalyticsService _analytics;
-        //[Inject] private IAudioService _audio;
-
-        private LoadingScreenUgui _loadingUI;
+        [Inject] private LoadingScreenManager _loadingUI;
+        
+        
 
         private async UniTaskVoid Start()
         {
@@ -25,69 +30,35 @@ namespace _1GameProject.Scripts.Bootstrap
             {
                 await InitializeBootstrap();
             }
-            catch (System.Exception ex)
+            catch (System.Exception exept)
             {
-                Debug.LogError($"[Bootstraper] Fatal error: {ex}");
+                Debug.LogError($"[Bootstraper] Fatal error: {exept}");
             }
         }
+        
 
         private async UniTask InitializeBootstrap()
         {
-            // --- Защита от null с детальным логом ---
-            if (_container == null)
-            {
-                Debug.LogError("[Bootstraper] _container is NULL! Убедись, что на сцене есть SceneContext с Installer.");
-                return;
-            }
-
-            if (loadingScreenPrefab == null)
-            {
-                Debug.LogError("[Bootstraper] loadingScreenPrefab не назначен в инспекторе!");
-                return;
-            }
-
-            if (_analytics == null)
-            {
-                Debug.LogError("[Bootstraper] IAnalyticsService не инжектирован! Проверь Installer.");
-                return;
-            }
-
-            // if (_audio == null)
-            // {
-            //     Debug.LogError("[Bootstraper] IAudioService не инжектирован! Проверь Installer.");
-            //     return;
-            // }
-
-            if (_signalBus == null)
-            {
-                Debug.LogError("[Bootstraper] SignalBus не инжектирован! Проверь SignalBusInstaller.Install().");
-                return;
-            }
-
-            // 1. Создаём UI из префаба через Zenject
-            _loadingUI = _container.InstantiatePrefabForComponent<LoadingScreenUgui>(loadingScreenPrefab);
+            // _loadingUI = _container.InstantiatePrefabForComponent<LoadingScreenManager>(loadingScreenPrefab); //спорная строка, у меня есть инсталлер для этой сцены.
+            //
+            // if (!_loadingUI)
+            //     throw new InvalidOperationException("LoadingScreenUgui не найден на префабе not found on prefab.");
             
-            if (_loadingUI == null)
-            {
-                Debug.LogError("[Bootstraper] Не удалось создать LoadingScreenUgui. Убедись, что на префабе висит этот компонент.");
-                return;
-            }
-
             _loadingUI.UpdateProgress(0f, "Загрузка...");
-
-            // 2. Инициализируем сервисы параллельно
-            var tasks = new List<UniTask>
+            
+            //перебираем все сервисы
+            var tasks = new List<UniTask>();
+            
+            foreach (var b in _asyncInitServices)
             {
-                SafeInitialize(_analytics.Initialize(), "Analytics"),
-                //SafeInitialize(_audio.Initialize(), "Audio")
-            };
-
+                tasks.Add(SafeInitialize(b.Initialize(), b.GetType().Name));
+            }
+            
             await UniTask.WhenAll(tasks);
-
+            
             _loadingUI.UpdateProgress(1f, "Готово!");
-
-            // 3. Сигнал о готовности
-            _signalBus.Fire(new ServicesLoadedSignal());
+            
+            _signalBus.Fire(new AllServicesisLoadedSignal());
         }
 
         private async UniTask SafeInitialize(UniTask task, string serviceName)
@@ -104,3 +75,7 @@ namespace _1GameProject.Scripts.Bootstrap
         }
     }
 }
+
+
+//Loading Screen и Load Manager существуют только в bootstrap сцене и менеджатся через реактивку
+//Fmod, аналитика ... более управляем, потому что персистентны.

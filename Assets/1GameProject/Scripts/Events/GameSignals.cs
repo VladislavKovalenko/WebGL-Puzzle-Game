@@ -3,7 +3,11 @@ using UnityEngine;
 namespace _1GameProject.Scripts.Events
 {
     //Bootstrap Signals
-    public class ServicesLoadedSignal { }
+    public class AllServicesisLoadedSignal { }
+    
+    
+    
+    
     
     //Marker-Interface
     public interface IEvent { }

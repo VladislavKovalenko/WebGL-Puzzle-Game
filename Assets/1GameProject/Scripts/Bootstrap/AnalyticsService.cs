@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace _1GameProject.Scripts.Bootstrap
 {
-    public class AnalyticsService : IAnalyticsService
+    public class AnalyticsService : IAsyncInitService
     {
         public string LoadingLabel => _currentStatus;
         public bool IsReady => _isReady;

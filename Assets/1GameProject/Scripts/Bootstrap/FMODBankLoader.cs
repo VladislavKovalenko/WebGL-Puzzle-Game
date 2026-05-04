@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using _1GameProject.Scripts.Bootstrap.Interfaces_for_Services;
 using Cysharp.Threading.Tasks;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using Zenject;
 
 namespace Audio
 {
-    public class FMODBankLoader : MonoBehaviour
+    public class FMODBankLoader : MonoBehaviour, IAsyncInitService
     {
         [Header("Банки для загрузки в порядке загрузки")]
         public List<string> banksToLoad = new()
@@ -14,11 +16,15 @@ namespace Audio
             "MasterBank.strings",
             "MasterBank",
         };
+        
+        [Header("Вариант с банками 2")]
+        [FMODUnity.BankRef]
+        public List<string> banks;
 
         public string LoadingLabel { get; private set; } = "FMOD: Waiting...";
         public bool IsReady { get; private set; }
 
-        public async UniTask LoadAsync()
+        public async UniTask Initialize()
         {
             await LoadBanks();
             await WaitForSampleData();
