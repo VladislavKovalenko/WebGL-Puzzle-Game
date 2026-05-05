@@ -35,5 +35,7 @@ namespace Corowan.Editor
         [MenuItem("HotKey/Input System Settings _1")]
         static void DoOpenInputSystemSettings() => EditorApplication.ExecuteMenuItem("Edit/Project Settings...");
         
+        
+        
     }
 }
