@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Vladislav
+  companyName: Kovalenko Games
   productName: VasilIvanov
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -143,7 +143,7 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 1.0
+  bundleVersion: 0.0.0.1
   preloadedAssets:
   - {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   metroInputSource: 0
@@ -327,8 +327,14 @@ PlayerSettings:
     Android: 1
     iPhone: 1
     tvOS: 1
-  m_BuildTargetGroupLightmapEncodingQuality: []
-  m_BuildTargetGroupHDRCubemapEncodingQuality: []
+  m_BuildTargetGroupLightmapEncodingQuality:
+  - serializedVersion: 2
+    m_BuildTarget: WebGL
+    m_EncodingQuality: 0
+  m_BuildTargetGroupHDRCubemapEncodingQuality:
+  - serializedVersion: 2
+    m_BuildTarget: WebGL
+    m_EncodingQuality: 0
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetGroupLoadStoreDebugModeSettings: []
   m_BuildTargetNormalMapEncoding: []
@@ -602,24 +608,24 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Android: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
+    Android: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
     EmbeddedLinux: DOTWEEN
     GameCoreScarlett: DOTWEEN
     GameCoreXboxOne: DOTWEEN
     Kepler: DOTWEEN
-    LinuxHeadlessSimulation: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
-    Nintendo Switch: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
+    LinuxHeadlessSimulation: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
+    Nintendo Switch: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
     Nintendo Switch 2: DOTWEEN
-    PS4: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
-    PS5: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
+    PS4: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
+    PS5: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
     QNX: DOTWEEN
-    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;ZEN_SIGNALS_ADD_UNIRX;DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
+    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;ZEN_SIGNALS_ADD_UNIRX;DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
     VisionOS: DOTWEEN
-    WebGL: DOTWEEN;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;PLUGIN_YG_2;TMP_YG2;RU_YG2;ZEN_SIGNALS_ADD_UNIRX
-    Windows Store Apps: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
-    XboxOne: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
-    iPhone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
-    tvOS: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2
+    WebGL: DOTWEEN;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;ZEN_SIGNALS_ADD_UNIRX;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg;PLUGIN_YG_2;TMP_YG2;RU_YG2
+    Windows Store Apps: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
+    XboxOne: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
+    iPhone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
+    tvOS: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

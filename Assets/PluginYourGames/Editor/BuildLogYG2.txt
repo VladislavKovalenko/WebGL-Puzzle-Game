@@ -1,0 +1,3 @@
+﻿Build path: D:/Work/DotUnity/Fillword/Releases/YG Build 2
+Build number: 0
+PluginYG version: 2.0091

@@ -1,0 +1,7 @@
+Authorization v1.023
+EnvirData v1.0031
+Fullscreen v1.0
+Localization v1.02
+Metrica v1.02
+QuitGameEvent v1.001
+Storage v1.021

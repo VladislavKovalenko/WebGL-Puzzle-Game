@@ -12,8 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa747916aa66674d96ea40ca8a480b2, type: 3}
   m_Name: SettingsYG2
   m_EditorClassIdentifier: Assembly-CSharp::YG.InfoYG
+  Authorization:
+    playerPhotoSize: 1
+    authorized: 1
+    playerName: Player current
+    uniqueID: 000
+    playerPhoto: demo image
+    payingStatus: 0
+  Localization:
+    setLanguageMod: 1
+  Metrica:
+    enable: 0
+    metricaCounterID: 0
+    log: 1
+    useYandexMetrica: 1
+  QuitGameEvent:
+    enable: 0
+    objectName: NameYourObject
+    methodName: NameYourMethod
+  Storage:
+    saveLocal: 0
+    saveCloud: 1
+    flush: 0
   Basic:
-    platform: {fileID: 0}
+    platform: {fileID: 11400000, guid: fabe82a4ab034324eb452cc7109f6d19, type: 2}
     autoApplySettings: 1
     autoPauseGame: 1
     editTimeScale: 1
@@ -26,7 +48,7 @@ MonoBehaviour:
     loadSceneIfSDKLate: 0
     loadSceneIndex: 0
     initDelaySimulation: 0
-    buildNumber: 0
+    buildNumber: 1
   Simulation:
     device: 0
     language: ru
@@ -69,6 +91,11 @@ MonoBehaviour:
   platformInfo:
     ownHost: 0
   platformToggles:
+    setLanguageMod: 0
+    useYandexMetrica: 0
+    metricaCounterID: 0
+    saveLocal: 0
+    saveCloud: 0
     autoPauseGame: 0
     selectWebGLTemplate: 1
     runInBackground: 1
