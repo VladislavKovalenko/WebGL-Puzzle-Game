@@ -5,7 +5,7 @@ namespace EditorTools
 {
     public static class AnchorsToCornersEditor
     {
-        [MenuItem("Tools/UI/Anchors to Corners %#a")]
+        [MenuItem("Tools/Megxlord UI/Anchors to Corners %#a")]
         public static void AnchorsToCorners()
         {
             var selectedObjects = Selection.gameObjects;
