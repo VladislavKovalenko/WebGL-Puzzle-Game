@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e84c12e2d9458a85501fb17c499f65, type: 3}
+  m_Name: TilerSettings
+  m_EditorClassIdentifier: MyEditorScripts::TextureTiler.TextureTilerSettings
+  Mode: 5
+  OutputResolution: 256
+  PreviewSize: 400
+  EnableColorMatch: 1
+  EnableMeanStd: 1
+  EnableColorTransfer: 0
+  EnableClahe: 0
+  ClaheClipLimit: 2
+  EnablePoisson: 0
+  EnableMultiband: 1
+  EnableSeamCarve: 1
+  EnableEdgeAware: 0
+  BandLevels: 6
+  EnableFreqSeamless: 1
+  EnableLCN: 0
+  EnableHistFlat: 0
+  EnableJitter: 1
+  EnableGainOffset: 1
+  EnableFreqSep: 0
+  SeamOverlap: 20
+  VariationCount: 4
+  VoronoiSpread: 5
+  PatternCount: 8
+  BlendIntensity: 0.5
+  PreviewTileCount: 2
+  PreviewTilePadding: 0

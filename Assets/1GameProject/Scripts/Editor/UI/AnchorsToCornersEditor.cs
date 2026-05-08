@@ -3,21 +3,76 @@ using UnityEngine;
 
 namespace EditorTools
 {
-    public static class AnchorsToCornersEditor
+    public class AnchorsToCorners : EditorWindow
     {
-        [MenuItem("Tools/Megxlord UI/Anchors to Corners %#a")]
-        public static void AnchorsToCorners()
+        private const float Epsilon = 0.001f;
+
+        [MenuItem("Tools/Megxlord UI/Anchors to Corners")]
+        public static void ShowWindow()
         {
-            var selectedObjects = Selection.gameObjects;
-            if (selectedObjects == null || selectedObjects.Length == 0)
+            var window = GetWindow<AnchorsToCorners>("Anchors to Corners");
+            window.minSize = new Vector2(320, 220);
+        }
+
+        private void OnGUI()
+        {
+            GUILayout.FlexibleSpace();
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+            bool canExecute = CanExecute();
+            EditorGUI.BeginDisabledGroup(!canExecute);
+
+            var buttonStyle = new GUIStyle(GUI.skin.button)
             {
-                Debug.LogWarning("[AnchorsToCorners] Не выбрано ни одного объекта.");
-                return;
+                fontSize = 14,
+                fontStyle = FontStyle.Bold
+            };
+
+            if (GUILayout.Button("Anchors to Corners", buttonStyle, GUILayout.Width(240), GUILayout.Height(64)))
+            {
+                Execute();
             }
 
+            EditorGUI.EndDisabledGroup();
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+
+            GUILayout.Space(12);
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+            if (!canExecute)
+                EditorGUILayout.LabelField("Выберите один или несколько объектов с RectTransform", EditorStyles.wordWrappedMiniLabel);
+            else
+                EditorGUILayout.LabelField($"Готово к обработке: {Selection.gameObjects.Length} объект(ов)", EditorStyles.miniLabel);
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+
+            GUILayout.FlexibleSpace();
+        }
+
+        private static bool CanExecute()
+        {
+            if (Selection.gameObjects == null || Selection.gameObjects.Length == 0)
+                return false;
+
+            foreach (var go in Selection.gameObjects)
+                if (go.GetComponent<RectTransform>() != null)
+                    return true;
+
+            return false;
+        }
+
+        private static void Execute()
+        {
             int processedCount = 0;
 
-            foreach (var go in selectedObjects)
+            foreach (var go in Selection.gameObjects)
             {
                 var rectTransform = go.GetComponent<RectTransform>();
                 if (rectTransform == null)
@@ -43,16 +98,19 @@ namespace EditorTools
                 return;
             }
 
-            // Получаем мировые углы объекта
             Vector3[] worldCorners = new Vector3[4];
             rectTransform.GetWorldCorners(worldCorners);
 
-            // Преобразуем мировые координаты в локальные координаты родителя
             Vector2 min = parent.InverseTransformPoint(worldCorners[0]);
             Vector2 max = parent.InverseTransformPoint(worldCorners[2]);
-
-            // Нормализуем относительно размеров родителя
             Vector2 parentSize = parent.rect.size;
+
+            if (parentSize.x <= Epsilon || parentSize.y <= Epsilon)
+            {
+                Debug.LogWarning($"[AnchorsToCorners] Родитель '{parent.name}' имеет нулевой размер.");
+                return;
+            }
+
             Vector2 anchorMin = new Vector2(
                 min.x / parentSize.x + parent.pivot.x,
                 min.y / parentSize.y + parent.pivot.y
@@ -62,31 +120,12 @@ namespace EditorTools
                 max.y / parentSize.y + parent.pivot.y
             );
 
-            // Применяем anchors
             rectTransform.anchorMin = anchorMin;
             rectTransform.anchorMax = anchorMax;
-
-            // Сбрасываем offset'ы, чтобы объект остался на том же месте
             rectTransform.offsetMin = Vector2.zero;
             rectTransform.offsetMax = Vector2.zero;
 
             EditorUtility.SetDirty(rectTransform);
         }
-
-        [MenuItem("Tools/UI/Anchors to Corners %#a", validate = true)]
-        private static bool ValidateAnchorsToCorners()
-        {
-            if (Selection.gameObjects == null || Selection.gameObjects.Length == 0)
-                return false;
-
-            foreach (var go in Selection.gameObjects)
-            {
-                if (go.GetComponent<RectTransform>() != null)
-                    return true;
-            }
-            return false;
-        }
     }
 }
-
-

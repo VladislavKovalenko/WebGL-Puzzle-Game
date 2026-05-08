@@ -16,6 +16,8 @@ namespace EditorTools
         private List<UIIssue> _results = new List<UIIssue>();
 
         private bool _skipTextAndTMP = true;
+        private bool _checkPointAnchors = false;
+        private bool _showDisabledAndHidden = false;
 
         private const float Epsilon = 0.001f;
 
@@ -49,6 +51,14 @@ namespace EditorTools
             _skipTextAndTMP = EditorGUILayout.ToggleLeft(
                 new GUIContent("Пропускать Text и TMP", "Исключить из проверки объекты, содержащие компоненты Text, TMP_Text или TextMeshProUGUI. Текстовые элементы часто используют авто-размер и им не критичны точные якоря."),
                 _skipTextAndTMP);
+
+            _checkPointAnchors = EditorGUILayout.ToggleLeft(
+                new GUIContent("Проверять точечные якоря", "Включить в проверку объекты, у которых anchorMin и anchorMax совпадают (точечная привязка). Такие объекты можно исправить, превратив в Stretch."),
+                _checkPointAnchors);
+
+            _showDisabledAndHidden = EditorGUILayout.ToggleLeft(
+                new GUIContent("Показывать выключенные и скрытые в сцене объекты", "Если выключено — объекты с activeInHierarchy == false или hideFlags != None пропускаются."),
+                _showDisabledAndHidden);
 
             EditorGUILayout.Space(10);
 
@@ -144,10 +154,19 @@ namespace EditorTools
 
         private bool ShouldSkip(RectTransform rt)
         {
+            var go = rt.gameObject;
+
+            if (!_showDisabledAndHidden)
+            {
+                if (!go.activeInHierarchy)
+                    return true;
+
+                if (go.hideFlags != HideFlags.None || rt.hideFlags != HideFlags.None)
+                    return true;
+            }
+
             if (!_skipTextAndTMP)
                 return false;
-
-            var go = rt.gameObject;
 
             if (go.GetComponent<UnityEngine.UI.Text>() != null)
                 return true;
@@ -174,8 +193,20 @@ namespace EditorTools
 
             bool isStretched = Mathf.Abs(rt.anchorMin.x - rt.anchorMax.x) > Epsilon ||
                                Mathf.Abs(rt.anchorMin.y - rt.anchorMax.y) > Epsilon;
+
             if (!isStretched)
-                return false;
+            {
+                if (!_checkPointAnchors)
+                    return false;
+
+                issue = new UIIssue
+                {
+                    Target = rt.gameObject,
+                    Path = GetHierarchyPath(rt),
+                    Description = "Точечный якорь: anchorMin и anchorMax совпадают. Рекомендуется привязать к углам (Stretch)."
+                };
+                return true;
+            }
 
             Vector3[] worldCorners = new Vector3[4];
             rt.GetWorldCorners(worldCorners);
