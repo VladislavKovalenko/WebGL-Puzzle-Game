@@ -12,8 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,27 +23,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Editor/ProceduralImageEditors.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Animation/AnimatedRadius.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Animation/HoverModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Animation/UniformModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/EmptySprite.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/FreeModifier..cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/ModifierID.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/ArrowModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/CapsuleModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/DiamondModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/HeartModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/HexagonModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/PolygonModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/SpeechBubbleModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/SquircleModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/Modifiers/StarModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/ProceduralImageAnimation.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/ProceduralImageInfo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/ProceduralImageMask.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/ProceduralImageModifier.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ProceduralUIImage/Scripts/ProceduralImagePattern.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/MPUIKit/Editor/MPUIKitSettings.asset" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.neuecc.unirx@31ee62cbf28c/UniRx.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Editor/Zenject-Editor.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Zenject.asmdef" root0="SKIP_HIGHLIGHTING" />
@@ -124,6 +102,7 @@
       <workItem from="1778335761812" duration="247000" />
       <workItem from="1778370468567" duration="5167000" />
       <workItem from="1778412655037" duration="11605000" />
+      <workItem from="1778438503689" duration="2128000" />
     </task>
     <servers />
   </component>

@@ -69,6 +69,23 @@ namespace Megxlord.UI.Editor
         // ── Шапка (фиксированная высота) ──────────────────────────────────
         EditorGUILayout.Space(6);
         DrawHeader();
+
+        // ── Переключатель "От родителя / От Canvas" ───────────────────────
+        using (new EditorGUILayout.HorizontalScope())
+        {
+            GUILayout.Space(10);
+            bool newVal = GUILayout.Toggle(_state.RelativeToCanvas,
+                "Измерять от Canvas", "Button", GUILayout.Height(20));
+            if (newVal != _state.RelativeToCanvas)
+            {
+                _state.RelativeToCanvas = newVal;
+                _sync.SyncFromSelection();
+                Repaint();
+            }
+            GUILayout.FlexibleSpace();
+        }
+        EditorGUILayout.Space(2);
+
         DrawTabBar();
         EditorGUILayout.Space(4);
 
@@ -175,8 +192,11 @@ namespace Megxlord.UI.Editor
     private void DrawTab(string label, FigmaTab tab)
     {
         bool active = _state.CurrentTab == tab;
-        if (GUILayout.Button(label, active ? _styles.TabActive : _styles.Tab, GUILayout.Height(28)))
+        if (GUILayout.Button(label, active ? _styles.TabActive : _styles.Tab, GUILayout.Height(26)))
+        {
             _state.CurrentTab = tab;
+            Repaint();
+        }
     }
 
     // ── No selection ──────────────────────────────────────────────────────
@@ -341,6 +361,7 @@ namespace Megxlord.UI.Editor
         public bool   ShowDimensions = true;
         public bool   ShowCrosshair  = true;
         public bool   ShowSafeZone   = false;
+        public bool   RelativeToCanvas = false;
         public bool   MaintainAspect = false;
         public float  AspectRatio    = 1f;
         public bool   LivePreview    = true;
@@ -390,6 +411,22 @@ namespace Megxlord.UI.Editor
 
     public FigmaSync(FigmaState state) => _s = state;
 
+    private RectTransform ResolveParent(RectTransform rt)
+    {
+        if (_s.RelativeToCanvas)
+        {
+            var canvasRt = GetCanvasRect(rt);
+            if (canvasRt != null) return canvasRt;
+        }
+        return rt.parent as RectTransform;
+    }
+
+    private static RectTransform GetCanvasRect(RectTransform rt)
+    {
+        var canvas = rt.GetComponentInParent<Canvas>();
+        return canvas != null ? canvas.GetComponent<RectTransform>() : null;
+    }
+
     public void SyncFromSelection()
     {
         var targets = GetValidTargets();
@@ -398,7 +435,7 @@ namespace Megxlord.UI.Editor
         if (targets.Count >= 1)
         {
             _s.Target = targets[0];
-            _s.Parent = _s.Target.parent as RectTransform;
+            _s.Parent = ResolveParent(_s.Target);
             Calculate();
             _s.StorePrev();
         }
@@ -412,73 +449,96 @@ namespace Megxlord.UI.Editor
     public void Calculate()
     {
         var rt     = _s.Target;
-        var parent = _s.Parent;
+        var parent = rt != null ? ResolveParent(rt) : _s.Parent;
         if (rt == null || parent == null) return;
 
-        var ps    = parent.rect.size;
-        var pos   = rt.anchoredPosition;
-        var pivot = rt.pivot;
+        Vector3[] worldCorners = new Vector3[4];
+        rt.GetWorldCorners(worldCorners);
 
-        _s.W = rt.rect.width;
-        _s.H = rt.rect.height;
+        Vector2 localMin = parent.InverseTransformPoint(worldCorners[0]);
+        Vector2 localMax = parent.InverseTransformPoint(worldCorners[2]);
 
-        if (rt.anchorMin == rt.anchorMax)
-        {
-            float anchorAbsX = rt.anchorMin.x * ps.x;
-            float anchorAbsY = rt.anchorMin.y * ps.y;
+        var ps = parent.rect.size;
+        _s.W = localMax.x - localMin.x;
+        _s.H = localMax.y - localMin.y;
 
-            float pivotAbsX = anchorAbsX + pos.x;
-            float pivotAbsY = anchorAbsY + pos.y;
+        float leftEdge = -parent.pivot.x * ps.x;
+        float topEdge  = (1f - parent.pivot.y) * ps.y;
 
-            float objLeft   = pivotAbsX - pivot.x * _s.W;
-            float objBottom = pivotAbsY - pivot.y * _s.H;
-
-            _s.L = objLeft;
-            _s.B = objBottom;
-            _s.R = ps.x - objLeft   - _s.W;
-            _s.T = ps.y - objBottom - _s.H;
-        }
-        else
-        {
-            _s.L = rt.offsetMin.x;
-            _s.R = -rt.offsetMax.x;
-            _s.B = rt.offsetMin.y;
-            _s.T = -rt.offsetMax.y;
-        }
+        _s.L = localMin.x - leftEdge;
+        _s.R = ps.x - _s.W - _s.L;
+        _s.T = topEdge - localMax.y;
+        _s.B = ps.y - _s.H - _s.T;
     }
 
     public void Apply(bool recordUndo = false)
     {
         var rt     = _s.Target;
-        var parent = _s.Parent;
+        var parent = ResolveParent(rt);
         if (rt == null || parent == null) return;
 
         if (recordUndo) Undo.RecordObject(rt, "Figma Layout");
 
+        bool isStretchedH = rt.anchorMin.x != rt.anchorMax.x;
+        bool isStretchedV = rt.anchorMin.y != rt.anchorMax.y;
+
+        if (isStretchedH || isStretchedV)
+        {
+            Vector3[] stretchedCorners = new Vector3[4];
+            rt.GetWorldCorners(stretchedCorners);
+
+            Vector2 stretchedLocalMin = parent.InverseTransformPoint(stretchedCorners[0]);
+            Vector2 stretchedLocalMax = parent.InverseTransformPoint(stretchedCorners[2]);
+
+            float w = stretchedLocalMax.x - stretchedLocalMin.x;
+            float h = stretchedLocalMax.y - stretchedLocalMin.y;
+            float cx = (stretchedLocalMin.x + stretchedLocalMax.x) * 0.5f;
+            float cy = (stretchedLocalMin.y + stretchedLocalMax.y) * 0.5f;
+
+            rt.anchorMin = new Vector2(0.5f, 0.5f);
+            rt.anchorMax = new Vector2(0.5f, 0.5f);
+
+            var directParent = rt.parent as RectTransform;
+            Vector3 stretchedWorldCenter = parent.TransformPoint(new Vector3(cx, cy, 0));
+            Vector2 stretchedDpLocal = directParent.InverseTransformPoint(stretchedWorldCenter);
+
+            float stretchedDpAnchorX = (0.5f - directParent.pivot.x) * directParent.rect.size.x;
+            float stretchedDpAnchorY = (0.5f - directParent.pivot.y) * directParent.rect.size.y;
+
+            rt.anchoredPosition = new Vector2(
+                stretchedDpLocal.x - stretchedDpAnchorX,
+                stretchedDpLocal.y - stretchedDpAnchorY);
+            rt.sizeDelta = new Vector2(w, h);
+
+            Calculate();
+            _s.StorePrev();
+            EditorUtility.SetDirty(rt);
+            ShowOverlay($"Anchors → Center! L:{_s.L:F0}  R:{_s.R:F0}  T:{_s.T:F0}  B:{_s.B:F0}   {_s.W:F0}×{_s.H:F0}");
+            SceneView.RepaintAll();
+            return;
+        }
+
         _s.Clamp();
         var ps = parent.rect.size;
+        float leftEdge = -parent.pivot.x * ps.x;
+        float topEdge  = (1f - parent.pivot.y) * ps.y;
 
-        if (rt.anchorMin == rt.anchorMax)
-        {
-            var pivot = rt.pivot;
+        float minX = leftEdge + _s.L;
+        float maxX = minX + _s.W;
+        float maxY = topEdge - _s.T;
+        float minY = maxY - _s.H;
 
-            float objLeft   = _s.L;
-            float objBottom = _s.B;
+        Vector2 parentLocalCenter = new Vector2((minX + maxX) * 0.5f, (minY + maxY) * 0.5f);
+        Vector3 worldCenter = parent.TransformPoint(parentLocalCenter);
 
-            float pivotAbsX = objLeft   + pivot.x * _s.W;
-            float pivotAbsY = objBottom + pivot.y * _s.H;
+        var dp = rt.parent as RectTransform;
+        Vector2 dpLocalCenter = dp.InverseTransformPoint(worldCenter);
 
-            float anchorAbsX = rt.anchorMin.x * ps.x;
-            float anchorAbsY = rt.anchorMin.y * ps.y;
+        float dpAnchorX = (rt.anchorMin.x - dp.pivot.x) * dp.rect.size.x;
+        float dpAnchorY = (rt.anchorMin.y - dp.pivot.y) * dp.rect.size.y;
 
-            rt.anchoredPosition = new Vector2(pivotAbsX - anchorAbsX, pivotAbsY - anchorAbsY);
-            rt.sizeDelta        = new Vector2(_s.W, _s.H);
-        }
-        else
-        {
-            rt.offsetMin = new Vector2(_s.L, _s.B);
-            rt.offsetMax = new Vector2(-_s.R, -_s.T);
-        }
+        rt.anchoredPosition = new Vector2(dpLocalCenter.x - dpAnchorX, dpLocalCenter.y - dpAnchorY);
+        rt.sizeDelta        = new Vector2(_s.W, _s.H);
 
         EditorUtility.SetDirty(rt);
         ShowOverlay($"L:{_s.L:F0}  R:{_s.R:F0}  T:{_s.T:F0}  B:{_s.B:F0}   {_s.W:F0}×{_s.H:F0}");
@@ -487,10 +547,11 @@ namespace Megxlord.UI.Editor
 
     public void ResetToCenter()
     {
-        if (_s.Parent == null) return;
+        var parent = _s.Target != null ? ResolveParent(_s.Target) : _s.Parent;
+        if (parent == null) return;
         _s.StorePrev();
 
-        var ps = _s.Parent.rect.size;
+        var ps = parent.rect.size;
 
         _s.L = (ps.x - _s.W) * 0.5f;
         _s.R = (ps.x - _s.W) * 0.5f;
@@ -604,23 +665,65 @@ namespace Megxlord.UI.Editor
 
         Handles.BeginGUI();
 
-        EditorGUI.DrawRect(ContentRect, new Color(0.17f, 0.17f, 0.21f, 1f));
-        Handles.color = new Color(0.5f, 0.5f, 0.55f, 0.9f);
-        FigmaDrawUtils.HandlesRect(ContentRect);
-
-        if (_s.ShowSafeZone) DrawSafeZone(sx, sy);
-
-        if (_s.ShowCrosshair && ContentRect.Contains(_mousePos))
+        // Canvas background (when measuring from Canvas and Canvas != parent)
+        if (_s.RelativeToCanvas)
         {
-            Handles.color = new Color(0.28f, 0.56f, 1f, 0.25f);
-            Handles.DrawLine(new Vector3(_mousePos.x, ContentRect.y,    0), new Vector3(_mousePos.x, ContentRect.yMax, 0));
-            Handles.DrawLine(new Vector3(ContentRect.x, _mousePos.y,   0), new Vector3(ContentRect.xMax, _mousePos.y,  0));
+            var canvasRt = GetCanvasRect(_s.Target);
+            if (canvasRt != null && canvasRt != _s.Parent)
+            {
+                EditorGUI.DrawRect(ContentRect, new Color(0.1f, 0.1f, 0.3f, 0.5f));
+                GUI.Label(ContentRect, "Canvas", EditorStyles.centeredGreyMiniLabel);
+            }
         }
 
-        // T — отступ от верхнего края (экранный Y идёт вниз, поэтому +T*sy)
-        float ox = ContentRect.x + _s.L * sx;
-        float oy = ContentRect.y + _s.T * sy;
-        ObjectRect = new Rect(ox, oy, Mathf.Max(2, _s.W * sx), Mathf.Max(2, _s.H * sy));
+            EditorGUI.DrawRect(ContentRect, new Color(0.17f, 0.17f, 0.21f, 1f));
+            Handles.color = new Color(0.5f, 0.5f, 0.55f, 0.9f);
+            FigmaDrawUtils.HandlesRect(ContentRect);
+
+            if (_s.RelativeToCanvas && _s.Target != null)
+            {
+                var directParent = _s.Target.parent as RectTransform;
+                if (directParent != null && directParent != _s.Parent)
+                {
+                    Vector3[] parentCorners = new Vector3[4];
+                    directParent.GetWorldCorners(parentCorners);
+
+                    Vector2 localMin = _s.Parent.InverseTransformPoint(parentCorners[0]);
+                    Vector2 localMax = _s.Parent.InverseTransformPoint(parentCorners[2]);
+
+                    var canvasPs = _s.Parent.rect.size;
+
+                    float canvasLeftEdge = -_s.Parent.pivot.x * canvasPs.x;
+                    float canvasTopEdge = (1f - _s.Parent.pivot.y) * canvasPs.y;
+
+                    float pL = localMin.x - canvasLeftEdge;
+                    float pT = canvasTopEdge - localMax.y;
+                    float pW = localMax.x - localMin.x;
+                    float pH = localMax.y - localMin.y;
+
+                    float pOx = ContentRect.x + pL * sx;
+                    float pOy = ContentRect.y + pT * sy;
+                    float pOw = Mathf.Max(2, pW * sx);
+                    float pOh = Mathf.Max(2, pH * sy);
+                    Rect parentRect = new Rect(pOx, pOy, pOw, pOh);
+
+                    FigmaDrawUtils.DrawDashedRect(parentRect, new Color(1f, 0.6f, 0.2f, 0.6f));
+                }
+            }
+
+            if (_s.ShowSafeZone) DrawSafeZone(sx, sy);
+
+            if (_s.ShowCrosshair && ContentRect.Contains(_mousePos))
+            {
+                Handles.color = new Color(0.28f, 0.56f, 1f, 0.25f);
+                Handles.DrawLine(new Vector3(_mousePos.x, ContentRect.y,    0), new Vector3(_mousePos.x, ContentRect.yMax, 0));
+                Handles.DrawLine(new Vector3(ContentRect.x, _mousePos.y,   0), new Vector3(ContentRect.xMax, _mousePos.y,  0));
+            }
+
+            // T — отступ от верхнего края (экранный Y идёт вниз, поэтому +T*sy)
+            float ox = ContentRect.x + _s.L * sx;
+            float oy = ContentRect.y + _s.T * sy;
+            ObjectRect = new Rect(ox, oy, Mathf.Max(2, _s.W * sx), Mathf.Max(2, _s.H * sy));
 
         DrawShadow(ObjectRect);
 
@@ -884,6 +987,13 @@ namespace Megxlord.UI.Editor
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────
+    private static RectTransform GetCanvasRect(RectTransform rt)
+    {
+        if (rt == null) return null;
+        var canvas = rt.GetComponentInParent<Canvas>();
+        return canvas != null ? canvas.GetComponent<RectTransform>() : null;
+    }
+
     private static void DrawCornerMarkers(Rect r)
     {
         float len = Mathf.Min(7f, r.width * 0.18f, r.height * 0.18f);
@@ -969,7 +1079,6 @@ namespace Megxlord.UI.Editor
             var e = Event.current;
             if (e == null || _s.Target == null || _s.Parent == null) return;
 
-            // Scroll wheel zoom — only inside visual rect
             if (e.type == EventType.ScrollWheel && visualRect.Contains(e.mousePosition))
             {
                 float delta = -e.delta.y * 0.06f;
@@ -979,7 +1088,6 @@ namespace Megxlord.UI.Editor
                 return;
             }
 
-            // Right mouse / middle mouse = pan
             if (e.type == EventType.MouseDown && (e.button == 1 || e.button == 2) && visualRect.Contains(e.mousePosition))
             {
                 _isPanning        = true;
@@ -1000,7 +1108,6 @@ namespace Megxlord.UI.Editor
 
             GetScaleFactors(out float sx, out float sy);
 
-            // MouseDown
             if (e.type == EventType.MouseDown && e.button == 0)
             {
                 int h = GetHandleAt(e.mousePosition, objectRect);
@@ -1024,22 +1131,31 @@ namespace Megxlord.UI.Editor
                 }
             }
 
-            // Drag (move)
             if (e.type == EventType.MouseDrag && _isDragging)
             {
                 var d = e.mousePosition - _dragStartMouse;
                 var ps = _s.Parent.rect.size;
-                _s.L = Mathf.Clamp(_dragStartPos.x + d.x / sx, 0, ps.x - _s.W);
-                _s.T = Mathf.Clamp(_dragStartPos.y + d.y / sy, 0, ps.y - _s.H);
-                SnapValues();
+
+                float newL = _dragStartPos.x + d.x / sx;
+                float newT = _dragStartPos.y + d.y / sy;
+
+                float snapThreshold = 5f;
+                newL = SnapValue(newL, snapThreshold, ps.x, _s.W, true);
+                newT = SnapValue(newT, snapThreshold, ps.y, _s.H, false);
+
+                _s.L = Mathf.Clamp(newL, 0, ps.x - _s.W);
+                _s.T = Mathf.Clamp(newT, 0, ps.y - _s.H);
+
+                if (_s.SnapToPixels) { _s.L = Mathf.Round(_s.L); _s.T = Mathf.Round(_s.T); }
+
                 _s.R = Mathf.Max(0, ps.x - _s.L - _s.W);
                 _s.B = Mathf.Max(0, ps.y - _s.T - _s.H);
+
                 if (_s.LivePreview) _sync.Apply();
                 _s.NeedsRepaint = true;
                 e.Use(); return;
             }
 
-            // Drag (resize)
             if (e.type == EventType.MouseDrag && _isResizing)
             {
                 var d  = e.mousePosition - _dragStartMouse;
@@ -1054,7 +1170,6 @@ namespace Megxlord.UI.Editor
                 e.Use(); return;
             }
 
-            // Mouse up
             if (e.type == EventType.MouseUp && e.button == 0 && (_isDragging || _isResizing))
             {
                 _isDragging = false; _isResizing = false; _resizeHandle = -1;
@@ -1088,7 +1203,39 @@ namespace Megxlord.UI.Editor
             e.Use();
         }
 
-        // ── Helpers ──────────────────────────────────────────────────────
+        private float SnapValue(float val, float threshold, float parentSize, float objSize, bool isHorizontal)
+        {
+            var snapPoints = new List<float> { 0, parentSize * 0.5f - objSize * 0.5f, parentSize - objSize };
+
+            if (_s.RelativeToCanvas && _s.Target != null)
+            {
+                var directParent = _s.Target.parent as RectTransform;
+                if (directParent != null && directParent != _s.Parent)
+                {
+                    var parentBounds = new FigmaValues(directParent, _s.Parent);
+                    if (isHorizontal)
+                    {
+                        snapPoints.Add(parentBounds.L);
+                        snapPoints.Add(parentBounds.L + (parentBounds.W - objSize) * 0.5f);
+                        snapPoints.Add(parentBounds.L + parentBounds.W - objSize);
+                    }
+                    else
+                    {
+                        snapPoints.Add(parentBounds.T);
+                        snapPoints.Add(parentBounds.T + (parentBounds.H - objSize) * 0.5f);
+                        snapPoints.Add(parentBounds.T + parentBounds.H - objSize);
+                    }
+                }
+            }
+
+            foreach (float p in snapPoints)
+            {
+                if (Mathf.Abs(val - p) < threshold)
+                    return p;
+            }
+            return val;
+        }
+
         private void ApplyResize(float dw, float dh)
         {
             float nl = _dragStartOffsets.x, nt = _dragStartOffsets.y;
@@ -2216,6 +2363,19 @@ namespace Megxlord.UI.Editor
             Handles.DrawLine(new Vector3(r.x,    r.yMax, 0), new Vector3(r.x,    r.y,    0));
         }
 
+        public static void DrawDashedRect(Rect r, Color c, float dashSize = 4f)
+        {
+            Handles.color = c;
+            var p1 = new Vector3(r.x, r.y, 0);
+            var p2 = new Vector3(r.xMax, r.y, 0);
+            var p3 = new Vector3(r.xMax, r.yMax, 0);
+            var p4 = new Vector3(r.x, r.yMax, 0);
+            Handles.DrawDottedLine(p1, p2, dashSize);
+            Handles.DrawDottedLine(p2, p3, dashSize);
+            Handles.DrawDottedLine(p3, p4, dashSize);
+            Handles.DrawDottedLine(p4, p1, dashSize);
+        }
+
         public static void SectionHeader(string title, float windowWidth)
         {
             var r = GUILayoutUtility.GetRect(Mathf.Max(0, windowWidth - 20), 24);
@@ -2248,46 +2408,59 @@ namespace Megxlord.UI.Editor
         public FigmaValues(RectTransform rt, RectTransform parent)
         {
             if (rt == null || parent == null) { L=R=T=B=W=H=0; return; }
-            var ps = parent.rect.size;
-            W = rt.rect.width; H = rt.rect.height;
 
-            if (rt.anchorMin == rt.anchorMax)
-            {
-                var pivot = rt.pivot;
-                var pos   = rt.anchoredPosition;
-                float pox = (pivot.x - rt.anchorMin.x) * ps.x;
-                float poy = (pivot.y - rt.anchorMin.y) * ps.y;
-                float px  = pos.x + pox, py = pos.y + poy;
-                L = px - pivot.x * W; R = ps.x - px - (1-pivot.x)*W;
-                B = py - pivot.y * H; T = ps.y - py - (1-pivot.y)*H;
-            }
-            else
-            {
-                L = rt.offsetMin.x; R = -rt.offsetMax.x;
-                B = rt.offsetMin.y; T = -rt.offsetMax.y;
-            }
+            Vector3[] worldCorners = new Vector3[4];
+            rt.GetWorldCorners(worldCorners);
+
+            Vector2 localMin = parent.InverseTransformPoint(worldCorners[0]);
+            Vector2 localMax = parent.InverseTransformPoint(worldCorners[2]);
+
+            var ps = parent.rect.size;
+            W = localMax.x - localMin.x;
+            H = localMax.y - localMin.y;
+
+            float leftEdge = -parent.pivot.x * ps.x;
+            float topEdge  = (1f - parent.pivot.y) * ps.y;
+
+            L = localMin.x - leftEdge;
+            R = ps.x - W - L;
+            T = topEdge - localMax.y;
+            B = ps.y - H - T;
         }
 
         public void Apply(RectTransform rt, RectTransform parent)
         {
             if (rt == null || parent == null) return;
+
+            bool isStretchedH = rt.anchorMin.x != rt.anchorMax.x;
+            bool isStretchedV = rt.anchorMin.y != rt.anchorMax.y;
+            if (isStretchedH || isStretchedV)
+            {
+                rt.anchorMin = new Vector2(0.5f, 0.5f);
+                rt.anchorMax = new Vector2(0.5f, 0.5f);
+            }
+
             var ps = parent.rect.size;
-            if (rt.anchorMin == rt.anchorMax)
-            {
-                var pivot = rt.pivot;
-                float px  = L + pivot.x * W, py = B + pivot.y * H;
-                float pox = (pivot.x - rt.anchorMin.x) * ps.x;
-                float poy = (pivot.y - rt.anchorMin.y) * ps.y;
-                rt.anchoredPosition = new Vector2(px - pox, py - poy);
-                rt.sizeDelta        = new Vector2(W, H);
-            }
-            else
-            {
-                rt.offsetMin = new Vector2(L, B);
-                rt.offsetMax = new Vector2(-R, -T);
-            }
+            float leftEdge = -parent.pivot.x * ps.x;
+            float topEdge  = (1f - parent.pivot.y) * ps.y;
+
+            float minX = leftEdge + L;
+            float maxX = minX + W;
+            float maxY = topEdge - T;
+            float minY = maxY - H;
+
+            Vector2 parentLocalCenter = new Vector2((minX + maxX) * 0.5f, (minY + maxY) * 0.5f);
+            Vector3 worldCenter = parent.TransformPoint(parentLocalCenter);
+
+            var dp = rt.parent as RectTransform;
+            Vector2 dpLocalCenter = dp.InverseTransformPoint(worldCenter);
+
+            float dpAnchorX = (rt.anchorMin.x - dp.pivot.x) * dp.rect.size.x;
+            float dpAnchorY = (rt.anchorMin.y - dp.pivot.y) * dp.rect.size.y;
+
+            rt.anchoredPosition = new Vector2(dpLocalCenter.x - dpAnchorX, dpLocalCenter.y - dpAnchorY);
+            rt.sizeDelta = new Vector2(W, H);
         }
     }
-    
-    
+
 }
