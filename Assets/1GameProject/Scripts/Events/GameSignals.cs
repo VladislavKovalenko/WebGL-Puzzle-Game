@@ -26,9 +26,6 @@ namespace _1GameProject.Scripts.Events
     public class GameStateChangedEvent : IEvent { }
     public class StartGameRequestEvent : IEvent { }
     #endregion
-
-    //Test Events
-    public class TestGameSignal{ }
     
     #region Board
     public class BoardGeneratedEvent : IEvent { }

@@ -8,5 +8,7 @@ namespace _1GameProject.Scripts.UI.Buttons
         {
             SceneManager.LoadScene("Main Menu");
         }
+        
+        //test заметка
     }
 }

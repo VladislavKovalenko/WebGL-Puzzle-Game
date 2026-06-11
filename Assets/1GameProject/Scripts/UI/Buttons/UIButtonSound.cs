@@ -20,7 +20,6 @@ namespace _1GameProject.Scripts.UI.Buttons
 
         private void Start()
         {
-            var d = DContainter;
             if(soundLibrary == null) 
                 soundLibrary = Resources.Load<SoundLibrarySO>("Sound/SoundLibrary");
             
@@ -46,7 +45,7 @@ namespace _1GameProject.Scripts.UI.Buttons
 
         private void Text()
         {
-            Debug.Log("Habubu");
+            //Тестовый метод
         }
         
     }

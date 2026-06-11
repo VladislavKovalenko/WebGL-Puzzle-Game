@@ -1,6 +1,5 @@
 ﻿using _1GameProject.Scripts.Audio;
 using _1GameProject.Scripts.UI.Buttons;
-using _1GameProject.Scripts.UI.Test;
 using Zenject;
 
 namespace _1GameProject.Scripts.DI
@@ -14,8 +13,6 @@ namespace _1GameProject.Scripts.DI
             
             //UI
             Container.Bind<UIButtonSound>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<TestSignalEvents>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<LearningUiComponents>().FromComponentInHierarchy().AsSingle();
             
             
 
