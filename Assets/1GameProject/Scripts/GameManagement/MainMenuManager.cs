@@ -1,39 +1,54 @@
 ﻿using System;
 using _1GameProject.Scripts.Events;
+using _1GameProject.Scripts.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using Zenject;
 using UniRx;
+using UnityEngine.UI;
 
 namespace _1GameProject.Scripts.GameManagement
 {
     public class MainMenuManager : MonoBehaviour
     {
-        [Inject] SignalBus SignalBus;
         
+        [Header("Кнопки")]
+        [SerializeField] private Button _settingsButton;
+        [SerializeField] private Button _startGameButton;
+        [SerializeField] private Button _openRanksButton;
+        [SerializeField] private Button _openStoreButton;
+        [SerializeField] private Button _backToMainMenuFromRankButton;
+        
+        [Header("Объекты")]
         public  GameObject MainMenu;
         public  GameObject Ranks;
         public  GameObject Settings;
         public  GameObject Store;
+        
 
         private void Start()
         {
-            SignalBus.GetStream<GameStartSignal>()
+            _startGameButton.OnClickAsObservable()
                 .Subscribe(_ => StartGame())
                 .AddTo(this);
             
-            SignalBus.GetStream<RanksMenuOpenSignal>()
+            _openRanksButton.OnClickAsObservable()
                 .Subscribe(_ => OpenRanks())
                 .AddTo(this);
-
-            SignalBus.GetStream<StoreOpenSignal>()
+            
+            _openStoreButton.OnClickAsObservable()
                 .Subscribe(_ => OpenStore())
                 .AddTo(this);
-
-            SignalBus.GetStream<BackToMainMenuSignal>()
+            
+            _backToMainMenuFromRankButton.OnClickAsObservable()
                 .Subscribe(_ => BackToMainMenu())
                 .AddTo(this);
+            
+            _settingsButton.OnClickAsObservable()
+                .Subscribe(_ => OpenSettings())
+                .AddTo(this);
+            
         }
         
 
@@ -51,6 +66,7 @@ namespace _1GameProject.Scripts.GameManagement
 
         public void OpenSettings()
         {
+            Settings.SetActive(true);
         }
 
         public void OpenStore()

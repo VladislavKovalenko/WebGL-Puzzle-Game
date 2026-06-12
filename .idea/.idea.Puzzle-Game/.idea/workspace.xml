@@ -11,52 +11,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level End.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level Start.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level Start/Levels Select Manager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level Start/Levels Select Manager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/AnalyticsService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/AnalyticsService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/AnalyticsService.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/AnalyticsService.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Bootstraper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Bootstraper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Bootstraper.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Bootstraper.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/FMODBankLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/FMODBankLoader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/FMODBankLoader.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/FMODBankLoader.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Interfaces for Services.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Interfaces for Services.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Interfaces for Services/IAsyncInitService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Interfaces for Services/IAsyncInitService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Interfaces for Services/IAsyncInitService.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Interfaces for Services/IAsyncInitService.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/LoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/LoadManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/LoadingScreenManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadingScreenManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/LoadingScreenManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadingScreenManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/AudioManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/AudioManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/AudioManager.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/AudioManager.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/LoadManager.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/LoadManager.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/LoadManager.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/LoadManager.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/LoadingScreen.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/LoadingScreen.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/LoadingScreen.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/LoadingScreen.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/MainBootstrapper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/MainBootstrapper.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Bootstrap/Prefabs/MainBootstrapper.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/MainBootstrapper.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/PlaySceneInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/PlaySceneInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignals.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignals.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/ButtonLogic.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/ButtonLogic.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/UIButtonSound.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/UIButtonSound.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Data/CharacterDataSO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Data/CharacterDataSO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/MouseCursor/CursorEvents.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/MouseCursor/CursorEvents.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/MouseCursor/CursorManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/MouseCursor/CursorManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Test/LearningUiComponents.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Test/LearningUiComponents.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Test/TestSignalEvents.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Test/TestSignalEvents.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/ToolTips/ToolTipService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/ToolTips/ToolTipService.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/ServerInfoYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/ServerInfoYG2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SettingsData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SettingsData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/MainMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/MainMenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/SignalServices.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/SignalServices/MainMenuSignalsServiceWrapper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/SignalServices/MainMenuSignalsServiceWrapper.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsService.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsService.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsView.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsView.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Data.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Test.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/ToolTips.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,9 +41,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot PNG 24b.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/Settings Panel.prefab" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.neuecc.unirx@31ee62cbf28c/UniRx.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Editor/Zenject-Editor.asmdef" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Signals/Main/SignalBus.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Zenject.asmdef" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
@@ -153,7 +129,8 @@
       <workItem from="1780936117802" duration="3707000" />
       <workItem from="1781021054518" duration="2967000" />
       <workItem from="1781182294340" duration="2659000" />
-      <workItem from="1781217499655" duration="551000" />
+      <workItem from="1781217499655" duration="4566000" />
+      <workItem from="1781254111559" duration="12431000" />
     </task>
     <servers />
   </component>
