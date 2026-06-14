@@ -19,8 +19,8 @@ namespace _1GameProject.Scripts.DI
             
             
             
-            // Биндим модель (одна на всю игру)
-            Container.Bind<SettingsModel>().AsSingle();
+            // привязываем класс SettingsModel и все его интерфейсы (IInitializable)
+            Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle();
             
             
             Container.Bind<SettingsWindowView>()

@@ -13,6 +13,8 @@ namespace _1GameProject.Scripts.GameManagement
     public class MainMenuManager : MonoBehaviour
     {
         
+        [Inject] SignalBus SignalBus;
+        
         [Header("Кнопки")]
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _startGameButton;
@@ -66,7 +68,11 @@ namespace _1GameProject.Scripts.GameManagement
 
         public void OpenSettings()
         {
-            Settings.SetActive(true);
+            // 1. Выключаем Главное Меню
+            //MainMenu.SetActive(false);
+            
+            // 2. Стреляем сигналом! Менеджер больше сам окно не включает!
+            SignalBus.Fire<SettingsMenuOpenSignal>();
         }
 
         public void OpenStore()

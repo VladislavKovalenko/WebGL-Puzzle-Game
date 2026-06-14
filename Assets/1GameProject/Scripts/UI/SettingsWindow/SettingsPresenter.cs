@@ -2,17 +2,16 @@
 using UniRx;
 using Zenject;
 using _1GameProject.Scripts.Events;
-using _1GameProject.Scripts.UI.SettingsWindow;
+using _1GameProject.Scripts.Settings;
 using UnityEngine;
 
-namespace _1GameProject.Scripts.Settings
+namespace _1GameProject.Scripts.UI.SettingsWindow
 {
     public class SettingsPresenter : IInitializable, IDisposable
     {
         private readonly SettingsModel _model;
         private readonly SettingsWindowView _view;
         private readonly SignalBus _signalBus;
-        
         private readonly CompositeDisposable _disposables = new();
 
         // Временные переменные (изменяются пока двигаем слайдеры)
@@ -38,64 +37,66 @@ namespace _1GameProject.Scripts.Settings
             _view.OnApplyClicked.Subscribe(_ => ApplyChanges()).AddTo(_disposables);
             _view.OnResetClicked.Subscribe(_ => ResetToDefaults()).AddTo(_disposables);
 
-            // Реакция на ползунки (передаем во View, чтобы обновить текст)
+            // Обработка слайдера ГРОМКОСТИ
             _view.OnVolumeChanged.Subscribe(val =>
             {
                 _tempVolume = (int)val;
-                _view.SetVolume(_tempVolume); 
+                _view.UpdateTexts(_tempFps, _tempVolume); 
+                
+                // СРАЗУ меняем громкость в игре для предпросмотра
+                _model.PreviewSettings(_tempFps, _tempVolume);
             }).AddTo(_disposables);
 
+            // Обработка слайдера FPS
             _view.OnFpsChanged.Subscribe(val =>
             {
                 _tempFps = (int)val;
-                _view.SetFps(_tempFps); 
+                _view.UpdateTexts(_tempFps, _tempVolume); 
+                
+                // СРАЗУ меняем FPS в игре для предпросмотра
+                _model.PreviewSettings(_tempFps, _tempVolume);
             }).AddTo(_disposables);
         }
 
         private void OpenWindow()
         {
-            // При открытии окна берем реальные сохраненные данные
+            // 1. Берем данные
             _tempFps = _model.CurrentFps;
             _tempVolume = _model.CurrentVolume;
 
-            // Настраиваем UI
-            _view.SetFps(_tempFps);
-            _view.SetVolume(_tempVolume);
-
+            // 2. СНАЧАЛА включаем окно! Чтобы слайдеры проснулись и могли двигаться.
             _view.Show();
+
+            // 3. И только ТЕПЕРЬ двигаем ползунки.
+            _view.InitValuesSilently(_tempFps, _tempVolume);
         }
 
         private void CloseWindow()
         {
-            // Если игрок нажал Close, мы просто закрываем окно.
-            // Временные переменные сотрутся при следующем OpenWindow().
+            // Отменяем несохраненные изменения (возвращаем громкость назад)
+            _model.RevertSettingsToSaved();
+            
             _view.Hide();
             _signalBus.Fire<BackToMainMenuSignal>();
         }
 
         private void ResetToDefaults()
         {
-            // Сбрасываем ВРЕМЕННЫЕ переменные на дефолтные
+            // Выставляем дефолтные константы
             _tempFps = SettingsModel.DefaultFps;
             _tempVolume = SettingsModel.DefaultVolume;
 
-            // Обновляем ползунки (в файл пока не сохраняем)
-            _view.SetFps(_tempFps);
-            _view.SetVolume(_tempVolume);
+            _view.InitValuesSilently(_tempFps, _tempVolume);
+            
+            // Сразу даем услышать дефолтную громкость
+            _model.PreviewSettings(_tempFps, _tempVolume);
         }
 
         private void ApplyChanges()
         {
-            // 1. Сохраняем в Яндекс Игры
+            // Сохраняем физически (Preview уже применен)
             _model.SaveSettings(_tempFps, _tempVolume);
             
-            // 2. Применяем настройки к движку Unity физически
-            Application.targetFrameRate = _tempFps;
-            
-            // TODO: Применить громкость через FMOD. Например:
-            // FMODUnity.RuntimeManager.GetVCA("vca:/Master").setVolume(_tempVolume / 100f);
-
-            // Закрываем окно
             CloseWindow();
         }
 

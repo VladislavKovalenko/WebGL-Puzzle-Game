@@ -15,7 +15,7 @@ MonoBehaviour:
   Path: Assets/1GameProject/Audio/Mobile/MasterBank.bank
   Name: MasterBank
   StudioPath: bank:/MasterBank
-  lastModified: 639083245009404694
+  lastModified: 639170012187107911
   FileSizes: []
   Exists: 1
 --- !u!114 &-6213871271851971108
@@ -87,10 +87,10 @@ MonoBehaviour:
   Path: Assets/1GameProject/Audio/Mobile/MasterBank.strings.bank
   Name: MasterBank.strings
   StudioPath: bank:/MasterBank.strings
-  lastModified: 639083245009414746
+  lastModified: 639170012187128246
   FileSizes:
   - Name: 
-    Value: 890
+    Value: 968
   Exists: 1
 --- !u!114 &-1454424948641812794
 MonoBehaviour:
@@ -138,7 +138,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: -2068446543087357356}
   cacheVersion: 131858
-  cacheTime: 639083245009414746
+  cacheTime: 639170012187128246
   SerializableEventsDict:
   - key: event:/Background Music/MainMenuAlternative
     index: 0

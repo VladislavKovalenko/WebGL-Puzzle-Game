@@ -30,16 +30,20 @@ namespace _1GameProject.Scripts.Settings
         public IObservable<float> OnVolumeChanged => _volumeSlider.onValueChanged.AsObservable();
         public IObservable<float> OnFpsChanged => _fpsSlider.onValueChanged.AsObservable();
 
-        public void SetVolume(int volume)
+        // ТИХАЯ инициализация при открытии окна или сбросе (не вызывает бесконечный цикл)
+        public void InitValuesSilently(int fps, int volume)
         {
-            _volumeSlider.value = volume;
-            _volumeText.text = volume.ToString();
+            _fpsSlider.SetValueWithoutNotify(fps);
+            _volumeSlider.SetValueWithoutNotify(volume);
+            
+            UpdateTexts(fps, volume);
         }
 
-        public void SetFps(int fps)
+        // Обновление только текста (вызывается во время перетаскивания)
+        public void UpdateTexts(int fps, int volume)
         {
-            _fpsSlider.value = fps;
             _fpsText.text = fps.ToString();
+            _volumeText.text = volume.ToString();
         }
 
         public void Show() => gameObject.SetActive(true);

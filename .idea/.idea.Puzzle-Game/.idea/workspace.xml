@@ -11,25 +11,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization/IInitializable.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization/IInitializable.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Audio/Mobile/MasterBank.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Audio/Mobile/MasterBank.bank" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Audio/Mobile/MasterBank.strings.bank" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Audio/Mobile/MasterBank.strings.bank" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SettingsData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SettingsData.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/MainMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/MainMenuManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/SignalServices.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/SignalServices/MainMenuSignalsServiceWrapper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/SignalServices/MainMenuSignalsServiceWrapper.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsService.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsService.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsView.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Settings/SettingsView.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Data.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Test.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/ToolTips.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/Settings Panel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/Settings Panel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsWindowView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsWindowView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,12 +38,14 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot PNG 24b.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization/IInitializable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/Settings Panel.prefab" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.neuecc.unirx@31ee62cbf28c/UniRx.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Editor/Zenject-Editor.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Signals/Main/SignalBus.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Zenject.asmdef" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -131,9 +128,12 @@
       <workItem from="1781182294340" duration="2659000" />
       <workItem from="1781217499655" duration="4566000" />
       <workItem from="1781254111559" duration="12431000" />
+      <workItem from="1781348670060" duration="4366000" />
+      <workItem from="1781394587287" duration="2651000" />
     </task>
     <servers />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
