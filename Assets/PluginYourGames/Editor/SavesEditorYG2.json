@@ -1,6 +1,6 @@
 {
-    "fpsCount": 47,
-    "gameVolume": 50,
+    "fpsCount": 60,
+    "gameVolume": 70,
     "intExample": 5,
     "strExample": "Hello!",
     "boolExample": [
@@ -9,5 +9,5 @@
         false,
         false
     ],
-    "idSave": 3
+    "idSave": 5
 }

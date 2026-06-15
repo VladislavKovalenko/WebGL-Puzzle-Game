@@ -1,11 +1,11 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using _1GameProject.Scripts.Events;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Zenject;
-using _1GameProject.Scripts.Events;
 
-namespace _1GameProject.Scripts.Bootstrap
+namespace _1GameProject.Scripts.GameFlow.Bootstrap
 {
     public class LoadManager : MonoBehaviour
     {

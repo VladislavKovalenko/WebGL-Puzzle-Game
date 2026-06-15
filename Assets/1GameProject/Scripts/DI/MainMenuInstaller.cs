@@ -29,9 +29,7 @@ namespace _1GameProject.Scripts.DI
 
             // Биндим Presenter (он сам вызовет свой Initialize)
             Container.BindInterfacesTo<SettingsPresenter>().AsSingle();
-            
-            
-            
+
         }
     }
 }

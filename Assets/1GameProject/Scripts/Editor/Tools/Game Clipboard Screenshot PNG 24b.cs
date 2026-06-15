@@ -8,7 +8,7 @@ namespace MegxlordTools.Editor
 {
     public static class GameScreenRenderClipboardPNG
     {
-        [MenuItem("Tools/Megxlord Tools/Game Screen Render Clipboard PNG")]
+        [MenuItem("Tools/Megxlord Toolbox/Tools/Game Screen Render Clipboard PNG")]
         private static void Execute()
         {
 #if UNITY_EDITOR_WIN

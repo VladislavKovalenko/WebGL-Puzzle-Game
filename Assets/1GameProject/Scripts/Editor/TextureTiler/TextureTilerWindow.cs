@@ -13,7 +13,7 @@ namespace TextureTiler
         bool _processing;
         //int _previewTileCount = 2; // Сколько плиток показывать в превью (2x2, 4x4 и т.д.)
 
-        [MenuItem("Tools/Texture Tiler")]
+        [MenuItem("Tools/Megxlord Toolbox/Texture/Texture Tiler")]
         public static void ShowWindow()
         {
             GetWindow<TextureTilerWindow>("Texture Tiler");

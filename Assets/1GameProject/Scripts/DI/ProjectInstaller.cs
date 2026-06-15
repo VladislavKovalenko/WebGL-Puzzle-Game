@@ -1,6 +1,7 @@
 ﻿
 using _1GameProject.Scripts.Bootstrap;
 using _1GameProject.Scripts.Bootstrap.Interfaces_for_Services;
+using _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu;
 using Audio;
 using UnityEngine;
 using Zenject;
@@ -25,6 +26,9 @@ namespace _1GameProject.Scripts.DI
                 .NonLazy();
 
             Container.Bind<IAsyncInitService>().To<FMODBankLoader>().FromResolve();
+            
+            //Levels Model глобальная для проекта, потому что к ней нужен доступ и из главного меню и из игры при начале и завершении уровня.
+            Container.Bind<LevelsModel>().AsSingle();
             
 
         }

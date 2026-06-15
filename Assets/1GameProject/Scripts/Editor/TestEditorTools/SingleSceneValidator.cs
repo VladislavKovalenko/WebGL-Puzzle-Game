@@ -9,7 +9,7 @@ namespace TestEditorTools
     {
         static ILogger Logger => Debug.unityLogger;
 
-        [MenuItem("Tools/Megxlord Hierarchy/SingleSceneMissingComponents😶‍🌫️")]
+        [MenuItem("Tools/Megxlord/Test/SingleSceneMissingComponents😶‍🌫️")]
         public static void FindMissingComponents()
         { 
             var scene = SceneManager.GetActiveScene();

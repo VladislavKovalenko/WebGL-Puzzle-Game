@@ -10,7 +10,7 @@ namespace TestEditorTools
     {
         static ILogger Logger => Debug.unityLogger;
 
-        [MenuItem("Tools/Megxlord Hierarchy/tmp IterateScenes")]
+        [MenuItem("Tools/Megxlord/Test/tmp IterateScenes")]
         public static void IterateScenes()
         {
             var scenePaths = AssetDatabase.FindAssets("t:Scene", new string[] { "Assets" })

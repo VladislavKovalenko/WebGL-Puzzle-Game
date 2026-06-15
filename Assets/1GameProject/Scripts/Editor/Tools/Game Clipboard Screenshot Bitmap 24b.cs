@@ -9,7 +9,7 @@ namespace MegxlordTools.Editor
 {
     public static class GameScreenRenderClipboard
     {
-        [MenuItem("Tools/Megxlord Tools/Game Screen Render Clipboard Bitmap")]
+        [MenuItem("Tools/Megxlord Toolbox/Tools/Game Screen Render Clipboard Bitmap")]
         private static void Execute()
         {
             Texture2D screenshot = CaptureFromGameView();

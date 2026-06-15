@@ -24,7 +24,7 @@ public class MissingScriptValidatorWindow : EditorWindow
         public int MissingCount;
     }
 
-    [MenuItem("Tools/Megxlord Hierarchy/Missing Script Validator")]
+    [MenuItem("Tools/Megxlord Toolbox/Hierarchy/Missing Script Validator", priority = 200)]
     public static void ShowWindow()
     {
         var window = GetWindow<MissingScriptValidatorWindow>("Missing Script Validator");

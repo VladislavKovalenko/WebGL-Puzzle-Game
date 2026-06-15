@@ -1,7 +1,9 @@
-﻿namespace _1GameProject.Scripts.GameData
+﻿namespace YG
 {
-    public class GlobalGameData
+    public partial class SavesYG
     {
-        
+        // --- Прогресс по уровням ---
+        // Хранит максимальный уровень, доступный игроку. По умолчанию 1.
+        public int maxUnlockedLevel = 1; 
     }
 }
