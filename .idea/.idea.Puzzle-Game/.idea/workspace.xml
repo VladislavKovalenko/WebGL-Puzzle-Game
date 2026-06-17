@@ -11,115 +11,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/ButtonSoundsManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/ButtonSoundsManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Scale Calculator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Scale Calculator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/BootstrapSignalsList.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/BootstrapSignalsList.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignalsList.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/MainMenuSignalsList.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/MainMenuSignalsList.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Level Generator.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Interfaces.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelButtonView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelButtonView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelsMenuPresenter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelsMenuPresenter.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelsModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelsModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/TODO.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/TODO.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Sprite2DOrderManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Sprite2DOrderManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE Bitmap.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE Bitmap.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Data.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Data/SettingsData.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Data/SettingsData.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Resources/GameData.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Resources/LevelsData.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/GamePlay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/GamePlay.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapSceneInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapSceneInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/ProjectInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/ProjectInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Assets.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Assets/ScriptUsageFinder.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Assets/ScriptUsageFinder.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/BillboardTextureCreator.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/BillboardTextureCreator.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/FastObjects.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/FastObjects.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hotkeys.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hotkeys.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Polycount Viewer ver7.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Polycount Viewer ver7/Polycount Viewer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Polycount Viewer ver7/Polycount Viewer.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/QuickMemoryClean.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/QuickMemoryClean.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/RandomScale.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/RandomScale.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/ReferencingScriptsWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/ReferencingScriptsWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/SceneSwitcherToolbar.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/SceneSwitcherToolbar.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/SmartProjectMenu.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/SmartProjectMenu.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/SnapToTerrain.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/SnapToTerrain.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/TestEditorTools/MultipleSceneValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/TestEditorTools/MultipleSceneValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/TestEditorTools/SingleSceneValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/TestEditorTools/SingleSceneValidator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/TextureTiler/TextureTilerWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/TextureTiler/TextureTilerWindow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot Bitmap 24b.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot Bitmap 24b.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot PNG 24b.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot PNG 24b.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/AnchorsToCornersChecker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/AnchorsToCornersChecker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/AnchorsToCornersChecker.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/AnchorsToCornersChecker.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/AnchorsToCornersEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/AnchorsToCornersEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/AnchorsToCornersEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/AnchorsToCornersEditor.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/Figma Layout.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Figma Layout.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/Figma Layout/FigmaLayoutEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Figma Layout/FigmaLayoutEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/Figma Layout/FigmaLayoutEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Figma Layout/FigmaLayoutEditor.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/Simple2DPivotEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Simple2DPivotEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/Simple2DPivotEditor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Simple2DPivotEditor.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/UIRectValidatorWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/UIRectValidatorWindow.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/UI/UIRectValidatorWindow.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/UIRectValidatorWindow.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignals.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignals.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignalsList.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GlobalGameData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GlobalGameData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level End.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level Start.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level Start/Levels Select Manager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level Start/Levels Select Manager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization/IInitializable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Interfaces/IInitializable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Scene Initialization/IInitializable.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Interfaces/IInitializable.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/ADTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/ADTest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/GameManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/GameState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/GameState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameState.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/MainMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/MainMenuManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameManagement/MainMenuManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/MainMenuManager.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/UIButtonSound.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSound.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/UIButtonSound.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSound.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/Settings Panel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/Settings Panel.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/Settings Panel.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/Settings Panel.prefab.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/SettingsModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsModel.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/SettingsModel.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/SettingsPresenter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsPresenter.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/SettingsPresenter.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsWindowView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/SettingsWindowView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/SettingsWindow/SettingsWindowView.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/SettingsWindow/SettingsWindowView.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/Levels Menu.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/Levels Menu.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -132,11 +34,11 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/ButtonSoundsManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Hierarchy/MissingScriptValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Tools/Game Clipboard Screenshot PNG 24b.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Scale Calculator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/MainMenuSignalsList.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelNumberHandler.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Main Menu/Levels Menu/LevelsMenuPresenter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/TODO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.neuecc.unirx@31ee62cbf28c/UniRx.asmdef" root0="SKIP_HIGHLIGHTING" />
@@ -235,7 +137,9 @@
       <workItem from="1781522886012" duration="2909000" />
       <workItem from="1781528397894" duration="6482000" />
       <workItem from="1781537936211" duration="6426000" />
-      <workItem from="1781552469698" duration="1251000" />
+      <workItem from="1781552469698" duration="1730000" />
+      <workItem from="1781627200329" duration="1885000" />
+      <workItem from="1781633597278" duration="4458000" />
     </task>
     <servers />
   </component>
