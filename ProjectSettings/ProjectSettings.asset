@@ -3,7 +3,7 @@
 --- !u!129 &1
 PlayerSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 28
+  serializedVersion: 29
   productGUID: f68b27a656d189c4c997cfbd62fb9d6b
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
@@ -65,10 +65,15 @@ PlayerSettings:
   useOSAutorotation: 1
   use32BitDisplayBuffer: 1
   preserveFramebufferAlpha: 0
+  adjustIOSFPSUsingThermalState: 1
+  thermalStateSeriousIOSFPS: 30
+  thermalStateCriticalIOSFPS: 15
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
   androidUseSwappy: 1
+  androidRequestedVisibleInsets: 0
+  androidSystemBarsBehavior: 2
   androidDisplayOptions: 1
   androidBlitType: 0
   androidResizeableActivity: 1
@@ -173,7 +178,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 25
+  AndroidMinSdkVersion: 26
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   AndroidPreferredDataLocation: 1
@@ -198,6 +203,7 @@ PlayerSettings:
   tvOSTargetOSVersionString: 15.0
   VisionOSSdkVersion: 0
   VisionOSTargetOSVersionString: 1.0
+  xcodeProjectType: 0
   uIPrerenderedIcon: 0
   uIRequiresPersistentWiFi: 0
   uIRequiresFullScreen: 1
@@ -265,7 +271,6 @@ PlayerSettings:
   useCustomGradleSettingsTemplate: 0
   useCustomProguardFile: 0
   AndroidTargetArchitectures: 2
-  AndroidAllowedArchitectures: -13
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: 
@@ -316,7 +321,6 @@ PlayerSettings:
   - m_BuildTarget: WindowsStandaloneSupport
     m_APIs: 0b000000
     m_Automatic: 0
-  m_BuildTargetVRSettings: []
   m_DefaultShaderChunkSizeInMB: 16
   m_DefaultShaderChunkCount: 0
   openGLRequireES31: 0
@@ -499,6 +503,8 @@ PlayerSettings:
   switchMicroSleepForYieldTime: 25
   switchRamDiskSpaceSize: 12
   switchUpgradedPlayerSettingsToNMETA: 0
+  switchCaStoreSource: 0
+  switchCaStoreFilePath: 
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -619,7 +625,7 @@ PlayerSettings:
     PS4: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
     PS5: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
     QNX: DOTWEEN
-    Standalone: ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg;ZEN_SIGNALS_ADD_UNIRX
+    Standalone: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg;ZEN_SIGNALS_ADD_UNIRX
     VisionOS: DOTWEEN
     WebGL: DOTWEEN;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg;PLUGIN_YG_2;TMP_YG2;RU_YG2;ZEN_SIGNALS_ADD_UNIRX
     Windows Store Apps: DOTWEEN;PLUGIN_YG_2;TMP_YG2;RU_YG2;YandexGamesPlatform_yg;Storage_yg;EnvirData_yg;Authorization_yg;Localization_yg;Metrica_yg;Fullscreen_yg;QuitGameEvent_yg
@@ -632,6 +638,7 @@ PlayerSettings:
     Android: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
+  il2cppLTOMode: {}
   il2cppStacktraceInformation: {}
   managedStrippingLevel:
     WebGL: 4
@@ -702,7 +709,6 @@ PlayerSettings:
   XboxOneXTitleMemory: 8
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
-  vrEditorSettings: {}
   cloudServicesEnabled: {}
   luminIcon:
     m_Name: 
@@ -725,6 +731,7 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
+  enableDirectStorage: 0
   cloudProjectId: 3ab09dd5-172f-407e-872e-6f9a2b1f6567
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []

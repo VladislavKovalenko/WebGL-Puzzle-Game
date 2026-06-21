@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
@@ -10,6 +11,11 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
         [Inject] private LevelsModel _levelsModel;
 
         [SerializeField] private List<LevelButtonView> _levelButtons;
+        
+        [Header("Логика закрытия вкладки")]
+        [SerializeField] private GameObject _levelsPrefab;
+        [SerializeField] private Button _closeLevelsMenuButton;
+        
 
         private void Start()
         {
@@ -20,6 +26,11 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
                     .Subscribe(levelId => StartLevel(levelId))
                     .AddTo(this);
             }
+            
+            _closeLevelsMenuButton.OnClickAsObservable()
+                .Subscribe(_ => _levelsPrefab.SetActive(false))
+                .AddTo(this); 
+            
         }
 
         private void OnEnable()

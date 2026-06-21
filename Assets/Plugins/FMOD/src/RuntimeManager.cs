@@ -663,7 +663,13 @@ retry:
                 debugStyle.fontSize = currentPlatform.OverlayFontSize;
                 if (studioSystem.isValid() && isOverlayEnabled)
                 {
-                    windowRect = GUI.Window(GetInstanceID(), windowRect, DrawDebugOverlay, "FMOD Studio Debug", debugStyle);
+#if UNITY_6000_0_OR_NEWER
+                    // В Unity 6 GetInstanceID() устарел. Используем хэш строки как стабильный int ID для GUI-окна.
+                    int windowID = nameof(RuntimeManager).GetHashCode();
+#else
+                    int windowID = GetInstanceID();
+#endif
+                    windowRect = GUI.Window(windowID, windowRect, DrawDebugOverlay, "FMOD Studio Debug", debugStyle);
                 }
             }
             else
@@ -677,6 +683,7 @@ retry:
 #endif
             }
         }
+        
 
 #if !UNITY_EDITOR
         private void Start()

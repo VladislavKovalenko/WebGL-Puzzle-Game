@@ -1625,7 +1625,6 @@ namespace FMODUnity
             searchField = new SearchField();
             treeView = new TreeView(treeViewState);
 
-			// Delay accessing the event cache as this will cause an error if window is opened on Unity start up.
             EditorApplication.delayCall += () =>
             {
                 ReadEventCache();
@@ -1634,7 +1633,10 @@ namespace FMODUnity
 
                 SceneView.duringSceneGui += SceneUpdate;
 
+                // Для Unity 6000.0+ мы полностью игнорируем старое событие иерархии, чтобы избежать ошибки CS0619 и конфликтов с фантомным типом EntityId.
+#if !UNITY_6000_0_OR_NEWER
                 EditorApplication.hierarchyWindowItemOnGUI += HierarchyUpdate;
+#endif
 
                 if (isStandaloneWindow)
                 {
@@ -1659,6 +1661,12 @@ namespace FMODUnity
                 EditorUtils.UnloadPreviewBanks();
             }
 
+            SceneView.duringSceneGui -= SceneUpdate;
+
+#if !UNITY_6000_0_OR_NEWER
+            EditorApplication.hierarchyWindowItemOnGUI -= HierarchyUpdate;
+#endif
+
             IsOpen = false;
         }
 
@@ -1672,6 +1680,7 @@ namespace FMODUnity
             return data.Length > 0 && IsDraggable(data[0]);
         }
 
+#if !UNITY_6000_0_OR_NEWER
         // This is an event handler on the hierachy view to handle dragging our objects from the browser
         private void HierarchyUpdate(int instance, Rect rect)
         {
@@ -1681,11 +1690,7 @@ namespace FMODUnity
                 {
                     UnityEngine.Object data = DragAndDrop.objectReferences[0];
 
-#if UNITY_6000_3_OR_NEWER
-                    GameObject target = EditorUtility.EntityIdToObject(instance) as GameObject;
-#else
                     GameObject target = EditorUtility.InstanceIDToObject(instance) as GameObject;
-#endif
 
                     if (data is EditorEventRef)
                     {
@@ -1719,6 +1724,7 @@ namespace FMODUnity
                 }
             }
         }
+#endif
 
         // This is an event handler on the scene view to handle dragging our objects from the browser
         // and creating new gameobjects

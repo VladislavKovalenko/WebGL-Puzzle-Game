@@ -7,9 +7,31 @@ using UnityEngine.UI;
 
 namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
 {
+
+    public enum LevelFrame
+    {
+       Starter,
+       Neophyte,
+       Amateur,
+       Hardcore
+       
+    }
+    
+    
     [RequireComponent(typeof(Button))]
     public class LevelButtonView : MonoBehaviour
     {
+        [Header("Тип рамки")] 
+        [SerializeField] private LevelFrame Type;
+        
+        [Header("Настройки рамки")]  
+        [SerializeField] private Sprite Starter;
+        [SerializeField] private Sprite Neophyte;
+        [SerializeField] private Sprite Amateur;
+        [SerializeField] private Sprite Hardcore;
+        
+        public Image _frameImage;
+        
         [Header("Настройки кнопки")]
         [Tooltip("Заполняется автоматически из имени объекта")]
         public int LevelIndex; 
@@ -25,9 +47,15 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
         {
             _button = GetComponent<Button>();
             
+            _frameImage =  GetComponent<Image>();
+            
             // На всякий случай парсим при старте игры
             ParseLevelIndexFromName();
+
+            SetupButtonFrame();
         }
+        
+        
 
         // Этот метод автоматически вызывается Unity прямо в Редакторе, 
         // когда ты переименовываешь объект или меняешь значения в Инспекторе!
@@ -35,6 +63,8 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
         {
             // Позволяет видеть изменения текста еще до запуска игры
             ParseLevelIndexFromName();
+            
+            SetupButtonFrame();
         }
 
         public void SetUnlockedState(bool isUnlocked)
@@ -81,5 +111,19 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
             }
             return numberBuilder.ToString();
         }
+        
+        private void SetupButtonFrame()
+        {
+            _frameImage.sprite = Type switch
+            {
+                LevelFrame.Starter  => Starter,
+                LevelFrame.Neophyte => Neophyte,
+                LevelFrame.Amateur  => Amateur,
+                LevelFrame.Hardcore => Hardcore,
+                _                   => Starter
+            };
+        }
+        
+        
     }
 }

@@ -1,4 +1,5 @@
-﻿using _1GameProject.Scripts.Events;
+﻿using System;
+using _1GameProject.Scripts.Events;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -23,6 +24,8 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
         public  GameObject MainMenu;
         public  GameObject Levels;
         public  GameObject Store;
+        public  GameObject Settings;
+        public GameObject MainMenuSelector;
         
 
         private void Start()
@@ -54,6 +57,22 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
             //Но как будт нарушается единство кода.
 
         }
+
+        private void Update()
+        {
+            if (!Levels.activeSelf && !Store.activeSelf && !Settings.activeSelf)
+            {
+                _settingsButton.gameObject.SetActive(true);
+                MainMenuSelector.SetActive(true);
+            }
+            else
+            {
+                _settingsButton.gameObject.SetActive(false);
+                MainMenuSelector.SetActive(false);
+            }
+            
+        }
+        
         
 
         public void StartGame()
