@@ -1,51 +1,23 @@
 ﻿using System;
-using _1GameProject.Scripts.Audio;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
-namespace _1GameProject.Scripts.UI.Buttons
+namespace _1GameProject.Scripts.Audio
 {
     public class UIButtonSound : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
-        private IDisposable DContainter;
         
-        private bool IsHovered = false;
-        private static SoundLibrarySO soundLibrary;
-        public ReactiveProperty<bool> IsHover;
-        
-        private readonly Subject<bool> OnSimpleR3Event = new();
+        private SoundLibrarySO soundLibrary;
         
 
-        private void Start()
-        {
-            if(soundLibrary == null) 
-                soundLibrary = Resources.Load<SoundLibrarySO>("Sound/SoundLibrary");
-            
-            IsHover = new ReactiveProperty<bool>(IsHovered);
-            
-            OnSimpleR3Event.OnNext(IsHovered);
-            
-            DContainter = Observable.Interval(TimeSpan.FromMilliseconds(250)).Subscribe(_=>Text()).AddTo(this);
-        }
+        public void OnPointerEnter(PointerEventData eventData) => soundLibrary.PlayOneShot(soundLibrary.hover);
+        public void OnPointerClick(PointerEventData eventData) => soundLibrary.PlayOneShot(soundLibrary.click);
         
-
-        public void OnPointerEnter(PointerEventData eventData)
+        public void Init(SoundLibrarySO soundLibrary)
         {
-            soundLibrary.PlayOneShot(soundLibrary.hover);
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            soundLibrary.PlayOneShot(soundLibrary.click);
-
-            IsHovered =  true;
-        }
-
-        private void Text()
-        {
-            //Тестовый метод
+            this.soundLibrary = soundLibrary;
         }
         
     }

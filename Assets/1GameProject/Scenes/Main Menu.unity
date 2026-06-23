@@ -712,6 +712,50 @@ MonoBehaviour:
   _objectNameFontSize: 12
   _anchorLabelFontSize: 10
   _infoLabelFontSize: 9
+--- !u!1 &432881327
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 432881328}
+  - component: {fileID: 432881329}
+  m_Layer: 0
+  m_Name: UIButtonSoundService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &432881328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432881327}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 226.8438, y: 881.96533, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1216690560}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &432881329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432881327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15869a756017467e87eed33d8c4c9d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.Audio.UIButtonSoundService
 --- !u!1 &507896734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2021,6 +2065,7 @@ Transform:
   - {fileID: 1986383307}
   - {fileID: 1706088203}
   - {fileID: 1283491813}
+  - {fileID: 432881328}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1283491812
@@ -2440,7 +2485,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5333c0adb5717fb4fb74cf58b6cd7519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Audio.MainMenuSoundtrack
-  soundtrack: {fileID: 8300000, guid: 1d0586f780331ae4a8891b03c14a16ca, type: 3}
 --- !u!114 &1706088205
 MonoBehaviour:
   m_ObjectHideFlags: 0

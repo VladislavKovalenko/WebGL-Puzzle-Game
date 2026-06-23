@@ -1,19 +1,17 @@
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using Zenject;
 
 namespace _1GameProject.Scripts.Audio
 {
     public class FMODGameAudioManager : MonoBehaviour
     {
         private EventInstance musicInstance;
-        private static SoundLibrarySO soundLibrary;
+        [Inject] SoundLibrarySO soundLibrary;
 
         private void Start()
         {
-            if(soundLibrary == null) 
-                soundLibrary = Resources.Load<SoundLibrarySO>("Sound/SoundLibrary");
-        
             musicInstance = RuntimeManager.CreateInstance(soundLibrary.mainMenu);
             musicInstance.start();
         }

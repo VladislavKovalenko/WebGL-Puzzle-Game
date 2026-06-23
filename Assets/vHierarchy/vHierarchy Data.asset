@@ -16,6 +16,7 @@ MonoBehaviour:
     keys:
     - fcae2ef2d35bbd24fa4b1a5dcc1795a5
     - 8c9cfa26abfee488c85f1582747f6a02
+    - c704ac45de62a3c449f1d6f00ce3db53
     values:
     - goDatas_byGlobalId:
         keys:
@@ -24,6 +25,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-fcae2ef2d35bbd24fa4b1a5dcc1795a5-1706088201-0
         - globalObjectIdString: GlobalObjectId_V1-2-fcae2ef2d35bbd24fa4b1a5dcc1795a5-148794899-0
         - globalObjectIdString: GlobalObjectId_V1-2-fcae2ef2d35bbd24fa4b1a5dcc1795a5-520108308-0
+        - globalObjectIdString: GlobalObjectId_V1-2-fcae2ef2d35bbd24fa4b1a5dcc1795a5-432881327-0
         values:
         - colorIndex: 2
           iconNameOrGuid: Folder Icon
@@ -43,6 +45,10 @@ MonoBehaviour:
           isColorRecursive: 0
         - colorIndex: 5
           iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 0
+          iconNameOrGuid: WheelCollider Icon
           isIconRecursive: 0
           isColorRecursive: 0
     - goDatas_byGlobalId:
@@ -65,6 +71,14 @@ MonoBehaviour:
           isIconRecursive: 0
           isColorRecursive: 0
         - colorIndex: 5
+          iconNameOrGuid: 
+          isIconRecursive: 0
+          isColorRecursive: 0
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-c704ac45de62a3c449f1d6f00ce3db53-252730939-0
+        values:
+        - colorIndex: 2
           iconNameOrGuid: 
           isIconRecursive: 0
           isColorRecursive: 0

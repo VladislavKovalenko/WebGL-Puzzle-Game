@@ -9,9 +9,6 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
 {
     public class LoadManager : MonoBehaviour
     {
-        [Header("Settings")]
-        [SerializeField] private string targetScene = "Main Menu";
-
         [Inject] private SignalBus _signalBus;
 
         private void OnEnable()
@@ -37,7 +34,7 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
 
             Debug.Log("[LoadingFlow] User gesture detected. Starting game...");
             
-            SceneManager.LoadScene(targetScene);
+            SceneManager.LoadScene(SceneNames.MainMenu);
         }
         
         //тут нужно условие, что нажатия сработают только если получен сигнал 
