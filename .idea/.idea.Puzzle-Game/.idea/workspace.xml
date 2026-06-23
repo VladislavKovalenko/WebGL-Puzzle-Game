@@ -11,33 +11,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/ScenesNames.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/ScenesNames.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Resources/Sound.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Resources/Sound/SoundLibrary.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Resources/Sound/SoundLibrary.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Bootstrap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Bootstrap.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/ButtonSoundsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSoundService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/ButtonSoundsManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSoundService.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/FMODGameAudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/FMODGameAudioManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/MainMenuSoundtrack.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/MainMenuSoundtrack.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/SoundLibrarySO.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/SoundLibrarySO.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSound.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSound.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/PlaySceneInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/PlaySceneInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/ProjectInstaller.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/ProjectInstaller.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapSceneInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapSceneInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/BootstrapSignalsList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/BootstrapSignalsList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Bootstraper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Bootstraper.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/ButtonLogic.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/ButtonLogic.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/HoverReactionTestComponent.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/Buttons/HoverReactionTestComponent.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/MouseCursor/SimpleCursorManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/UI/MouseCursor/SimpleCursorManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/ProjectContext.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ProjectContext.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/vHierarchy/vHierarchy Data.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/vHierarchy/vHierarchy Data.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadingScreenManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadingScreenManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameManager.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/TODO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/TODO.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +152,7 @@
       <workItem from="1781953843013" duration="12980000" />
       <workItem from="1782040841541" duration="115000" />
       <workItem from="1782040985828" duration="4753000" />
-      <workItem from="1782151813304" duration="7998000" />
+      <workItem from="1782151813304" duration="9059000" />
     </task>
     <servers />
   </component>

@@ -58,7 +58,7 @@ MonoBehaviour:
         - globalObjectIdString: GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-667223210-0
         - globalObjectIdString: GlobalObjectId_V1-2-8c9cfa26abfee488c85f1582747f6a02-1994820518-0
         values:
-        - colorIndex: 8
+        - colorIndex: 2
           iconNameOrGuid: Folder Icon
           isIconRecursive: 0
           isColorRecursive: 0

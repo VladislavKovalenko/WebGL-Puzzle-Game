@@ -16,7 +16,7 @@ namespace _1GameProject.Scripts.DI
         {
             SignalBusInstaller.Install(Container);
 
-            Container.DeclareSignal<AllServicesisLoadedSignal>();
+            Container.DeclareSignal<AllServicesAreLoadedSignal>();
             
             Container.Bind<LoadingScreenManager>()
                 .FromComponentInNewPrefab(LoadingScreenManagerPrefab)

@@ -20,7 +20,7 @@ namespace _1GameProject.Scripts.Bootstrap
 
         private void OnEnable()
         {
-            _signalBus.Subscribe<AllServicesisLoadedSignal>(OnServicesLoaded);
+            _signalBus.Subscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
 
             if (spinnerObject != null)
             {
@@ -32,12 +32,12 @@ namespace _1GameProject.Scripts.Bootstrap
 
         private void OnDisable()
         {
-            _signalBus.Unsubscribe<AllServicesisLoadedSignal>(OnServicesLoaded);
+            _signalBus.Unsubscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
             
             if (_spinTween != null) _spinTween.Kill();
         }
 
-        private void OnServicesLoaded(AllServicesisLoadedSignal signal)
+        private void OnServicesLoaded(AllServicesAreLoadedSignal signal)
         {
             ShowReady("👆 Нажмите для старта");
         }

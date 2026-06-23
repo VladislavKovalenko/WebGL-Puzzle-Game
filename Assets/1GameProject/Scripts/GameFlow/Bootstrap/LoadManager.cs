@@ -13,15 +13,15 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
 
         private void OnEnable()
         {
-            _signalBus.Subscribe<AllServicesisLoadedSignal>(OnServicesLoaded);
+            _signalBus.Subscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
         }
 
         private void OnDisable()
         {
-            _signalBus.Unsubscribe<AllServicesisLoadedSignal>(OnServicesLoaded);
+            _signalBus.Unsubscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
         }
         
-        private void OnServicesLoaded(AllServicesisLoadedSignal signal)
+        private void OnServicesLoaded(AllServicesAreLoadedSignal signal)
         {
             HandleServicesLoadedAsync().Forget();
         }

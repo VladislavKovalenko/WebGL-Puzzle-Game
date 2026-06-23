@@ -53,7 +53,7 @@ namespace _1GameProject.Scripts.Bootstrap
             
             _loadingUI.UpdateProgress(1f, "Готово!");
             
-            _signalBus.Fire(new AllServicesisLoadedSignal());
+            _signalBus.Fire(new AllServicesAreLoadedSignal());
         }
 
         private async UniTask SafeInitialize(UniTask task, string serviceName)
