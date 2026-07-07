@@ -3,13 +3,19 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Toolbars;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+
+#if TMP_PRESENT
+using TMPro;
+#endif
 
 namespace _1GameProject.Scripts.Editor._2D
 {
     /// <summary>
     /// Менеджер порядка отрисовки 2D объектов сцены.
-    /// Base: Sorting Layer, Order in Layer, Rendering Layer Mask, Enable/Disable.
-    /// Advanced: Статистика, конфликты пересечений, визуализация, цветовые инструменты, авто-сортировка.
+    /// Сканирует: SpriteRenderer, TMP (TextMeshPro / TextMeshProUGUI),
+    /// MeshRenderer, ParticleSystemRenderer, TilemapRenderer,
+    /// SpriteMask, LineRenderer, TrailRenderer, SkinnedMeshRenderer.
     /// </summary>
     public class Sprite2DOrderManager : EditorWindow
     {
@@ -19,45 +25,110 @@ namespace _1GameProject.Scripts.Editor._2D
         private enum SortMode { Name, SortingLayer, OrderInLayer, Type }
         private enum FilterMode { All, Selected, Enabled, Disabled }
 
-        private const float RowHeight   = 22f;
-        private const string PrefPrefix = "Sprite2DOrderManager_";
+        /// <summary>Тип компонента-рендерера для отображения в UI.</summary>
+        private enum RendererKind
+        {
+            SpriteRenderer,
+            TextMeshPro,
+            TextMeshProUGUI,
+            MeshRenderer,
+            ParticleSystem,
+            Tilemap,
+            SpriteMask,
+            LineRenderer,
+            TrailRenderer,
+            SkinnedMesh,
+            Other
+        }
+
+        private const float  RowHeight   = 22f;
+        private const string PrefPrefix  = "Sprite2DOrderManager_";
 
         #endregion
 
         #region Inner Types
 
-        private class SpriteEntry
+        private class RendererEntry
         {
-            public GameObject   Go;
-            public SpriteRenderer Sr;
-            public bool         IsSelected;
-            public bool         IsEnabled;
+            public GameObject Go;
+            public Renderer   Rd;           // базовый тип — общий для всех
+            public RendererKind Kind;
+            public bool       IsSelected;
+            public bool       IsEnabled;
 
-            private string _snapshotSortingLayer;
-            private int    _snapshotOrder;
-            private uint   _snapshotRenderingMask;
-            private bool   _snapshotEnabled;
+            // Snapshot для отслеживания внешних изменений
+            private string _snapLayer;
+            private int    _snapOrder;
+            private uint   _snapMask;
+            private bool   _snapActive;
 
             public bool HasExternalChanges =>
-                _snapshotSortingLayer  != Sr.sortingLayerName    ||
-                _snapshotOrder         != Sr.sortingOrder         ||
-                _snapshotRenderingMask != Sr.renderingLayerMask   ||
-                _snapshotEnabled       != Go.activeSelf;
+                _snapLayer  != Rd.sortingLayerName  ||
+                _snapOrder  != Rd.sortingOrder       ||
+                _snapMask   != Rd.renderingLayerMask ||
+                _snapActive != Go.activeSelf;
 
             public void TakeSnapshot()
             {
-                _snapshotSortingLayer  = Sr.sortingLayerName;
-                _snapshotOrder         = Sr.sortingOrder;
-                _snapshotRenderingMask = Sr.renderingLayerMask;
-                _snapshotEnabled       = Go.activeSelf;
+                _snapLayer  = Rd.sortingLayerName;
+                _snapOrder  = Rd.sortingOrder;
+                _snapMask   = Rd.renderingLayerMask;
+                _snapActive = Go.activeSelf;
             }
 
-            /// <summary>Мировой AABB спрайта с учётом трансформации.</summary>
+            /// <summary>Мировой AABB с учётом трансформации.</summary>
             public Bounds GetWorldBounds()
             {
-                if (Sr.sprite == null) return new Bounds(Go.transform.position, Vector3.zero);
-                return Sr.bounds;
+                if (Rd == null) return new Bounds(Go.transform.position, Vector3.zero);
+                var b = Rd.bounds;
+                // bounds с нулевым размером — заменяем точкой
+                return b.size == Vector3.zero
+                    ? new Bounds(Go.transform.position, Vector3.zero)
+                    : b;
             }
+
+            // ── Цвет (только SpriteRenderer и TMP) ──────────────────────
+            public bool SupportsColor => Kind == RendererKind.SpriteRenderer
+#if TMP_PRESENT
+                || Kind == RendererKind.TextMeshPro
+                || Kind == RendererKind.TextMeshProUGUI
+#endif
+                ;
+
+            public Color GetColor()
+            {
+                if (Rd is SpriteRenderer sr) return sr.color;
+#if TMP_PRESENT
+                if (Rd.TryGetComponent<TextMeshPro>(out var tmp))    return tmp.color;
+                if (Rd.TryGetComponent<TextMeshProUGUI>(out var tmu)) return tmu.color;
+#endif
+                return Color.white;
+            }
+
+            public void SetColor(Color c)
+            {
+                if (Rd is SpriteRenderer sr) { sr.color = c; return; }
+#if TMP_PRESENT
+                if (Rd.TryGetComponent<TextMeshPro>(out var tmp))    { tmp.color = c; return; }
+                if (Rd.TryGetComponent<TextMeshProUGUI>(out var tmu)) { tmu.color = c; }
+#endif
+            }
+
+            /// <summary>Короткая метка типа для отображения в колонке.</summary>
+            public string KindLabel => Kind switch
+            {
+                RendererKind.SpriteRenderer    => "SR",
+                RendererKind.TextMeshPro        => "TMP",
+                RendererKind.TextMeshProUGUI    => "TMPUI",
+                RendererKind.MeshRenderer       => "Mesh",
+                RendererKind.ParticleSystem     => "FX",
+                RendererKind.Tilemap            => "Tile",
+                RendererKind.SpriteMask         => "Mask",
+                RendererKind.LineRenderer       => "Line",
+                RendererKind.TrailRenderer      => "Trail",
+                RendererKind.SkinnedMesh        => "Skin",
+                _                               => "?"
+            };
         }
 
         #endregion
@@ -66,8 +137,20 @@ namespace _1GameProject.Scripts.Editor._2D
 
         private Tab _activeTab = Tab.Base;
 
-        private readonly List<SpriteEntry> _entries  = new();
-        private          List<SpriteEntry> _filtered = new();
+        private readonly List<RendererEntry> _entries  = new();
+        private          List<RendererEntry> _filtered = new();
+
+        // Фильтр по типу компонента
+        private bool _filterSR        = true;
+        private bool _filterTMP       = true;
+        private bool _filterMesh      = true;
+        private bool _filterParticle  = true;
+        private bool _filterTilemap   = true;
+        private bool _filterMask      = true;
+        private bool _filterLine      = true;
+        private bool _filterTrail     = true;
+        private bool _filterSkin      = true;
+        private bool _showTypeFilter;           // раскрываемая панель типов
 
         private Vector2 _scrollBase;
         private Vector2 _scrollAdvanced;
@@ -100,8 +183,8 @@ namespace _1GameProject.Scripts.Editor._2D
         private float   _vizZoom   = 1f;
         private Vector2 _vizScroll;
 
-        // Conflict detection — только реальные пересечения
-        private List<(SpriteEntry A, SpriteEntry B)> _conflicts = new();
+        // Conflict detection
+        private List<(RendererEntry A, RendererEntry B)> _conflicts = new();
 
         // Color tools
         private Gradient _gradientPreset  = new();
@@ -122,6 +205,22 @@ namespace _1GameProject.Scripts.Editor._2D
         // Icons
         private Texture2D _warnIcon;
 
+        // Кэш иконок типов
+        private readonly Dictionary<RendererKind, Color> _kindColors = new()
+        {
+            { RendererKind.SpriteRenderer,  new Color(0.3f, 0.8f, 0.3f) },
+            { RendererKind.TextMeshPro,      new Color(0.4f, 0.7f, 1.0f) },
+            { RendererKind.TextMeshProUGUI,  new Color(0.3f, 0.6f, 1.0f) },
+            { RendererKind.MeshRenderer,     new Color(0.8f, 0.5f, 0.2f) },
+            { RendererKind.ParticleSystem,   new Color(0.9f, 0.3f, 0.7f) },
+            { RendererKind.Tilemap,          new Color(0.6f, 0.9f, 0.4f) },
+            { RendererKind.SpriteMask,       new Color(0.7f, 0.7f, 0.2f) },
+            { RendererKind.LineRenderer,     new Color(0.5f, 0.9f, 0.9f) },
+            { RendererKind.TrailRenderer,    new Color(0.8f, 0.5f, 0.9f) },
+            { RendererKind.SkinnedMesh,      new Color(1.0f, 0.6f, 0.3f) },
+            { RendererKind.Other,            new Color(0.6f, 0.6f, 0.6f) },
+        };
+
         #endregion
 
         #region Window Lifecycle
@@ -132,9 +231,9 @@ namespace _1GameProject.Scripts.Editor._2D
         private void OnEnable()
         {
             wantsMouseMove = true;
-            EditorApplication.hierarchyChanged       += OnHierarchyChanged;
-            EditorApplication.update                 += OnEditorUpdate;
-            Selection.selectionChanged               += OnSelectionChanged;
+            EditorApplication.hierarchyChanged += OnHierarchyChanged;
+            EditorApplication.update           += OnEditorUpdate;
+            Selection.selectionChanged         += OnSelectionChanged;
 
             LoadPrefs();
             RefreshEntries();
@@ -143,9 +242,9 @@ namespace _1GameProject.Scripts.Editor._2D
 
         private void OnDisable()
         {
-            EditorApplication.hierarchyChanged       -= OnHierarchyChanged;
-            EditorApplication.update                 -= OnEditorUpdate;
-            Selection.selectionChanged               -= OnSelectionChanged;
+            EditorApplication.hierarchyChanged -= OnHierarchyChanged;
+            EditorApplication.update           -= OnEditorUpdate;
+            Selection.selectionChanged         -= OnSelectionChanged;
 
             SavePrefs();
         }
@@ -169,11 +268,10 @@ namespace _1GameProject.Scripts.Editor._2D
                 return;
             }
 
-            // Внешние изменения (Inspector, другие окна)
             bool changed = false;
             foreach (var e in _entries)
             {
-                if (e.Sr == null || !e.HasExternalChanges) continue;
+                if (e.Rd == null || !e.HasExternalChanges) continue;
                 e.IsEnabled = e.Go.activeSelf;
                 e.TakeSnapshot();
                 changed = true;
@@ -195,32 +293,89 @@ namespace _1GameProject.Scripts.Editor._2D
 
         #region Data Management
 
+        // ── Определение типа рендерера ───────────────────────────────────────────
+
+        /// <summary>
+        /// Возвращает все Renderer-компоненты сцены, которые нас интересуют,
+        /// вместе с их классификацией.
+        /// </summary>
+        private static IEnumerable<(Renderer rd, RendererKind kind)> FindAllRenderers()
+        {
+            // Порядок проверки важен: TMP-объект содержит и MeshRenderer и TMP-компонент,
+            // поэтому TMP-проверки идут ПЕРВЫМИ.
+
+            var all = FindObjectsByType<Renderer>(
+                FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            foreach (var rd in all)
+            {
+                RendererKind kind = ClassifyRenderer(rd);
+                yield return (rd, kind);
+            }
+
+            // SpriteMask не является Renderer — добавляем отдельно
+            var masks = FindObjectsByType<SpriteMask>(
+                FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            foreach (var mask in masks)
+            {
+                // SpriteMask не наследует Renderer, поэтому нам нужен
+                // специальный прокси.  Здесь мы пропускаем его в общем цикле
+                // и обрабатываем ниже через специальный метод.
+            }
+        }
+
+        private static RendererKind ClassifyRenderer(Renderer rd)
+        {
+#if TMP_PRESENT
+            // TMP должен проверяться до MeshRenderer, т.к. TMP тоже MeshRenderer
+            if (rd.GetComponent<TMPro.TextMeshPro>()     != null) return RendererKind.TextMeshPro;
+            if (rd.GetComponent<TMPro.TextMeshProUGUI>() != null) return RendererKind.TextMeshProUGUI;
+#endif
+            return rd switch
+            {
+                SpriteRenderer        => RendererKind.SpriteRenderer,
+                ParticleSystemRenderer => RendererKind.ParticleSystem,
+                TilemapRenderer        => RendererKind.Tilemap,
+                LineRenderer           => RendererKind.LineRenderer,
+                TrailRenderer          => RendererKind.TrailRenderer,
+                SkinnedMeshRenderer    => RendererKind.SkinnedMesh,
+                MeshRenderer           => RendererKind.MeshRenderer,
+                _                      => RendererKind.Other
+            };
+        }
+
+        // ── Обновление списка ────────────────────────────────────────────────────
+
         private void RefreshEntries()
         {
-            var allSr    = FindObjectsByType<SpriteRenderer>(FindObjectsInactive.Include);
-            var existing = new HashSet<SpriteRenderer>(_entries.Select(e => e.Sr));
-            var found    = new HashSet<SpriteRenderer>(allSr);
+            var foundPairs  = FindAllRenderers().ToList();
+            var foundRds    = new HashSet<Renderer>(foundPairs.Select(p => p.rd));
+            var existingRds = new HashSet<Renderer>(_entries.Select(e => e.Rd));
 
-            _entries.RemoveAll(e => e.Sr == null || !found.Contains(e.Sr));
+            // Удаляем исчезнувшие
+            _entries.RemoveAll(e => e.Rd == null || !foundRds.Contains(e.Rd));
 
-            foreach (var sr in allSr)
+            // Добавляем новые
+            foreach (var (rd, kind) in foundPairs)
             {
-                if (existing.Contains(sr)) continue;
+                if (existingRds.Contains(rd)) continue;
 
-                var entry = new SpriteEntry
+                var entry = new RendererEntry
                 {
-                    Go        = sr.gameObject,
-                    Sr        = sr,
-                    IsEnabled = sr.gameObject.activeSelf,
+                    Go        = rd.gameObject,
+                    Rd        = rd,
+                    Kind      = kind,
+                    IsEnabled = rd.gameObject.activeSelf,
                 };
                 entry.TakeSnapshot();
                 _entries.Add(entry);
             }
 
-            foreach (var entry in _entries)
+            // Синхронизируем актуальное состояние
+            foreach (var entry in _entries.Where(e => e.Rd != null))
             {
-                if (entry.Sr == null) continue;
-                entry.Go        = entry.Sr.gameObject;
+                entry.Go        = entry.Rd.gameObject;
                 entry.IsEnabled = entry.Go.activeSelf;
             }
 
@@ -235,9 +390,14 @@ namespace _1GameProject.Scripts.Editor._2D
                 e.IsSelected = sel.Contains(e.Go);
         }
 
+        // ── Фильтрация и сортировка ──────────────────────────────────────────────
+
         private void ApplyFilterAndSort()
         {
-            IEnumerable<SpriteEntry> result = _entries.Where(e => e.Sr != null);
+            IEnumerable<RendererEntry> result = _entries.Where(e => e.Rd != null);
+
+            // Фильтр по типу компонента
+            result = result.Where(e => IsKindVisible(e.Kind));
 
             result = _filterMode switch
             {
@@ -248,15 +408,15 @@ namespace _1GameProject.Scripts.Editor._2D
             };
 
             if (_layerFilter != "All")
-                result = result.Where(e => e.Sr.sortingLayerName == _layerFilter);
+                result = result.Where(e => e.Rd.sortingLayerName == _layerFilter);
 
             if (!string.IsNullOrEmpty(_searchQuery))
             {
                 string q = _searchQuery.ToLower();
                 result = result.Where(e =>
-                    e.Go.name.ToLower().Contains(q)                             ||
-                    e.Sr.sortingLayerName.ToLower().Contains(q)                 ||
-                    (e.Sr.sprite != null && e.Sr.sprite.name.ToLower().Contains(q)));
+                    e.Go.name.ToLower().Contains(q)                    ||
+                    e.Rd.sortingLayerName.ToLower().Contains(q)        ||
+                    e.KindLabel.ToLower().Contains(q));
             }
 
             result = _sortMode switch
@@ -266,55 +426,68 @@ namespace _1GameProject.Scripts.Editor._2D
                     : result.OrderByDescending(e => e.Go.name),
 
                 SortMode.SortingLayer => _sortAscending
-                    ? result.OrderBy(e => e.Sr.sortingLayerID).ThenBy(e => e.Sr.sortingOrder)
-                    : result.OrderByDescending(e => e.Sr.sortingLayerID)
-                            .ThenByDescending(e => e.Sr.sortingOrder),
+                    ? result.OrderBy(e => e.Rd.sortingLayerID).ThenBy(e => e.Rd.sortingOrder)
+                    : result.OrderByDescending(e => e.Rd.sortingLayerID)
+                            .ThenByDescending(e => e.Rd.sortingOrder),
 
                 SortMode.OrderInLayer => _sortAscending
-                    ? result.OrderBy(e => e.Sr.sortingOrder)
-                    : result.OrderByDescending(e => e.Sr.sortingOrder),
+                    ? result.OrderBy(e => e.Rd.sortingOrder)
+                    : result.OrderByDescending(e => e.Rd.sortingOrder),
 
-                SortMode.Type => result.OrderBy(e => e.Sr.sprite != null ? e.Sr.sprite.name : ""),
-                _             => result
+                SortMode.Type => result
+                    .OrderBy(e => e.Kind.ToString())
+                    .ThenBy(e => e.Go.name),
+
+                _ => result
             };
 
             _filtered = result.ToList();
         }
 
-        /// <summary>
-        /// Конфликт = одинаковый Sorting Layer + одинаковый Order + AABB пересекаются.
-        /// Объекты на одном Order, но не перекрывающиеся — не конфликт.
-        /// </summary>
+        private bool IsKindVisible(RendererKind kind) => kind switch
+        {
+            RendererKind.SpriteRenderer  => _filterSR,
+            RendererKind.TextMeshPro     => _filterTMP,
+            RendererKind.TextMeshProUGUI => _filterTMP,
+            RendererKind.MeshRenderer    => _filterMesh,
+            RendererKind.ParticleSystem  => _filterParticle,
+            RendererKind.Tilemap         => _filterTilemap,
+            RendererKind.SpriteMask      => _filterMask,
+            RendererKind.LineRenderer    => _filterLine,
+            RendererKind.TrailRenderer   => _filterTrail,
+            RendererKind.SkinnedMesh     => _filterSkin,
+            _                            => true
+        };
+
+        // ── Конфликты ─────────────────────────────────────────────────────────────
+
         private void DetectConflicts()
         {
             _conflicts.Clear();
 
-            // Группируем только по layer+order — кандидаты на конфликт
             var candidates = _entries
-                .Where(e => e.Sr != null)
-                .GroupBy(e => (e.Sr.sortingLayerName, e.Sr.sortingOrder))
+                .Where(e => e.Rd != null)
+                .GroupBy(e => (e.Rd.sortingLayerName, e.Rd.sortingOrder))
                 .Where(g => g.Count() > 1);
 
             foreach (var group in candidates)
             {
                 var list = group.ToList();
                 for (int i = 0; i < list.Count; i++)
+                for (int j = i + 1; j < list.Count; j++)
                 {
-                    for (int j = i + 1; j < list.Count; j++)
-                    {
-                        if (BoundsIntersect2D(list[i].GetWorldBounds(), list[j].GetWorldBounds()))
-                            _conflicts.Add((list[i], list[j]));
-                    }
+                    if (BoundsIntersect2D(list[i].GetWorldBounds(), list[j].GetWorldBounds()))
+                        _conflicts.Add((list[i], list[j]));
                 }
             }
         }
 
-        /// <summary>Проверяем пересечение только по X и Y (игнорируем Z — это 2D).</summary>
         private static bool BoundsIntersect2D(Bounds a, Bounds b)
         {
-            bool overlapX = a.min.x < b.max.x && a.max.x > b.min.x;
-            bool overlapY = a.min.y < b.max.y && a.max.y > b.min.y;
-            return overlapX && overlapY;
+            // Точечные bounds не считаем пересечением
+            if (a.size == Vector3.zero || b.size == Vector3.zero) return false;
+            return a.min.x < b.max.x && a.max.x > b.min.x &&
+                   a.min.y < b.max.y && a.max.y > b.min.y;
         }
 
         #endregion
@@ -366,7 +539,8 @@ namespace _1GameProject.Scripts.Editor._2D
             if (_conflicts.Count > 0)
             {
                 GUI.color = new Color(1f, 0.7f, 0.2f);
-                GUILayout.Label($"⚠ {_conflicts.Count}", EditorStyles.toolbarButton, GUILayout.Width(40));
+                GUILayout.Label($"⚠ {_conflicts.Count}", EditorStyles.toolbarButton,
+                    GUILayout.Width(40));
                 GUI.color = Color.white;
             }
 
@@ -381,11 +555,15 @@ namespace _1GameProject.Scripts.Editor._2D
         {
             DrawSearchAndFilterBar();
             EditorGUILayout.Space(2);
+            DrawTypeFilterBar();         // ← новая панель типов
+            EditorGUILayout.Space(2);
             DrawColumnHeaders();
             DrawSpriteList();
             EditorGUILayout.Space(4);
             DrawBaseActionBar();
         }
+
+        // ── Строка поиска / фильтров ─────────────────────────────────────────────
 
         private void DrawSearchAndFilterBar()
         {
@@ -427,13 +605,88 @@ namespace _1GameProject.Scripts.Editor._2D
             EditorGUILayout.EndHorizontal();
         }
 
+        // ── Фильтр по типам компонентов ──────────────────────────────────────────
+
+        private void DrawTypeFilterBar()
+        {
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
+
+            _showTypeFilter = EditorGUILayout.Foldout(_showTypeFilter, "Types:", true,
+                EditorStyles.foldout);
+
+            if (_showTypeFilter)
+            {
+                DrawTypeToggle("SR",    ref _filterSR,       RendererKind.SpriteRenderer);
+                DrawTypeToggle("TMP",   ref _filterTMP,      RendererKind.TextMeshPro);
+                DrawTypeToggle("Mesh",  ref _filterMesh,     RendererKind.MeshRenderer);
+                DrawTypeToggle("FX",    ref _filterParticle, RendererKind.ParticleSystem);
+                DrawTypeToggle("Tile",  ref _filterTilemap,  RendererKind.Tilemap);
+                DrawTypeToggle("Mask",  ref _filterMask,     RendererKind.SpriteMask);
+                DrawTypeToggle("Line",  ref _filterLine,     RendererKind.LineRenderer);
+                DrawTypeToggle("Trail", ref _filterTrail,    RendererKind.TrailRenderer);
+                DrawTypeToggle("Skin",  ref _filterSkin,     RendererKind.SkinnedMesh);
+            }
+            else
+            {
+                // Компактная строка: цветные метки активных типов
+                int count = CountByKind(RendererKind.SpriteRenderer);
+                if (count > 0) DrawKindBadge($"SR:{count}",    RendererKind.SpriteRenderer);
+                count = CountByKind(RendererKind.TextMeshPro) +
+                        CountByKind(RendererKind.TextMeshProUGUI);
+                if (count > 0) DrawKindBadge($"TMP:{count}",   RendererKind.TextMeshPro);
+                count = CountByKind(RendererKind.MeshRenderer);
+                if (count > 0) DrawKindBadge($"Mesh:{count}",  RendererKind.MeshRenderer);
+                count = CountByKind(RendererKind.ParticleSystem);
+                if (count > 0) DrawKindBadge($"FX:{count}",    RendererKind.ParticleSystem);
+                count = CountByKind(RendererKind.Tilemap);
+                if (count > 0) DrawKindBadge($"Tile:{count}",  RendererKind.Tilemap);
+                count = CountByKind(RendererKind.LineRenderer);
+                if (count > 0) DrawKindBadge($"Line:{count}",  RendererKind.LineRenderer);
+            }
+
+            GUILayout.FlexibleSpace();
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private void DrawTypeToggle(string label, ref bool value, RendererKind kind)
+        {
+            int cnt = CountByKind(kind);
+
+            // Подкрашиваем активный тип
+            Color prev = GUI.contentColor;
+            if (value && _kindColors.TryGetValue(kind, out var c))
+                GUI.contentColor = c;
+
+            bool newVal = GUILayout.Toggle(value,
+                $"{label} ({cnt})", EditorStyles.toolbarButton, GUILayout.Width(62));
+
+            GUI.contentColor = prev;
+
+            if (newVal != value)
+                value = newVal;
+        }
+
+        private void DrawKindBadge(string text, RendererKind kind)
+        {
+            Color prev = GUI.contentColor;
+            if (_kindColors.TryGetValue(kind, out var c)) GUI.contentColor = c;
+            GUILayout.Label(text, EditorStyles.miniLabel, GUILayout.ExpandWidth(false));
+            GUILayout.Space(6);
+            GUI.contentColor = prev;
+        }
+
+        private int CountByKind(RendererKind kind) =>
+            _entries.Count(e => e.Kind == kind);
+
+        // ── Заголовок таблицы ────────────────────────────────────────────────────
+
         private void DrawColumnHeaders()
         {
             EditorGUILayout.BeginHorizontal(_headerStyle);
-            // Колонка On/Off
             GUILayout.Label("On",           EditorStyles.boldLabel, GUILayout.Width(26));
+            GUILayout.Label("Type",         EditorStyles.boldLabel, GUILayout.Width(40));
             GUILayout.Label("Name",         EditorStyles.boldLabel, GUILayout.MinWidth(100));
-            GUILayout.Label("Sorting Layer", EditorStyles.boldLabel, GUILayout.Width(100));
+            GUILayout.Label("Sorting Layer",EditorStyles.boldLabel, GUILayout.Width(100));
             GUILayout.Label("Order",        EditorStyles.boldLabel, GUILayout.Width(50));
             GUILayout.Label("Render Mask",  EditorStyles.boldLabel, GUILayout.Width(90));
             GUILayout.Label("Color",        EditorStyles.boldLabel, GUILayout.Width(50));
@@ -441,19 +694,21 @@ namespace _1GameProject.Scripts.Editor._2D
             EditorGUILayout.EndHorizontal();
         }
 
+        // ── Список строк ─────────────────────────────────────────────────────────
+
         private void DrawSpriteList()
         {
             _scrollBase = EditorGUILayout.BeginScrollView(_scrollBase);
 
             for (int i = 0; i < _filtered.Count; i++)
-                DrawSpriteRow(_filtered[i], i);
+                DrawRendererRow(_filtered[i], i);
 
             EditorGUILayout.EndScrollView();
         }
 
-        private void DrawSpriteRow(SpriteEntry entry, int index)
+        private void DrawRendererRow(RendererEntry entry, int index)
         {
-            if (entry.Sr == null) return;
+            if (entry.Rd == null) return;
 
             bool isConflict = _conflicts.Any(c => c.A == entry || c.B == entry);
 
@@ -465,13 +720,21 @@ namespace _1GameProject.Scripts.Editor._2D
 
             EditorGUILayout.BeginHorizontal(rowBg, GUILayout.Height(RowHeight));
 
-            // ── On / Off галочка ──────────────────────────────────────────────
+            // ── On / Off ──────────────────────────────────────────────────────────
             EditorGUI.BeginChangeCheck();
             bool newActive = EditorGUILayout.Toggle(entry.IsEnabled, GUILayout.Width(20));
             if (EditorGUI.EndChangeCheck())
                 SetEntryEnabled(entry, newActive);
 
-            // ── Имя объекта ───────────────────────────────────────────────────
+            // ── Тип компонента ────────────────────────────────────────────────────
+            Color prevContent = GUI.contentColor;
+            if (_kindColors.TryGetValue(entry.Kind, out var kindColor))
+                GUI.contentColor = kindColor;
+            GUILayout.Label(entry.KindLabel,
+                EditorStyles.miniLabel, GUILayout.Width(40));
+            GUI.contentColor = prevContent;
+
+            // ── Имя объекта ───────────────────────────────────────────────────────
             var nameStyle = new GUIStyle(EditorStyles.label);
             if (!entry.IsEnabled) nameStyle.normal.textColor = new Color(0.5f, 0.5f, 0.5f);
             if (isConflict)       nameStyle.normal.textColor = new Color(1f, 0.6f, 0.1f);
@@ -479,36 +742,36 @@ namespace _1GameProject.Scripts.Editor._2D
             if (GUILayout.Button(entry.Go.name, nameStyle, GUILayout.MinWidth(100)))
                 HandleRowClick(entry, index);
 
-            // ── Sorting Layer ─────────────────────────────────────────────────
+            // ── Sorting Layer ─────────────────────────────────────────────────────
             string[] layerNames  = SortingLayer.layers.Select(l => l.name).ToArray();
-            int      curLayerIdx = System.Array.IndexOf(layerNames, entry.Sr.sortingLayerName);
+            int      curLayerIdx = System.Array.IndexOf(layerNames, entry.Rd.sortingLayerName);
             if (curLayerIdx < 0) curLayerIdx = 0;
 
             EditorGUI.BeginChangeCheck();
             int newLayerIdx = EditorGUILayout.Popup(curLayerIdx, layerNames, GUILayout.Width(100));
             if (EditorGUI.EndChangeCheck())
             {
-                Undo.RecordObject(entry.Sr, "Change Sorting Layer");
-                entry.Sr.sortingLayerName = layerNames[newLayerIdx];
+                Undo.RecordObject(entry.Rd, "Change Sorting Layer");
+                entry.Rd.sortingLayerName = layerNames[newLayerIdx];
                 entry.TakeSnapshot();
-                EditorUtility.SetDirty(entry.Sr);
+                EditorUtility.SetDirty(entry.Rd);
                 DetectConflicts();
             }
 
-            // ── Order in Layer ────────────────────────────────────────────────
+            // ── Order in Layer ────────────────────────────────────────────────────
             EditorGUI.BeginChangeCheck();
-            int newOrder = EditorGUILayout.IntField(entry.Sr.sortingOrder, GUILayout.Width(50));
+            int newOrder = EditorGUILayout.IntField(entry.Rd.sortingOrder, GUILayout.Width(50));
             if (EditorGUI.EndChangeCheck())
             {
-                Undo.RecordObject(entry.Sr, "Change Order in Layer");
-                entry.Sr.sortingOrder = newOrder;
+                Undo.RecordObject(entry.Rd, "Change Order in Layer");
+                entry.Rd.sortingOrder = newOrder;
                 entry.TakeSnapshot();
-                EditorUtility.SetDirty(entry.Sr);
+                EditorUtility.SetDirty(entry.Rd);
                 DetectConflicts();
             }
 
-            // ── Rendering Layer Mask (через SerializedObject) ─────────────────
-            var so   = new SerializedObject(entry.Sr);
+            // ── Rendering Layer Mask ──────────────────────────────────────────────
+            var so   = new SerializedObject(entry.Rd);
             var prop = so.FindProperty("m_RenderingLayerMask");
             so.Update();
             EditorGUI.BeginChangeCheck();
@@ -519,27 +782,37 @@ namespace _1GameProject.Scripts.Editor._2D
                 entry.TakeSnapshot();
             }
 
-            // ── Color ─────────────────────────────────────────────────────────
-            EditorGUI.BeginChangeCheck();
-            Color newColor = EditorGUILayout.ColorField(
-                GUIContent.none, entry.Sr.color,
-                false, true, false,
-                GUILayout.Width(50));
-            if (EditorGUI.EndChangeCheck())
+            // ── Color (только для поддерживающих) ────────────────────────────────
+            if (entry.SupportsColor)
             {
-                Undo.RecordObject(entry.Sr, "Change Sprite Color");
-                entry.Sr.color = newColor;
-                EditorUtility.SetDirty(entry.Sr);
+                EditorGUI.BeginChangeCheck();
+                Color newColor = EditorGUILayout.ColorField(
+                    GUIContent.none, entry.GetColor(),
+                    false, true, false, GUILayout.Width(50));
+                if (EditorGUI.EndChangeCheck())
+                {
+                    Undo.RecordObject(entry.Rd, "Change Color");
+                    entry.SetColor(newColor);
+                    EditorUtility.SetDirty(entry.Rd);
+                }
+            }
+            else
+            {
+                // Для типов без прямого color-поля — серый прямоугольник-заглушка
+                GUI.color = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+                GUILayout.Label("—", GUILayout.Width(50));
+                GUI.color = Color.white;
             }
 
-            // ── Иконка конфликта ──────────────────────────────────────────────
+            // ── Иконка конфликта ──────────────────────────────────────────────────
             if (isConflict && _warnIcon != null)
-                GUILayout.Label(new GUIContent(_warnIcon, "Sprites overlap with same order!"),
+                GUILayout.Label(
+                    new GUIContent(_warnIcon, "Renderers overlap with same order!"),
                     GUILayout.Width(18));
             else
                 GUILayout.Space(18);
 
-            // ── Ping ──────────────────────────────────────────────────────────
+            // ── Ping ──────────────────────────────────────────────────────────────
             if (GUILayout.Button("→", GUILayout.Width(22), GUILayout.Height(RowHeight - 2)))
             {
                 EditorGUIUtility.PingObject(entry.Go);
@@ -549,9 +822,9 @@ namespace _1GameProject.Scripts.Editor._2D
             EditorGUILayout.EndHorizontal();
         }
 
-        // ── Включение / выключение объекта ───────────────────────────────────────
+        // ── Включение / выключение ───────────────────────────────────────────────
 
-        private static void SetEntryEnabled(SpriteEntry entry, bool enabled)
+        private static void SetEntryEnabled(RendererEntry entry, bool enabled)
         {
             Undo.RecordObject(entry.Go, enabled ? "Enable GameObject" : "Disable GameObject");
             entry.Go.SetActive(enabled);
@@ -562,7 +835,7 @@ namespace _1GameProject.Scripts.Editor._2D
 
         // ── Клики по строкам ──────────────────────────────────────────────────────
 
-        private void HandleRowClick(SpriteEntry entry, int index)
+        private void HandleRowClick(RendererEntry entry, int index)
         {
             Event e = Event.current;
 
@@ -598,13 +871,12 @@ namespace _1GameProject.Scripts.Editor._2D
                 .ToArray();
         }
 
-        // ── Нижняя панель Base ────────────────────────────────────────────────────
+        // ── Нижняя панель ─────────────────────────────────────────────────────────
 
         private void DrawBaseActionBar()
         {
             EditorGUILayout.BeginVertical(GUI.skin.box);
 
-            // Batch
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Batch Edit Selected:", EditorStyles.boldLabel);
             _showBatchPanel = EditorGUILayout.Foldout(_showBatchPanel, "", true);
@@ -614,55 +886,30 @@ namespace _1GameProject.Scripts.Editor._2D
 
             EditorGUILayout.Space(4);
 
-            // Строка 1 — выделение
             EditorGUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Select All", GUILayout.Height(24)))
-            {
-                foreach (var e in _filtered) e.IsSelected = true;
-                UpdateEditorSelection();
-            }
-
-            if (GUILayout.Button("Deselect All", GUILayout.Height(24)))
-            {
-                foreach (var e in _entries) e.IsSelected = false;
-                UpdateEditorSelection();
-            }
-
-            if (GUILayout.Button("Invert Selection", GUILayout.Height(24)))
-            {
-                foreach (var e in _filtered) e.IsSelected = !e.IsSelected;
-                UpdateEditorSelection();
-            }
-
+            if (GUILayout.Button("Select All",      GUILayout.Height(24)))
+            { foreach (var e in _filtered) e.IsSelected = true;  UpdateEditorSelection(); }
+            if (GUILayout.Button("Deselect All",    GUILayout.Height(24)))
+            { foreach (var e in _entries)  e.IsSelected = false; UpdateEditorSelection(); }
+            if (GUILayout.Button("Invert Selection",GUILayout.Height(24)))
+            { foreach (var e in _filtered) e.IsSelected = !e.IsSelected; UpdateEditorSelection(); }
             EditorGUILayout.EndHorizontal();
 
-            // Строка 2 — включение / выключение
             EditorGUILayout.BeginHorizontal();
-
             GUI.backgroundColor = new Color(0.4f, 0.9f, 0.4f);
-            if (GUILayout.Button("Enable All", GUILayout.Height(24)))
-            {
-                foreach (var e in _entries)
-                    SetEntryEnabled(e, true);
-            }
+            if (GUILayout.Button("Enable All",           GUILayout.Height(24)))
+                foreach (var e in _entries) SetEntryEnabled(e, true);
 
             GUI.backgroundColor = new Color(0.9f, 0.5f, 0.5f);
-            if (GUILayout.Button("Disable Unselected", GUILayout.Height(24)))
-            {
-                foreach (var e in _entries.Where(en => !en.IsSelected))
-                    SetEntryEnabled(e, false);
-            }
+            if (GUILayout.Button("Disable Unselected",   GUILayout.Height(24)))
+                foreach (var e in _entries.Where(en => !en.IsSelected)) SetEntryEnabled(e, false);
 
             GUI.backgroundColor = new Color(0.6f, 0.6f, 0.9f);
-            if (GUILayout.Button("Toggle Selected", GUILayout.Height(24)))
-            {
+            if (GUILayout.Button("Toggle Selected",      GUILayout.Height(24)))
                 foreach (var e in _entries.Where(en => en.IsSelected))
                     SetEntryEnabled(e, !e.IsEnabled);
-            }
 
             GUI.backgroundColor = Color.white;
-
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
         }
@@ -672,11 +919,13 @@ namespace _1GameProject.Scripts.Editor._2D
             var selected = _filtered.Where(e => e.IsSelected).ToList();
             if (selected.Count == 0)
             {
-                EditorGUILayout.HelpBox("No sprites selected. Click rows to select.", MessageType.Info);
+                EditorGUILayout.HelpBox("No objects selected. Click rows to select.",
+                    MessageType.Info);
                 return;
             }
 
-            EditorGUILayout.LabelField($"Applying to {selected.Count} sprite(s):", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField($"Applying to {selected.Count} renderer(s):",
+                EditorStyles.miniLabel);
             EditorGUILayout.Space(3);
 
             string[] layerNames = SortingLayer.layers.Select(l => l.name).ToArray();
@@ -693,26 +942,30 @@ namespace _1GameProject.Scripts.Editor._2D
             _batchOrderOffset = EditorGUILayout.IntField("Order Offset", _batchOrderOffset);
             EditorGUILayout.EndHorizontal();
 
+            // Цвет — только для поддерживающих типов
+            int colorCapable = selected.Count(e => e.SupportsColor);
             EditorGUILayout.BeginHorizontal();
             _batchApplyColor = EditorGUILayout.Toggle(_batchApplyColor, GUILayout.Width(16));
-            _batchColor      = EditorGUILayout.ColorField("Color", _batchColor);
+            _batchColor = EditorGUILayout.ColorField(
+                $"Color  (applies to {colorCapable}/{selected.Count})", _batchColor);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space(4);
 
             GUI.backgroundColor = new Color(0.2f, 0.8f, 0.2f);
-            if (GUILayout.Button($"▶  Apply to {selected.Count} sprite(s)", GUILayout.Height(28)))
+            if (GUILayout.Button($"▶  Apply to {selected.Count} renderer(s)", GUILayout.Height(28)))
             {
                 foreach (var entry in selected)
                 {
-                    Undo.RecordObject(entry.Sr, "Batch Edit Sprites");
+                    Undo.RecordObject(entry.Rd, "Batch Edit Renderers");
 
-                    if (_batchApplyLayer) entry.Sr.sortingLayerName = _batchSortingLayer;
-                    if (_batchApplyOrder) entry.Sr.sortingOrder    += _batchOrderOffset;
-                    if (_batchApplyColor) entry.Sr.color            = _batchColor;
+                    if (_batchApplyLayer) entry.Rd.sortingLayerName = _batchSortingLayer;
+                    if (_batchApplyOrder) entry.Rd.sortingOrder    += _batchOrderOffset;
+                    if (_batchApplyColor && entry.SupportsColor)
+                        entry.SetColor(_batchColor);
 
                     entry.TakeSnapshot();
-                    EditorUtility.SetDirty(entry.Sr);
+                    EditorUtility.SetDirty(entry.Rd);
                 }
                 DetectConflicts();
             }
@@ -722,11 +975,11 @@ namespace _1GameProject.Scripts.Editor._2D
         #endregion
 
         #region Advanced Tab
+        // (Методы Advanced идентичны оригиналу, но используют RendererEntry / entry.Rd)
 
         private void DrawAdvancedTab()
         {
             _scrollAdvanced = EditorGUILayout.BeginScrollView(_scrollAdvanced);
-
             DrawStatsPanel();
             EditorGUILayout.Space(4);
             DrawConflictsPanel();
@@ -736,7 +989,6 @@ namespace _1GameProject.Scripts.Editor._2D
             DrawColorToolsPanel();
             EditorGUILayout.Space(4);
             DrawAutoSortPanel();
-
             EditorGUILayout.EndScrollView();
         }
 
@@ -754,24 +1006,34 @@ namespace _1GameProject.Scripts.Editor._2D
             int conflictCount = _conflicts.Count;
 
             var layerGroups = _entries
-                .Where(e => e.Sr != null)
-                .GroupBy(e => e.Sr.sortingLayerName)
+                .Where(e => e.Rd != null)
+                .GroupBy(e => e.Rd.sortingLayerName)
                 .OrderBy(g => SortingLayer.GetLayerValueFromName(g.Key));
 
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.BeginVertical();
-            DrawStatRow("Total sprites",      total.ToString(),             Color.white);
-            DrawStatRow("Enabled",            enabled.ToString(),           new Color(0.4f, 1f,   0.4f));
-            DrawStatRow("Disabled",           (total - enabled).ToString(), new Color(0.6f, 0.6f, 0.6f));
-            DrawStatRow("Overlap Conflicts",  conflictCount.ToString(),
+            DrawStatRow("Total renderers",   total.ToString(),             Color.white);
+            DrawStatRow("Enabled",           enabled.ToString(),           new Color(0.4f, 1f,   0.4f));
+            DrawStatRow("Disabled",          (total - enabled).ToString(), new Color(0.6f, 0.6f, 0.6f));
+            DrawStatRow("Overlap Conflicts", conflictCount.ToString(),
                 conflictCount > 0 ? new Color(1f, 0.6f, 0.1f) : new Color(0.4f, 1f, 0.4f));
+
+            EditorGUILayout.Space(4);
+            EditorGUILayout.LabelField("By Type:", EditorStyles.boldLabel);
+            foreach (RendererKind kind in System.Enum.GetValues(typeof(RendererKind)))
+            {
+                int cnt = CountByKind(kind);
+                if (cnt == 0) continue;
+                Color col = _kindColors.TryGetValue(kind, out var kc) ? kc : Color.white;
+                DrawStatRow($"  {kind}", cnt.ToString(), col);
+            }
             EditorGUILayout.EndVertical();
 
             GUILayout.Space(20);
 
             EditorGUILayout.BeginVertical();
-            EditorGUILayout.LabelField("Per Layer:", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Per Sorting Layer:", EditorStyles.boldLabel);
             foreach (var g in layerGroups)
             {
                 EditorGUILayout.BeginHorizontal();
@@ -789,7 +1051,7 @@ namespace _1GameProject.Scripts.Editor._2D
         private static void DrawStatRow(string label, string value, Color valueColor)
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(label, GUILayout.Width(140));
+            EditorGUILayout.LabelField(label, GUILayout.Width(160));
             GUI.color = valueColor;
             EditorGUILayout.LabelField(value, EditorStyles.boldLabel, GUILayout.Width(50));
             GUI.color = Color.white;
@@ -801,14 +1063,16 @@ namespace _1GameProject.Scripts.Editor._2D
             Rect  r    = GUILayoutUtility.GetRect(80, 14);
             float frac = total > 0 ? count / (float)total : 0;
             EditorGUI.DrawRect(r, new Color(0.2f, 0.2f, 0.2f));
-            EditorGUI.DrawRect(new Rect(r.x, r.y, r.width * frac, r.height), new Color(0.3f, 0.6f, 1f));
+            EditorGUI.DrawRect(new Rect(r.x, r.y, r.width * frac, r.height),
+                new Color(0.3f, 0.6f, 1f));
         }
 
         // ── Conflicts ─────────────────────────────────────────────────────────────
 
         private void DrawConflictsPanel()
         {
-            _showConflicts = DrawFoldout(_showConflicts, $"⚠  Overlap Conflicts  ({_conflicts.Count})");
+            _showConflicts = DrawFoldout(_showConflicts,
+                $"⚠  Overlap Conflicts  ({_conflicts.Count})");
             if (!_showConflicts) return;
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
@@ -823,10 +1087,8 @@ namespace _1GameProject.Scripts.Editor._2D
             else
             {
                 EditorGUILayout.HelpBox(
-                    "These sprites share the same Sorting Layer + Order AND their bounds overlap.\n" +
-                    "Rendering order between them is undefined.",
+                    "These renderers share the same Sorting Layer + Order AND their bounds overlap.",
                     MessageType.Warning);
-
                 EditorGUILayout.Space(4);
 
                 int shown = Mathf.Min(_conflicts.Count, 10);
@@ -835,16 +1097,15 @@ namespace _1GameProject.Scripts.Editor._2D
                     var (a, b) = _conflicts[i];
                     EditorGUILayout.BeginHorizontal(_conflictStyle);
                     EditorGUILayout.LabelField(
-                        $"{a.Go.name}  ↔  {b.Go.name}  [{a.Sr.sortingLayerName} / {a.Sr.sortingOrder}]",
+                        $"[{a.KindLabel}] {a.Go.name}  ↔  [{b.KindLabel}] {b.Go.name}" +
+                        $"  [{a.Rd.sortingLayerName} / {a.Rd.sortingOrder}]",
                         EditorStyles.miniLabel);
 
                     if (GUILayout.Button("Ping A", GUILayout.Width(46), GUILayout.Height(18)))
                         EditorGUIUtility.PingObject(a.Go);
-
                     if (GUILayout.Button("Ping B", GUILayout.Width(46), GUILayout.Height(18)))
                         EditorGUIUtility.PingObject(b.Go);
-
-                    if (GUILayout.Button("Fix", GUILayout.Width(32), GUILayout.Height(18)))
+                    if (GUILayout.Button("Fix",    GUILayout.Width(32), GUILayout.Height(18)))
                         FixConflict(a, b);
 
                     EditorGUILayout.EndHorizontal();
@@ -855,7 +1116,6 @@ namespace _1GameProject.Scripts.Editor._2D
                         EditorStyles.miniLabel);
 
                 EditorGUILayout.Space(4);
-
                 GUI.backgroundColor = new Color(1f, 0.7f, 0.2f);
                 if (GUILayout.Button("Auto-Fix All Overlap Conflicts", GUILayout.Height(26)))
                     AutoFixAllConflicts();
@@ -865,30 +1125,27 @@ namespace _1GameProject.Scripts.Editor._2D
             EditorGUILayout.EndVertical();
         }
 
-        private void FixConflict(SpriteEntry a, SpriteEntry b)
+        private void FixConflict(RendererEntry a, RendererEntry b)
         {
-            Undo.RecordObject(b.Sr, "Fix Order Conflict");
-            b.Sr.sortingOrder = a.Sr.sortingOrder + 1;
+            Undo.RecordObject(b.Rd, "Fix Order Conflict");
+            b.Rd.sortingOrder = a.Rd.sortingOrder + 1;
             b.TakeSnapshot();
-            EditorUtility.SetDirty(b.Sr);
+            EditorUtility.SetDirty(b.Rd);
             DetectConflicts();
         }
 
         private void AutoFixAllConflicts()
         {
-            // Обходим только группы с реальными пересечениями
-            var processed = new HashSet<SpriteEntry>();
-
+            var processed = new HashSet<RendererEntry>();
             foreach (var (a, b) in _conflicts.ToList())
             {
                 if (processed.Contains(b)) continue;
-                Undo.RecordObject(b.Sr, "Auto-Fix Overlap Conflicts");
-                b.Sr.sortingOrder = a.Sr.sortingOrder + 1;
+                Undo.RecordObject(b.Rd, "Auto-Fix Overlap Conflicts");
+                b.Rd.sortingOrder = a.Rd.sortingOrder + 1;
                 b.TakeSnapshot();
-                EditorUtility.SetDirty(b.Sr);
+                EditorUtility.SetDirty(b.Rd);
                 processed.Add(b);
             }
-
             DetectConflicts();
         }
 
@@ -896,7 +1153,8 @@ namespace _1GameProject.Scripts.Editor._2D
 
         private void DrawOrderVisualizationPanel()
         {
-            _showOrderVisualization = DrawFoldout(_showOrderVisualization, "📈  Order Visualization");
+            _showOrderVisualization = DrawFoldout(_showOrderVisualization,
+                "📈  Order Visualization");
             if (!_showOrderVisualization) return;
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
@@ -907,12 +1165,11 @@ namespace _1GameProject.Scripts.Editor._2D
             EditorGUILayout.LabelField($"{_vizZoom:F1}x", GUILayout.Width(35));
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-
             EditorGUILayout.Space(4);
 
             var layerGroups = _entries
-                .Where(e => e.Sr != null)
-                .GroupBy(e => e.Sr.sortingLayerName)
+                .Where(e => e.Rd != null)
+                .GroupBy(e => e.Rd.sortingLayerName)
                 .OrderBy(g => SortingLayer.GetLayerValueFromName(g.Key))
                 .ToList();
 
@@ -921,7 +1178,7 @@ namespace _1GameProject.Scripts.Editor._2D
 
             foreach (var group in layerGroups)
             {
-                var items = group.OrderBy(e => e.Sr.sortingOrder).ToList();
+                var items = group.OrderBy(e => e.Rd.sortingOrder).ToList();
                 if (items.Count == 0) continue;
 
                 EditorGUILayout.LabelField(group.Key, EditorStyles.boldLabel);
@@ -932,15 +1189,14 @@ namespace _1GameProject.Scripts.Editor._2D
 
                 EditorGUI.DrawRect(lineRect, new Color(0.18f, 0.18f, 0.18f));
 
-                int minOrder = items.Min(e => e.Sr.sortingOrder);
-                int maxOrder = items.Max(e => e.Sr.sortingOrder);
+                int minOrder = items.Min(e => e.Rd.sortingOrder);
+                int maxOrder = items.Max(e => e.Rd.sortingOrder);
                 int range    = Mathf.Max(maxOrder - minOrder, 1);
 
-                for (int i = 0; i < items.Count; i++)
+                foreach (var entry in items)
                 {
-                    var   entry = items[i];
                     bool  hasConflict = _conflicts.Any(c => c.A == entry || c.B == entry);
-                    float t     = (entry.Sr.sortingOrder - minOrder) / (float)range;
+                    float t     = (entry.Rd.sortingOrder - minOrder) / (float)range;
                     float x     = lineRect.x + 10 + t * (lineRect.width - 80);
                     float y     = lineRect.y + lineRect.height * 0.5f;
 
@@ -948,7 +1204,9 @@ namespace _1GameProject.Scripts.Editor._2D
                         ? new Color(1f, 0.4f, 0.1f)
                         : entry.IsSelected
                             ? new Color(0.2f, 0.8f, 1f)
-                            : new Color(0.3f + t * 0.5f, 0.6f, 0.9f - t * 0.3f);
+                            : _kindColors.TryGetValue(entry.Kind, out var kc)
+                                ? kc
+                                : new Color(0.5f, 0.7f, 0.9f);
 
                     if (!entry.IsEnabled)
                         nodeColor = new Color(nodeColor.r, nodeColor.g, nodeColor.b, 0.4f);
@@ -968,12 +1226,13 @@ namespace _1GameProject.Scripts.Editor._2D
                     float lblW = 60 * _vizZoom;
                     GUI.Label(
                         new Rect(x - lblW * 0.5f, y - nodeSize - 14, lblW, 14),
-                        $"{entry.Go.name}\n({entry.Sr.sortingOrder})",
+                        $"[{entry.KindLabel}] {entry.Go.name}\n({entry.Rd.sortingOrder})",
                         EditorStyles.centeredGreyMiniLabel);
 
                     if (Event.current.type == EventType.MouseDown)
                     {
-                        float d = Vector2.Distance(Event.current.mousePosition, new Vector2(x, y));
+                        float d = Vector2.Distance(Event.current.mousePosition,
+                            new Vector2(x, y));
                         if (d < nodeSize + 4)
                         {
                             HandleRowClick(entry, _filtered.IndexOf(entry));
@@ -1001,6 +1260,10 @@ namespace _1GameProject.Scripts.Editor._2D
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
 
+            EditorGUILayout.HelpBox(
+                "Color operations apply only to SpriteRenderer and TextMeshPro components.",
+                MessageType.Info);
+
             EditorGUILayout.LabelField("Apply Gradient to Selection", EditorStyles.boldLabel);
             _gradientPreset  = EditorGUILayout.GradientField("Gradient", _gradientPreset);
             _gradientByOrder = EditorGUILayout.Toggle("Map by Order in Layer", _gradientByOrder);
@@ -1024,61 +1287,63 @@ namespace _1GameProject.Scripts.Editor._2D
 
             EditorGUILayout.LabelField("Debug Colors", EditorStyles.boldLabel);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Randomize",     GUILayout.Height(22))) ApplyRandomColors();
-            if (GUILayout.Button("by Layer",      GUILayout.Height(22))) ApplyColorByLayer();
-            if (GUILayout.Button("by Order",      GUILayout.Height(22))) ApplyColorByOrder();
+            if (GUILayout.Button("Randomize", GUILayout.Height(22))) ApplyRandomColors();
+            if (GUILayout.Button("by Layer",  GUILayout.Height(22))) ApplyColorByLayer();
+            if (GUILayout.Button("by Order",  GUILayout.Height(22))) ApplyColorByOrder();
+            if (GUILayout.Button("by Type",   GUILayout.Height(22))) ApplyColorByType();
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.EndVertical();
         }
 
+        private List<RendererEntry> SelectedColorTargets() =>
+            _filtered.Where(e => e.IsSelected && e.SupportsColor && e.Rd != null).ToList();
+
         private void ApplyGradientToSelected()
         {
-            var targets = _filtered.Where(e => e.IsSelected && e.Sr != null).ToList();
-            if (targets.Count == 0) { ShowNotification(new GUIContent("No sprites selected!")); return; }
+            var targets = SelectedColorTargets();
+            if (targets.Count == 0) { ShowNotification(new GUIContent("No color-capable sprites selected!")); return; }
 
             var ordered = _gradientByOrder
-                ? targets.OrderBy(e => e.Sr.sortingOrder).ToList()
+                ? targets.OrderBy(e => e.Rd.sortingOrder).ToList()
                 : targets;
 
             for (int i = 0; i < ordered.Count; i++)
             {
                 float t = ordered.Count > 1 ? i / (float)(ordered.Count - 1) : 0f;
-                Undo.RecordObject(ordered[i].Sr, "Apply Gradient");
-                ordered[i].Sr.color = _gradientPreset.Evaluate(t);
-                EditorUtility.SetDirty(ordered[i].Sr);
+                Undo.RecordObject(ordered[i].Rd, "Apply Gradient");
+                ordered[i].SetColor(_gradientPreset.Evaluate(t));
+                EditorUtility.SetDirty(ordered[i].Rd);
             }
         }
 
         private void ResetColorsToWhite()
         {
-            foreach (var e in _filtered.Where(en => en.IsSelected && en.Sr != null))
+            foreach (var e in SelectedColorTargets())
             {
-                Undo.RecordObject(e.Sr, "Reset Color");
-                e.Sr.color = Color.white;
-                EditorUtility.SetDirty(e.Sr);
+                Undo.RecordObject(e.Rd, "Reset Color");
+                e.SetColor(Color.white);
+                EditorUtility.SetDirty(e.Rd);
             }
         }
 
         private void SetAlphaToSelected(float alpha)
         {
-            foreach (var e in _filtered.Where(en => en.IsSelected && en.Sr != null))
+            foreach (var e in SelectedColorTargets())
             {
-                Undo.RecordObject(e.Sr, "Set Alpha");
-                Color c = e.Sr.color;
-                c.a        = alpha;
-                e.Sr.color = c;
-                EditorUtility.SetDirty(e.Sr);
+                Undo.RecordObject(e.Rd, "Set Alpha");
+                Color c = e.GetColor(); c.a = alpha; e.SetColor(c);
+                EditorUtility.SetDirty(e.Rd);
             }
         }
 
         private void ApplyRandomColors()
         {
-            foreach (var e in _filtered.Where(en => en.IsSelected && en.Sr != null))
+            foreach (var e in SelectedColorTargets())
             {
-                Undo.RecordObject(e.Sr, "Random Color");
-                e.Sr.color = new Color(Random.value, Random.value, Random.value, 1f);
-                EditorUtility.SetDirty(e.Sr);
+                Undo.RecordObject(e.Rd, "Random Color");
+                e.SetColor(new Color(Random.value, Random.value, Random.value, 1f));
+                EditorUtility.SetDirty(e.Rd);
             }
         }
 
@@ -1086,32 +1351,41 @@ namespace _1GameProject.Scripts.Editor._2D
         {
             SortingLayer[] layers  = SortingLayer.layers;
             Color[]        palette = GeneratePalette(layers.Length);
-
-            foreach (var e in _filtered.Where(en => en.IsSelected && en.Sr != null))
+            foreach (var e in SelectedColorTargets())
             {
-                int idx = System.Array.FindIndex(layers, l => l.name == e.Sr.sortingLayerName);
+                int idx = System.Array.FindIndex(layers, l => l.name == e.Rd.sortingLayerName);
                 if (idx < 0) continue;
-                Undo.RecordObject(e.Sr, "Color by Layer");
-                e.Sr.color = palette[idx % palette.Length];
-                EditorUtility.SetDirty(e.Sr);
+                Undo.RecordObject(e.Rd, "Color by Layer");
+                e.SetColor(palette[idx % palette.Length]);
+                EditorUtility.SetDirty(e.Rd);
             }
         }
 
         private void ApplyColorByOrder()
         {
-            var targets = _filtered.Where(e => e.IsSelected && e.Sr != null).ToList();
+            var targets = SelectedColorTargets();
             if (targets.Count == 0) return;
-
-            int min   = targets.Min(e => e.Sr.sortingOrder);
-            int max   = targets.Max(e => e.Sr.sortingOrder);
+            int min   = targets.Min(e => e.Rd.sortingOrder);
+            int max   = targets.Max(e => e.Rd.sortingOrder);
             int range = Mathf.Max(max - min, 1);
-
             foreach (var e in targets)
             {
-                float t = (e.Sr.sortingOrder - min) / (float)range;
-                Undo.RecordObject(e.Sr, "Color by Order");
-                e.Sr.color = Color.Lerp(new Color(0.2f, 0.4f, 1f), new Color(1f, 0.3f, 0.3f), t);
-                EditorUtility.SetDirty(e.Sr);
+                float t = (e.Rd.sortingOrder - min) / (float)range;
+                Undo.RecordObject(e.Rd, "Color by Order");
+                e.SetColor(Color.Lerp(new Color(0.2f, 0.4f, 1f), new Color(1f, 0.3f, 0.3f), t));
+                EditorUtility.SetDirty(e.Rd);
+            }
+        }
+
+        /// <summary>Каждому типу компонента — свой цвет из палитры kindColors.</summary>
+        private void ApplyColorByType()
+        {
+            foreach (var e in SelectedColorTargets())
+            {
+                if (!_kindColors.TryGetValue(e.Kind, out var c)) continue;
+                Undo.RecordObject(e.Rd, "Color by Type");
+                e.SetColor(new Color(c.r, c.g, c.b, 1f));
+                EditorUtility.SetDirty(e.Rd);
             }
         }
 
@@ -1137,14 +1411,15 @@ namespace _1GameProject.Scripts.Editor._2D
 
             EditorGUILayout.BeginHorizontal();
             GUI.backgroundColor = new Color(0.4f, 0.8f, 0.4f);
-            if (GUILayout.Button("Normalize ALL Layers",     GUILayout.Height(28))) NormalizeOrders(true);
-            if (GUILayout.Button("Normalize Selected Layer", GUILayout.Height(28))) NormalizeOrders(false);
+            if (GUILayout.Button("Normalize ALL Layers",     GUILayout.Height(28)))
+                NormalizeOrders(true);
+            if (GUILayout.Button("Normalize Selected Layer", GUILayout.Height(28)))
+                NormalizeOrders(false);
             GUI.backgroundColor = Color.white;
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.Space(6);
             EditorGUILayout.LabelField("Quick Order Shift for Selected:", EditorStyles.boldLabel);
-
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("–10",   GUILayout.Height(24))) ShiftOrderSelected(-10);
             if (GUILayout.Button("–1",    GUILayout.Height(24))) ShiftOrderSelected(-1);
@@ -1158,50 +1433,46 @@ namespace _1GameProject.Scripts.Editor._2D
 
         private void NormalizeOrders(bool allEntries)
         {
-            IEnumerable<SpriteEntry> source = allEntries
+            IEnumerable<RendererEntry> source = allEntries
                 ? _entries
                 : _entries.Where(e => e.IsSelected);
 
-            var groups = source
-                .Where(e => e.Sr != null)
-                .GroupBy(e => e.Sr.sortingLayerName);
-
-            foreach (var g in groups)
+            foreach (var g in source.Where(e => e.Rd != null)
+                         .GroupBy(e => e.Rd.sortingLayerName))
             {
-                var sorted = g.OrderBy(e => e.Sr.sortingOrder).ToList();
+                var sorted = g.OrderBy(e => e.Rd.sortingOrder).ToList();
                 for (int i = 0; i < sorted.Count; i++)
                 {
-                    Undo.RecordObject(sorted[i].Sr, "Normalize Order");
-                    sorted[i].Sr.sortingOrder = i;
+                    Undo.RecordObject(sorted[i].Rd, "Normalize Order");
+                    sorted[i].Rd.sortingOrder = i;
                     sorted[i].TakeSnapshot();
-                    EditorUtility.SetDirty(sorted[i].Sr);
+                    EditorUtility.SetDirty(sorted[i].Rd);
                 }
             }
-
             DetectConflicts();
             ShowNotification(new GUIContent("Orders normalized!"));
         }
 
         private void ShiftOrderSelected(int delta)
         {
-            foreach (var e in _filtered.Where(en => en.IsSelected && en.Sr != null))
+            foreach (var e in _filtered.Where(en => en.IsSelected && en.Rd != null))
             {
-                Undo.RecordObject(e.Sr, "Shift Order");
-                e.Sr.sortingOrder += delta;
+                Undo.RecordObject(e.Rd, "Shift Order");
+                e.Rd.sortingOrder += delta;
                 e.TakeSnapshot();
-                EditorUtility.SetDirty(e.Sr);
+                EditorUtility.SetDirty(e.Rd);
             }
             DetectConflicts();
         }
 
         private void SetOrderSelected(int value)
         {
-            foreach (var e in _filtered.Where(en => en.IsSelected && en.Sr != null))
+            foreach (var e in _filtered.Where(en => en.IsSelected && en.Rd != null))
             {
-                Undo.RecordObject(e.Sr, "Set Order");
-                e.Sr.sortingOrder = value;
+                Undo.RecordObject(e.Rd, "Set Order");
+                e.Rd.sortingOrder = value;
                 e.TakeSnapshot();
-                EditorUtility.SetDirty(e.Sr);
+                EditorUtility.SetDirty(e.Rd);
             }
             DetectConflicts();
         }
@@ -1221,28 +1492,23 @@ namespace _1GameProject.Scripts.Editor._2D
                 margin  = new RectOffset(0, 0, 0, 0),
                 normal  = { background = MakeTexture(new Color(0.22f, 0.22f, 0.22f)) }
             };
-
             _rowAltStyle = new GUIStyle(_rowStyle)
             {
                 normal = { background = MakeTexture(new Color(0.19f, 0.19f, 0.19f)) }
             };
-
             _rowSelectedStyle = new GUIStyle(_rowStyle)
             {
                 normal = { background = MakeTexture(new Color(0.17f, 0.36f, 0.53f)) }
             };
-
             _headerStyle = new GUIStyle(GUI.skin.box)
             {
                 padding = new RectOffset(4, 4, 3, 3),
                 normal  = { background = MakeTexture(new Color(0.15f, 0.15f, 0.15f)) }
             };
-
             _conflictStyle = new GUIStyle(_rowAltStyle)
             {
                 normal = { background = MakeTexture(new Color(0.35f, 0.22f, 0.05f)) }
             };
-
             _sectionStyle = new GUIStyle(EditorStyles.foldoutHeader)
             {
                 fontSize  = 12,
@@ -1267,13 +1533,31 @@ namespace _1GameProject.Scripts.Editor._2D
             _sortMode      = (SortMode)EditorPrefs.GetInt(PrefPrefix + "SortMode", 0);
             _sortAscending = EditorPrefs.GetBool(PrefPrefix + "SortAsc", true);
             _layerFilter   = EditorPrefs.GetString(PrefPrefix + "LayerFilter", "All");
+            _filterSR       = EditorPrefs.GetBool(PrefPrefix + "F_SR",       true);
+            _filterTMP      = EditorPrefs.GetBool(PrefPrefix + "F_TMP",      true);
+            _filterMesh     = EditorPrefs.GetBool(PrefPrefix + "F_Mesh",     true);
+            _filterParticle = EditorPrefs.GetBool(PrefPrefix + "F_FX",       true);
+            _filterTilemap  = EditorPrefs.GetBool(PrefPrefix + "F_Tile",     true);
+            _filterMask     = EditorPrefs.GetBool(PrefPrefix + "F_Mask",     true);
+            _filterLine     = EditorPrefs.GetBool(PrefPrefix + "F_Line",     true);
+            _filterTrail    = EditorPrefs.GetBool(PrefPrefix + "F_Trail",    true);
+            _filterSkin     = EditorPrefs.GetBool(PrefPrefix + "F_Skin",     true);
         }
 
         private void SavePrefs()
         {
-            EditorPrefs.SetInt(PrefPrefix + "SortMode",    (int)_sortMode);
-            EditorPrefs.SetBool(PrefPrefix + "SortAsc",    _sortAscending);
+            EditorPrefs.SetInt(PrefPrefix    + "SortMode",  (int)_sortMode);
+            EditorPrefs.SetBool(PrefPrefix   + "SortAsc",   _sortAscending);
             EditorPrefs.SetString(PrefPrefix + "LayerFilter", _layerFilter);
+            EditorPrefs.SetBool(PrefPrefix + "F_SR",       _filterSR);
+            EditorPrefs.SetBool(PrefPrefix + "F_TMP",      _filterTMP);
+            EditorPrefs.SetBool(PrefPrefix + "F_Mesh",     _filterMesh);
+            EditorPrefs.SetBool(PrefPrefix + "F_FX",       _filterParticle);
+            EditorPrefs.SetBool(PrefPrefix + "F_Tile",     _filterTilemap);
+            EditorPrefs.SetBool(PrefPrefix + "F_Mask",     _filterMask);
+            EditorPrefs.SetBool(PrefPrefix + "F_Line",     _filterLine);
+            EditorPrefs.SetBool(PrefPrefix + "F_Trail",    _filterTrail);
+            EditorPrefs.SetBool(PrefPrefix + "F_Skin",     _filterSkin);
         }
 
         #endregion
@@ -1286,10 +1570,12 @@ namespace _1GameProject.Scripts.Editor._2D
     {
         private const string ElementId = "MyTools/Sprite2DOrderManager";
 
-        [MainToolbarElement(ElementId, defaultDockPosition = MainToolbarDockPosition.Right)]
+        [MainToolbarElement(ElementId,
+            defaultDockPosition = MainToolbarDockPosition.Right)]
         public static MainToolbarElement CreateButton() =>
             new MainToolbarButton(
-                new MainToolbarContent("2D Order", tooltip: "Open Sprite2D Order Manager"),
+                new MainToolbarContent("2D Order",
+                    tooltip: "Open Sprite2D Order Manager"),
                 Sprite2DOrderManager.ShowWindow);
     }
 }

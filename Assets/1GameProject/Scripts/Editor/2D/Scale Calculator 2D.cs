@@ -101,7 +101,7 @@ namespace _1GameProject.Scripts.Editor.UI
 
         #region Window Lifecycle
 
-        [MenuItem("Tools/Megxlord Toolbar/2D/Scale Calculator 2D", priority = 102)]
+        [MenuItem("Tools/Megxlord Toolbox/2D/Scale Calculator 2D", priority = 102)]
         public static void ShowWindow() =>
             GetWindow<ScaleCalculator2DWindow>("Scale Calc 2D");
 

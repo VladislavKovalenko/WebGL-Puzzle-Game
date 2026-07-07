@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6a0cfb08b38e520449fcb3982bb37d3f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _grandpaImage: {instanceID: 0}
+  - _spriteCalm: {fileID: -5642690997702571860, guid: 3a78324b1cddb1b42b74315bcf68bf5d, type: 3}
+  - _spriteWary: {fileID: 5573131823607252589, guid: def7c47b744d2bd499becd39272cf6dc, type: 3}
+  - _spriteFrowning: {fileID: 2177568711321873369, guid: bdbdaa1eebc757247971c8883d934a02, type: 3}
+  - _spriteAngry: {fileID: 621222158458474870, guid: 9151eb1b63de0fb43b391ca0104d14f2, type: 3}
+  - _spriteFurious: {fileID: -2861203690133763881, guid: e03a082aa6ba3cf40b659cf086f2b2c8, type: 3}
+  - _spriteDefeated: {fileID: 1223958907002410498, guid: 0fc8095ee3f75954795d4623a0ffbf7b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

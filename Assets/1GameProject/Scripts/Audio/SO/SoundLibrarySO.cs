@@ -16,8 +16,9 @@ namespace _1GameProject.Scripts.Audio
         public EventReference click;
         
         [Header("Звуки игрового процесса")]
-        public EventReference successSound;
-        public EventReference failSound;
+        public EventReference winSound;
+        public EventReference screamerSound;
+        
         
         
         public void PlayOneShot(EventReference reference)

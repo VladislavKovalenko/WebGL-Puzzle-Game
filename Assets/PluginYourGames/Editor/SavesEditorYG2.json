@@ -1,4 +1,5 @@
 {
+    "maxUnlockedLevel": 2,
     "fpsCount": 60,
     "gameVolume": 70,
     "intExample": 5,
@@ -9,5 +10,5 @@
         false,
         false
     ],
-    "idSave": 5
+    "idSave": 6
 }
