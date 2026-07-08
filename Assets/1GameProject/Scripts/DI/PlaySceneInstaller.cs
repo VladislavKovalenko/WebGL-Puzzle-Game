@@ -1,10 +1,10 @@
 ﻿using _1GameProject.Scripts.Audio;
 using _1GameProject.Scripts.GameData;
+using _1GameProject.Scripts.GameData.SO;
 using _1GameProject.Scripts.GameFlow.Level.End;
 using _1GameProject.Scripts.GameFlow.Level.Hazards;
 using _1GameProject.Scripts.GameFlow.Level.HUD;
 using _1GameProject.Scripts.GameFlow.Level.LevelGenerator;
-using _1GameProject.Scripts.GameFlow.Level.LevelGenerator.SO;
 using _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP;
 using _1GameProject.Scripts.GameFlow.Level.Narrative;
 using _1GameProject.Scripts.GameFlow.Level.Start;
@@ -39,19 +39,22 @@ namespace _1GameProject.Scripts.DI
             // === ГЛОБАЛЬНАЯ СЕССИЯ (Проверка заглушки) ===
             var session = Container.Resolve<GameSessionModel>();
             
-            if (session.CurrentConfig == null) // ИСПРАВЛЕНО: CurrentConfig вместо CurrentLevelConfig
+            if (session.CurrentConfig == null) 
             {
                 Debug.LogWarning("Запуск сцены без меню! Создаю тестовый конфиг 4x4.");
-                session.CurrentConfig = ScriptableObject.CreateInstance<LevelConfigSO>();
-                session.CurrentConfig.Columns = 4;
-                session.CurrentConfig.Rows = 4;
-                session.CurrentConfig.MinWordLength = 3; // Добавлено, чтобы генератор не сломался
-                session.CurrentConfig.MaxWordLength = 6; // Добавлено
-                session.CurrentConfig.Hazard = LevelHazardType.Flashlight;
+                // ИСПРАВЛЕНИЕ: Используем new вместо ScriptableObject.CreateInstance
+                session.CurrentConfig = new LevelConfig 
+                {
+                    Columns = 4,
+                    Rows = 4,
+                    MinWordLength = 3,
+                    MaxWordLength = 6,
+                    Hazard = LevelHazardType.None
+                };
             }
 
             // Биндим конфиг из глобальной сессии!
-            Container.Bind<LevelConfigSO>().FromInstance(session.CurrentConfig).AsSingle();
+            Container.Bind<LevelConfig>().FromInstance(session.CurrentConfig).AsSingle();
 
             // === ИГРОВАЯ ДОСКА ===
             Container.Bind<BoardGenerator>().AsSingle();

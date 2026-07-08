@@ -56,13 +56,22 @@ namespace _1GameProject.Scripts.GameFlow.Level.End
                 _view.ShowWin();
                 _soundLibrary.PlayOneShot(_soundLibrary.winSound); 
                 
-                // В будущем сохраняем реальный прогресс
-                _levelsModel.CompleteLevel(_sessionModel.CurrentLevel); 
+                // Запоминаем, сколько комнат мы уже прошли в этом забеге
+                int completedStages = _sessionModel.StagesSurvived + 1;
+                
+                // 1. Двигаем игрока вперед по глобальному забегу (генерируем новые развилки)
+                _sessionModel.AdvanceStage();
+                
+                // 2. Сохраняем прогресс в Яндекс.Игры (например, рекорд выживания)
+                _levelsModel.CompleteLevel(completedStages); 
             }
             else if (finalState == GameState.Lose)
             {
                 _view.ShowLose();
                 _soundLibrary.PlayOneShot(_soundLibrary.screamerSound); 
+                
+                // ПРОИГРЫШ -> Сбрасываем весь забег (жизни на макс, генерация новых стартовых вариантов)
+                _sessionModel.StartNewRun();
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿// FILE: Scripts/GameFlow/Level/Hazards/HazardPresenter.cs
-using _1GameProject.Scripts.GameFlow.Level.LevelGenerator.SO;
+
+using _1GameProject.Scripts.GameData.SO;
 using _1GameProject.Scripts.GameFlow.Level.Start;
 using UnityEngine;
 using Zenject;
@@ -8,13 +9,13 @@ namespace _1GameProject.Scripts.GameFlow.Level.Hazards
 {
     public class HazardPresenter : IInitializable, ITickable
     {
-        private readonly LevelConfigSO _currentConfig;
+        private readonly LevelConfig _currentConfig;
         private readonly GameplayModel _gameplayModel;
         private readonly FlashlightView _flashlightView;
 
         [Inject]
         public HazardPresenter(
-            LevelConfigSO config,
+            LevelConfig config,
             GameplayModel gameplayModel,
             FlashlightView flashlightView)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using _1GameProject.Scripts.GameData.SO;
 using _1GameProject.Scripts.GameFlow.Level.LevelGenerator;
-using _1GameProject.Scripts.GameFlow.Level.LevelGenerator.SO;
 using UnityEngine;
 using Zenject;
 using Random = UnityEngine.Random;
@@ -26,7 +26,7 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator
             _wordService = wordService;
         }
 
-        public BoardData Generate(LevelConfigSO config)
+        public BoardData Generate(LevelConfig config)
         {
             _cols = config.Columns;
             _rows = config.Rows;
@@ -46,7 +46,7 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator
             return null;
         }
 
-        private bool TryGenerate(LevelConfigSO config, out BoardData boardData)
+        private bool TryGenerate(LevelConfig config, out BoardData boardData)
         {
             boardData = null;
             _grid = new int[_cols, _rows];

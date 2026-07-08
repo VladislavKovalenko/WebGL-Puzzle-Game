@@ -1,13 +1,11 @@
-﻿// FILE: Scripts/GameFlow/Level/LevelGenerator/BoardMVP/BoardPresenter.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using _1GameProject.Scripts.GameData;
-using _1GameProject.Scripts.GameFlow.Level.LevelGenerator;
-using _1GameProject.Scripts.GameFlow.Level.LevelGenerator.SO;
+using _1GameProject.Scripts.GameData.SO;
 using _1GameProject.Scripts.GameFlow.Level.Start;
 using UniRx;
 using UnityEngine;
-using Zenject;  
+using Zenject;
 
 namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP
 {
@@ -33,20 +31,14 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP
 
         public void Initialize()
         {
-            // Берем конфиг из глобальной сессии (если запустили без меню, используем заглушку)
-            LevelConfigSO config = _sessionModel.CurrentConfig;
-            if (config == null)
-            {
-                Debug.LogWarning("Нет конфига в сессии! Создаем тестовый 4х4");
-                config = ScriptableObject.CreateInstance<LevelConfigSO>();
-                config.Columns = 4; config.Rows = 4;
-            }
+            // Берем гарантированно существующий конфиг из сессии
+            LevelConfig config = _sessionModel.CurrentConfig;
 
             _boardData = _generator.Generate(config);
 
             if (_boardData != null)
             {
-                _gameplayModel.SetupLevel(_boardData.Words.Count); // Передаем кол-во слов в модель
+                _gameplayModel.SetupLevel(_boardData.Words.Count);
                 _view.BuildGrid(_boardData, OnCellPointerDown, OnCellPointerEnter);
             }
         }
@@ -140,13 +132,12 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP
                 foreach (var cell in _currentSelection)
                     cell.SetState(CellState.Found);
 
-                // Сообщаем геймплейной модели, что слово найдено (она сама проверит победу)
                 _gameplayModel.AddFoundWord(); 
             }
             else
             {
                 Debug.Log($"Ошибка: {selectedWord}");
-                _sessionModel.TakeDamage(); // Урон идет в глобальную сессию
+                _sessionModel.TakeDamage(); 
 
                 foreach (var cell in _currentSelection)
                     cell.SetState(CellState.Error);

@@ -11,36 +11,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/ObjectSnap.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/ObjectSnap.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GameSessionModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GameSessionModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndPresenter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndPresenter.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndWindowView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/FlashlightView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/FlashlightView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/HazardPresenter.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/HazardPresenter.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameplayModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Start/GameplayModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SO/CampaignRouteSO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SO/CampaignRouteSO.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE Bitmap.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE Bitmap.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/GamePlay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/GamePlay.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/SO/SoundLibrarySO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/SO/SoundLibrarySO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Loadable/Level Settings List.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Loadable/Level Settings List/Level1ConfigSO.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Loadable/Level Settings List/Level1ConfigSO.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Loadable/Level Settings List/Level2ConfigSO.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Loadable/Level Settings List/Level2ConfigSO.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/PlaySceneInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/PlaySceneInstaller.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/ProjectInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/ProjectInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Sprite2DOrderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Sprite2DOrderManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndManager.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndWindowView.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Level Generator.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Settings/Renderer2D.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Settings/Renderer2D.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GameSessionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GameSessionModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/HazardPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/HazardPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/BoardGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/BoardGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/BoardMVP/BoardPresenter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/BoardMVP/BoardPresenter.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/SO.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/SO/LevelConfigSO.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/LevelGenerator/SO/LevelConfigSO.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/ServerInfoYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/ServerInfoYG2.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +41,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Art/Global Materials/Shaders/FlashlightFog.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/SOProjectInstaller.asset" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/ObjectSnap.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs" root0="FORCE_HIGHLIGHTING" />
@@ -60,6 +49,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/uGUI/Scale Calculator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/MainMenuSignalsList.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/GameSessionModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameData/SO/CampaignRouteSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/End/LevelEndPresenter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/FlashlightView.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Level/Hazards/HazardPresenter.cs" root0="FORCE_HIGHLIGHTING" />
@@ -194,6 +184,7 @@
       <workItem from="1783452993280" duration="471000" />
       <workItem from="1783454144928" duration="666000" />
       <workItem from="1783455773466" duration="4486000" />
+      <workItem from="1783531812655" duration="5936000" />
     </task>
     <servers />
   </component>
