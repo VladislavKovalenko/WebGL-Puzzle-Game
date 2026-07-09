@@ -16,7 +16,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
 
         [SerializeField] private List<LevelButtonView> _levelButtons;
         [SerializeField] private GameObject _levelsPrefab;
-        [SerializeField] private Button _closeLevelsMenuButton;
+        
 
         private void Start()
         {
@@ -25,8 +25,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
                 btn.OnLevelClicked.Subscribe(StartLevel).AddTo(this);
             }
             
-            _closeLevelsMenuButton.OnClickAsObservable()
-                .Subscribe(_ => _levelsPrefab.SetActive(false)).AddTo(this); 
+             
         }
 
         private void OnEnable()

@@ -2,7 +2,6 @@
 using _1GameProject.Scripts.Events;
 using _1GameProject.Scripts.GameData;
 using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,40 +11,41 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
 {
     public class MainMenuManager : MonoBehaviour
     {
-        
-        [Inject] SignalBus SignalBus;
+        [Inject] private SignalBus _signalBus;
         [Inject] private GameSessionModel _sessionModel;
         
-        [Header("Кнопки")]
+        [Header("Кнопки открытия")]
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _openLevelsButton;
         [SerializeField] private Button _openStoreButton;
+
+        [Header("Кнопки ЗАКРЫТИЯ (Назад в меню)")]
+        [SerializeField] private Button _closeStoreButton;
+        [SerializeField] private Button _closeLevelsButton;
         
-        [Header("Объекты")]
-        public  GameObject MainMenu;
-        public  GameObject Levels;
-        public  GameObject Store;
-        public  GameObject Settings;
+        [Header("Панели (Объекты)")]
+        public GameObject MainMenu;
+        public GameObject Levels;
+        public GameObject Store;
+        public GameObject Settings;
         public GameObject MainMenuSelector;
-        
 
         private void Start()
         {
-            _startGameButton.OnClickAsObservable()
-                .Subscribe(_ => StartGame())
-                .AddTo(this);   
-            
-            _openLevelsButton.OnClickAsObservable()
-                .Subscribe(_ => OpenLevels())
-                .AddTo(this);
-            
-            _openStoreButton.OnClickAsObservable()
-                .Subscribe(_ => OpenStore())
-                .AddTo(this);
-            
-            _settingsButton.OnClickAsObservable()
-                .Subscribe(_ => OpenSettings())
+            _startGameButton.OnClickAsObservable().Subscribe(_ => StartGame()).AddTo(this);   
+            _openLevelsButton.OnClickAsObservable().Subscribe(_ => OpenLevels()).AddTo(this);
+            _openStoreButton.OnClickAsObservable().Subscribe(_ => OpenStore()).AddTo(this);
+            _settingsButton.OnClickAsObservable().Subscribe(_ => OpenSettings()).AddTo(this);
+
+            if (_closeStoreButton != null)
+                _closeStoreButton.OnClickAsObservable().Subscribe(_ => BackToMainMenu()).AddTo(this);
+                
+            if (_closeLevelsButton != null)
+                _closeLevelsButton.OnClickAsObservable().Subscribe(_ => BackToMainMenu()).AddTo(this);
+
+            _signalBus.GetStream<BackToMainMenuSignal>()
+                .Subscribe(_ => BackToMainMenu())
                 .AddTo(this);
 
             if (_sessionModel.AutoOpenLevelsMenu)
@@ -53,58 +53,31 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
                 _sessionModel.AutoOpenLevelsMenu = false;
                 OpenLevels();
             }
-
-            _startGameButton.OnPointerEnterAsObservable();
-            //TODO надо обдумать звук для кнопок или я могу тут вызывать Button Sound Manager напрямую
-            //Либо я могу событие сделать и он подсосется, но это уже бессмысленно, архитектуру надо было тогда сразу
-            //строить как сложные события (события 2 (наведение на кнопку и нажатие), а на них тег кнопки (обычная, выбирающая, закрывающая и т.д.)) и по тегу звуки выбирать
-            //Тег не обязательно в инспекторе, можно свой enum написать 
-            //Либо я могу как компонент сделать. Button Sound Manager компонент, который сам определяет что за тип кнопки
-            //И уже подбирает под действие звук. Возможно для uGUI это попроще даже будет. Но это надо на каждую кнопку руками скрипт кидать.
-            //С другой стороны у компонента преимущество, ему не нужно дублировать события в Installer DI для меню и сцены отдельно
-            //Но как будт нарушается единство кода.
-
         }
 
         private void Update()
         {
-            if (!Levels.activeSelf && !Store.activeSelf && !Settings.activeSelf)
-            {
-                _settingsButton.gameObject.SetActive(true);
-                MainMenuSelector.SetActive(true);
-            }
-            else
-            {
-                _settingsButton.gameObject.SetActive(false);
-                MainMenuSelector.SetActive(false);
-            }
+            bool isMainMenuActive = !Levels.activeSelf && !Store.activeSelf && !Settings.activeSelf;
             
+            _settingsButton.gameObject.SetActive(isMainMenuActive);
+            MainMenuSelector.SetActive(isMainMenuActive);
         }
-        
-        
 
         public void StartGame()
         {
-            SceneManager.LoadScene("GamePlay");
+            SceneManager.LoadScene(SceneNames.Gameplay);
         }
         
         public void OpenLevels()
         {
-            Debug.Log("Сигнал получен");
             MainMenu.SetActive(false);
             Levels.SetActive(true);
-            
-            //прикольно, что можно обращаться через компонент к объекту
             _settingsButton.gameObject.SetActive(false);
         }
 
         public void OpenSettings()
         {
-            // 1. Выключаем Главное Меню
-            //MainMenu.SetActive(false);
-            
-            // 2. Стреляем сигналом! Менеджер больше сам окно не включает!
-            SignalBus.Fire<SettingsMenuOpenSignal>();
+            _signalBus.Fire<SettingsMenuOpenSignal>();
         }
 
         public void OpenStore()
@@ -115,15 +88,10 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
 
         public void BackToMainMenu()
         {
-            //Settings
             Levels.SetActive(false);
             Store.SetActive(false);
             MainMenu.SetActive(true);
         }
-        
-        
-        
-        
     }
 }
 
