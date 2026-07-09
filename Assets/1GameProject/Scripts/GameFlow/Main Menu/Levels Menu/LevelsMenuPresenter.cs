@@ -1,41 +1,36 @@
-﻿using System.Collections.Generic;
+﻿// FILE: Scripts/GameFlow/Main_Menu/Levels_Menu/LevelsMenuPresenter.cs
+using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
+using _1GameProject.Scripts.GameData;
 
 namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
 {
     public class LevelsMenuPresenter : MonoBehaviour
     {
         [Inject] private LevelsModel _levelsModel;
+        [Inject] private GameSessionModel _sessionModel;
 
         [SerializeField] private List<LevelButtonView> _levelButtons;
-        
-        [Header("Логика закрытия вкладки")]
         [SerializeField] private GameObject _levelsPrefab;
         [SerializeField] private Button _closeLevelsMenuButton;
-        
 
         private void Start()
         {
-            // 1. Подписываемся на ВСЕ кнопки ровно ОДИН раз при старте сцены.
             foreach (var btn in _levelButtons)
             {
-                btn.OnLevelClicked
-                    .Subscribe(levelId => StartLevel(levelId))
-                    .AddTo(this);
+                btn.OnLevelClicked.Subscribe(StartLevel).AddTo(this);
             }
             
             _closeLevelsMenuButton.OnClickAsObservable()
-                .Subscribe(_ => _levelsPrefab.SetActive(false))
-                .AddTo(this); 
-            
+                .Subscribe(_ => _levelsPrefab.SetActive(false)).AddTo(this); 
         }
 
         private void OnEnable()
         {
-            // 2. А вот визуал (замочки) обновляем каждый раз, когда панель открывается
             RefreshLevelsUI();
         }
 
@@ -44,25 +39,19 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
             foreach (var btn in _levelButtons)
             {
                 bool isUnlocked = _levelsModel.IsLevelUnlocked(btn.LevelIndex);
+                btn.gameObject.SetActive(isUnlocked);
                 btn.SetUnlockedState(isUnlocked);
             }
         }
 
         private void StartLevel(int levelId)
         {
-            // 3. Так как мы подписались на все кнопки, 
-            // дополнительно проверяем, можно ли запускать этот уровень
-            if (!_levelsModel.IsLevelUnlocked(levelId))
-            {
-                Debug.Log($"[LevelsMenu] Уровень {levelId} заблокирован!");
-                return;
-            }
+            if (!_levelsModel.IsLevelUnlocked(levelId)) return;
 
-            // Здесь мы будем загружать игровую сцену и передавать в неё levelId
-            Debug.Log($"Загрузка уровня {levelId}...");
-            
-            // GlobalGameData.CurrentLevel = levelId;
-            // SceneManager.LoadScene("GamePlay");
+            // Индексы массивов начинаются с 0 (1-й уровень = индекс 0)
+            _sessionModel.CurrentLevelIndex = levelId - 1;
+
+            SceneManager.LoadScene(SceneNames.Gameplay);
         }
     }
 }

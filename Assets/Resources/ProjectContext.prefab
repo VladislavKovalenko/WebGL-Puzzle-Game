@@ -110,3 +110,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.DI.ProjectInstaller
   audioManagerPrefab: {fileID: 1415570417500093334, guid: 9c55fbaf6c4121a4faed3b60028675e9, type: 3}
+  _mainCampaign: {fileID: 11400000, guid: 384bebf9cc130c1488706b75f03fa319, type: 2}

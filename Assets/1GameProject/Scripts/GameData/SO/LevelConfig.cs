@@ -9,7 +9,6 @@ namespace _1GameProject.Scripts.GameData.SO
         Blur
     }
     
-    [CreateAssetMenu(fileName = "LevelConfig", menuName = "SO/LevelConfig")]
     public class LevelConfig
     {
         [Header("Отображение в меню (для кнопок выбора)")]

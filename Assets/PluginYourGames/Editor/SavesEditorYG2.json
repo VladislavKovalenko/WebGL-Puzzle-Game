@@ -1,5 +1,14 @@
 {
-    "maxUnlockedLevel": 2,
+    "unlockedLevels": [
+        1,
+        4,
+        24,
+        10,
+        14
+    ],
+    "completedLevels": [
+        1
+    ],
     "fpsCount": 60,
     "gameVolume": 70,
     "intExample": 5,
@@ -10,5 +19,5 @@
         false,
         false
     ],
-    "idSave": 6
+    "idSave": 18
 }

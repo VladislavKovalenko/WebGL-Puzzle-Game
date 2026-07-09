@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using _1GameProject.Scripts.Audio;
 using _1GameProject.Scripts.GameData;
 using _1GameProject.Scripts.GameData.SO;
 using _1GameProject.Scripts.GameFlow.Level.Start;
@@ -15,26 +16,34 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP
         private readonly BoardView _view;
         private readonly GameplayModel _gameplayModel;
         private readonly GameSessionModel _sessionModel;
+        private readonly LevelConfig _config;
+        private readonly SoundLibrarySO _soundLibrary;
 
         private BoardData _boardData;
         private bool _isDragging = false;
         private List<LetterCellView> _currentSelection = new();
 
         [Inject]
-        public BoardPresenter(BoardGenerator generator, BoardView view, GameplayModel gameplayModel, GameSessionModel sessionModel)
+        public BoardPresenter(
+            BoardGenerator generator, 
+            BoardView view, 
+            GameplayModel gameplayModel, 
+            GameSessionModel sessionModel,
+            LevelConfig config,
+            SoundLibrarySO soundLibrary)
         {
             _generator = generator;
             _view = view;
             _gameplayModel = gameplayModel;
             _sessionModel = sessionModel;
+            _config = config;
+            _soundLibrary = soundLibrary;
         }
 
         public void Initialize()
         {
-            // Берем гарантированно существующий конфиг из сессии
-            LevelConfig config = _sessionModel.CurrentConfig;
-
-            _boardData = _generator.Generate(config);
+            // Генерируем доску по полученному конфигу
+            _boardData = _generator.Generate(_config);
 
             if (_boardData != null)
             {
@@ -84,6 +93,8 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP
         {
             _currentSelection.Add(cell);
             cell.SetState(CellState.Selected);
+
+            _soundLibrary.PlayOneShot(_soundLibrary.letterSelect);
         }
 
         private void EvaluateSelection()

@@ -1,5 +1,6 @@
 ﻿using System;
 using _1GameProject.Scripts.Events;
+using _1GameProject.Scripts.GameData;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
     {
         
         [Inject] SignalBus SignalBus;
+        [Inject] private GameSessionModel _sessionModel;
         
         [Header("Кнопки")]
         [SerializeField] private Button _settingsButton;
@@ -45,6 +47,12 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
             _settingsButton.OnClickAsObservable()
                 .Subscribe(_ => OpenSettings())
                 .AddTo(this);
+
+            if (_sessionModel.AutoOpenLevelsMenu)
+            {
+                _sessionModel.AutoOpenLevelsMenu = false;
+                OpenLevels();
+            }
 
             _startGameButton.OnPointerEnterAsObservable();
             //TODO надо обдумать звук для кнопок или я могу тут вызывать Button Sound Manager напрямую

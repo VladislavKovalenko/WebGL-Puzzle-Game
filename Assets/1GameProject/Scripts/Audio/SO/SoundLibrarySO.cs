@@ -19,6 +19,9 @@ namespace _1GameProject.Scripts.Audio
         public EventReference winSound;
         public EventReference screamerSound;
         
+        [Header("Звуки связанные с выбором букв")]
+        public EventReference letterHover;
+        public EventReference letterSelect;
         
         
         public void PlayOneShot(EventReference reference)

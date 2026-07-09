@@ -14,7 +14,7 @@ namespace _1GameProject.Scripts.DI
     {
         [SerializeField] private GameObject audioManagerPrefab;
         
-        [SerializeField] private CampaignRouteSO _mainCampaign;
+        //В целом сюда можно сразу биндить SO, так будет даже быстрее.
 
         public override void InstallBindings()
         {
@@ -33,8 +33,6 @@ namespace _1GameProject.Scripts.DI
             
             //Levels Model глобальная для проекта, потому что к ней нужен доступ и из главного меню и из игры при начале и завершении уровня.
             Container.Bind<LevelsModel>().AsSingle();
-            
-            Container.BindInstance(_mainCampaign).AsSingle();
             
             Container.Bind<GameSessionModel>().AsSingle().NonLazy();
             

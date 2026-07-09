@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SOProjectInstaller
   m_EditorClassIdentifier: Assembly-CSharp::SOProjectInstaller
   SoundLibrary: {fileID: 11400000, guid: d89bc1cbac3ebec4aa9e64eaeb098117, type: 2}
+  MainCampaign: {fileID: 11400000, guid: 384bebf9cc130c1488706b75f03fa319, type: 2}

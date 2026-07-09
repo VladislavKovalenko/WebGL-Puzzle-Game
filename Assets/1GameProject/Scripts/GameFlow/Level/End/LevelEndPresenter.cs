@@ -21,12 +21,8 @@ namespace _1GameProject.Scripts.GameFlow.Level.End
         private readonly CompositeDisposable _disposables = new();
 
         [Inject]
-        public LevelEndPresenter(
-            GameplayModel gameplayModel, 
-            GameSessionModel sessionModel, 
-            LevelEndWindowView view, 
-            LevelsModel levelsModel, 
-            SoundLibrarySO soundLibrary)
+        public LevelEndPresenter(GameplayModel gameplayModel, GameSessionModel sessionModel, 
+            LevelEndWindowView view, LevelsModel levelsModel, SoundLibrarySO soundLibrary)
         {
             _gameplayModel = gameplayModel;
             _sessionModel = sessionModel;
@@ -38,15 +34,12 @@ namespace _1GameProject.Scripts.GameFlow.Level.End
         public void Initialize()
         {
             _view.Hide();
-
-            // Реагируем только на состояния Win или Lose
             _gameplayModel.CurrentState
                 .Where(state => state == GameState.Win || state == GameState.Lose)
-                .Subscribe(HandleGameOver)
-                .AddTo(_disposables);
+                .Subscribe(HandleGameOver).AddTo(_disposables);
 
-            _view.OnContinueClicked.Subscribe(_ => ReturnToMenu()).AddTo(_disposables);
-            _view.OnToMenuClicked.Subscribe(_ => ReturnToMenu()).AddTo(_disposables);
+            _view.OnContinueClicked.Subscribe(_ => ReturnToMenu(true)).AddTo(_disposables);
+            _view.OnToMenuClicked.Subscribe(_ => ReturnToMenu(false)).AddTo(_disposables);
         }
 
         private void HandleGameOver(GameState finalState)
@@ -56,33 +49,26 @@ namespace _1GameProject.Scripts.GameFlow.Level.End
                 _view.ShowWin();
                 _soundLibrary.PlayOneShot(_soundLibrary.winSound); 
                 
-                // Запоминаем, сколько комнат мы уже прошли в этом забеге
-                int completedStages = _sessionModel.StagesSurvived + 1;
-                
-                // 1. Двигаем игрока вперед по глобальному забегу (генерируем новые развилки)
-                _sessionModel.AdvanceStage();
-                
-                // 2. Сохраняем прогресс в Яндекс.Игры (например, рекорд выживания)
-                _levelsModel.CompleteLevel(completedStages); 
+                int completedLevelNumber = _sessionModel.CurrentLevelIndex + 1;
+                _levelsModel.CompleteLevel(completedLevelNumber); 
+                _levelsModel.UnlockTwoRandomLevels();
             }
             else if (finalState == GameState.Lose)
             {
                 _view.ShowLose();
                 _soundLibrary.PlayOneShot(_soundLibrary.screamerSound); 
                 
-                // ПРОИГРЫШ -> Сбрасываем весь забег (жизни на макс, генерация новых стартовых вариантов)
+                _levelsModel.ResetAllProgress();
                 _sessionModel.StartNewRun();
             }
         }
 
-        private void ReturnToMenu()
+        private void ReturnToMenu(bool openLevelsMenu)
         {
+            _sessionModel.AutoOpenLevelsMenu = openLevelsMenu;
             SceneManager.LoadScene(SceneNames.MainMenu);
         }
 
-        public void Dispose()
-        {
-            _disposables.Dispose();
-        }
+        public void Dispose() => _disposables.Dispose();
     }
 }

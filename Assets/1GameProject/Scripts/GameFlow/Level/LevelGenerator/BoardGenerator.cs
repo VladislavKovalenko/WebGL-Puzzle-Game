@@ -185,9 +185,15 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator
                 
                 int maxPossible = Mathf.Min(max, remaining);
                 
-                // Если остаток меньше (min * 2), мы обязаны взять его целиком, 
-                // иначе останется "огрызок" меньше min, который невозможно заполнить.
-                int length = (remaining < min * 2) ? remaining : Random.Range(min, maxPossible + 1);
+                int length;
+                if (remaining < min * 2)
+                {
+                    length = remaining;
+                }
+                else
+                {
+                    length = Random.Range(min, Mathf.Min(maxPossible, remaining - min) + 1);
+                }
 
                 // Если в словаре вообще нет слов такой длины, страхуемся
                 if (_wordService.GetWords(length).Count == 0) return null; 

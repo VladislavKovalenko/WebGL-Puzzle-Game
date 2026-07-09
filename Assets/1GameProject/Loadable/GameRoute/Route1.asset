@@ -12,4 +12,149 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 977cf08f7c8a41b8b636b07bc6bc2a3d, type: 3}
   m_Name: Route1
   m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.GameData.SO.CampaignRouteSO
-  Groups: []
+  DifficultySettings:
+  - Name: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438: Easy"
+    Difficulty: 0
+    Cols: 3
+    Rows: 3
+    MinLen: 3
+    MaxLen: 3
+  - Name: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438: Medium"
+    Difficulty: 1
+    Cols: 4
+    Rows: 4
+    MinLen: 3
+    MaxLen: 5
+  - Name: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438: Hard"
+    Difficulty: 2
+    Cols: 5
+    Rows: 5
+    MinLen: 4
+    MaxLen: 6
+  - Name: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438: Nightmare"
+    Difficulty: 3
+    Cols: 6
+    Rows: 6
+    MinLen: 5
+    MaxLen: 7
+  Levels:
+  - InspectorName: "\u0423\u0440 1 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Easy"
+    Difficulty: 0
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 2 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Easy"
+    Difficulty: 0
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 3 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Easy"
+    Difficulty: 0
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 4 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Easy"
+    Difficulty: 0
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 5 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Easy"
+    Difficulty: 0
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 6 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Medium"
+    Difficulty: 1
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 7 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Medium"
+    Difficulty: 1
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 8 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Medium"
+    Difficulty: 1
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 9 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Easy + Flashlight"
+    Difficulty: 0
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 10 [\u041F\u0440\u043E\u0441\u0442\u043E\u0439 \u043F\u0443\u043B]
+      - Medium + Flashlight"
+    Difficulty: 1
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 11 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Medium"
+    Difficulty: 1
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 12 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Medium + Flashlight"
+    Difficulty: 1
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 13 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Medium"
+    Difficulty: 1
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 14 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Medium + Flashlight"
+    Difficulty: 1
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 15 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard"
+    Difficulty: 2
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 16 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 17 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard"
+    Difficulty: 2
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 18 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 19 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
+  - InspectorName: "\u0423\u0440 20 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 21 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 22 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 23 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 24 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 25 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 26 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 27 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 28 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 29 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 30 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Nightmare"
+    Difficulty: 3
+    Hazard: 0

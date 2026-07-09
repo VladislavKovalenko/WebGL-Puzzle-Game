@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8934558946468418973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MainEvents/GameLose
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MainEvents/GameLose
+  Guid:
+    Data1: 874215037
+    Data2: 1171440154
+    Data3: -675825008
+    Data4: 827879703
+  Banks:
+  - {fileID: -6628393133087742889}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-6628393133087742889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +42,7 @@ MonoBehaviour:
   Path: Assets/1GameProject/Audio/Mobile/MasterBank.bank
   Name: MasterBank
   StudioPath: bank:/MasterBank
-  lastModified: 639170012187107911
+  lastModified: 639192421795880928
   FileSizes: []
   Exists: 1
 --- !u!114 &-6213871271851971108
@@ -45,6 +72,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 32000
+--- !u!114 &-5984667191152411099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MainEvents/LetterSelect
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MainEvents/LetterSelect
+  Guid:
+    Data1: 1358369040
+    Data2: 1102843962
+    Data3: -1122255706
+    Data4: -1901052825
+  Banks:
+  - {fileID: -6628393133087742889}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-5637246421662779848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MainEvents/ButtonSelect
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MainEvents/ButtonSelect
+  Guid:
+    Data1: -561557311
+    Data2: 1214977588
+    Data3: -576661342
+    Data4: 1121265588
+  Banks:
+  - {fileID: -6628393133087742889}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-3995585481710709920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,10 +168,10 @@ MonoBehaviour:
   Path: Assets/1GameProject/Audio/Mobile/MasterBank.strings.bank
   Name: MasterBank.strings
   StudioPath: bank:/MasterBank.strings
-  lastModified: 639170012187128246
+  lastModified: 639192421795890982
   FileSizes:
   - Name: 
-    Value: 968
+    Value: 1224
   Exists: 1
 --- !u!114 &-1454424948641812794
 MonoBehaviour:
@@ -131,22 +212,33 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -6213871271851971108}
   - {fileID: -3995585481710709920}
-  - {fileID: 19172691159647572}
+  - {fileID: 7137698614259881747}
+  - {fileID: 818417806842884555}
+  - {fileID: -8934558946468418973}
+  - {fileID: -5637246421662779848}
+  - {fileID: -5984667191152411099}
+  - {fileID: 3074728779697238395}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6628393133087742889}
   StringsBanks:
   - {fileID: -2068446543087357356}
   cacheVersion: 131858
-  cacheTime: 639170012187128246
+  cacheTime: 639192421795890982
   SerializableEventsDict:
   - key: event:/Background Music/MainMenuAlternative
     index: 0
   - key: event:/Background Music/MainMenu
     index: 1
-  - key: event:/Background Music/Lose
+  - key: event:/MainEvents/GameWin
     index: 2
---- !u!114 &19172691159647572
+  - key: event:/MainEvents/ButtonPress
+    index: 3
+  - key: event:/MainEvents/GameLose
+    index: 4
+  - key: event:/MainEvents/ButtonSelect
+    index: 5
+--- !u!114 &818417806842884555
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,23 +248,77 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Background Music/Lose
+  m_Name: event:/MainEvents/ButtonPress
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Background Music/Lose
+  Path: event:/MainEvents/ButtonPress
   Guid:
-    Data1: 816311682
-    Data2: 1146004536
-    Data3: 2055323302
-    Data4: 2003687469
+    Data1: 509687126
+    Data2: 1194691261
+    Data3: -858141285
+    Data4: -634086628
   Banks:
   - {fileID: -6628393133087742889}
-  IsStream: 1
+  IsStream: 0
   Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 16013
+  Length: 0
+--- !u!114 &3074728779697238395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MainEvents/LetterHover
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MainEvents/LetterHover
+  Guid:
+    Data1: 1709658157
+    Data2: 1116420759
+    Data3: 1738119093
+    Data4: 1276644671
+  Banks:
+  - {fileID: -6628393133087742889}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &7137698614259881747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MainEvents/GameWin
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/MainEvents/GameWin
+  Guid:
+    Data1: 143520337
+    Data2: 1265522494
+    Data3: 1877512116
+    Data4: 1077757187
+  Banks:
+  - {fileID: -6628393133087742889}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8476501810834611811
 MonoBehaviour:
   m_ObjectHideFlags: 0

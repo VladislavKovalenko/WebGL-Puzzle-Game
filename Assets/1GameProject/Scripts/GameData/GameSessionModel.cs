@@ -1,5 +1,5 @@
 ﻿// FILE: Scripts/GameData/GameSessionModel.cs
-using System.Collections.Generic;
+
 using _1GameProject.Scripts.GameData.SO;
 using UniRx;
 using UnityEngine;
@@ -13,11 +13,12 @@ namespace _1GameProject.Scripts.GameData
         
         private readonly CampaignRouteSO _route;
 
-        public int StagesSurvived { get; private set; } = 0; // Сколько комнат прошел игрок
-        public LevelConfig CurrentConfig { get; set; }
+        // Открыт доступ, чтобы Меню могло записать сюда выбранный уровень
+        public int CurrentLevelIndex { get; set; } = 0; 
+        
         public bool TookDamageThisLevel { get; set; } = false;
-
-        public List<LevelConfig> AvailableChoices { get; } = new();
+        
+        public bool AutoOpenLevelsMenu { get; set; } = false;
 
         public GameSessionModel(CampaignRouteSO route)
         {
@@ -27,16 +28,7 @@ namespace _1GameProject.Scripts.GameData
         public void StartNewRun()
         {
             GlobalLives.Value = MaxLives;
-            StagesSurvived = 0;
             ResetLevelFlags();
-            GenerateChoices();
-        }
-
-        public void AdvanceStage()
-        {
-            StagesSurvived++;
-            ResetLevelFlags();
-            GenerateChoices();
         }
 
         public void ResetLevelFlags() => TookDamageThisLevel = false;
@@ -52,37 +44,28 @@ namespace _1GameProject.Scripts.GameData
             GlobalLives.Value = Mathf.Min(GlobalLives.Value + amount, MaxLives);
         }
 
-        private void GenerateChoices()
+        // Инсталлер вызывает это, чтобы получить готовую сетку
+        public LevelConfig GetCurrentConfig()
         {
-            AvailableChoices.Clear();
+            CampaignLevel levelData = _route.Levels[CurrentLevelIndex];
+            DifficultyTemplate diffSettings = _route.GetSettings(levelData.Difficulty);
 
-            // 1. Выбираем случайный ПРОСТОЙ уровень (из первых 10, индексы 0-9)
-            int easyIndex = Random.Range(0, 10);
-            AvailableChoices.Add(CreateConfigFromTemplate(_route.Levels[easyIndex], easyIndex + 1));
+            Debug.Log($"[GameSessionModel] Грузим уровень: {CurrentLevelIndex + 1}. Сложность: {levelData.Difficulty}, Угроза: {levelData.Hazard}, Сетка: {diffSettings.Cols}x{diffSettings.Rows}");
 
-            // 2. Выбираем случайный СЛОЖНЫЙ уровень (из оставшихся 20, индексы 10-29)
-            int hardIndex = Random.Range(10, 30);
-            AvailableChoices.Add(CreateConfigFromTemplate(_route.Levels[hardIndex], hardIndex + 1));
-        }
-
-        private LevelConfig CreateConfigFromTemplate(CampaignLevel template, int realLevelNumber)
-        {
-            // Достаем настройки сетки (Cols, Rows, Min, Max) по выбранной сложности
-            DifficultyTemplate diffSettings = _route.GetSettings(template.Difficulty);
+            if (diffSettings == null)
+            {
+                Debug.LogError($"[GameSessionModel] Шаблон сложности {levelData.Difficulty} не найден!");
+            }
 
             return new LevelConfig
             {
-                NodeName = $"Уровень {realLevelNumber}",
-                NodeDescription = template.Hazard == LevelHazardType.None ? "Обычный путь" : "Опасный путь",
-                
-                // Берем размеры из глобального шаблона сложности
+                NodeName = $"Уровень {CurrentLevelIndex + 1}",
+                NodeDescription = levelData.Hazard == LevelHazardType.None ? "Обычный уровень" : "Опасный уровень",
                 Columns = diffSettings.Cols,
                 Rows = diffSettings.Rows,
                 MinWordLength = diffSettings.MinLen,
                 MaxWordLength = diffSettings.MaxLen,
-                
-                // А модификатор берем из самого уровня
-                Hazard = template.Hazard
+                Hazard = levelData.Hazard
             };
         }
     }

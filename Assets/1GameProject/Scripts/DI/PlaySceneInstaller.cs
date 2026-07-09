@@ -22,7 +22,7 @@ namespace _1GameProject.Scripts.DI
         [SerializeField] private GrandpaView _grandpaView;
         [SerializeField] private HealthBarView _healthBarView;
         
-        [SerializeField] private LevelEndWindowView _levelEndWindowView; // Перетащите сюда панель из Canvas
+        [SerializeField] private LevelEndWindowView _levelEndWindowView; 
         
         public override void InstallBindings()
         {
@@ -31,20 +31,27 @@ namespace _1GameProject.Scripts.DI
             Container.Bind<UIButtonSound>().FromComponentInHierarchy().AsSingle();
             
             // === СЛОВАРЬ ===
-            Container.Bind<WordService>()
-                .AsSingle()
-                .WithArguments(_wordsCsv)
-                .NonLazy();
+            Container.Bind<WordService>().AsSingle().WithArguments(_wordsCsv).NonLazy();
 
-            // === ГЛОБАЛЬНАЯ СЕССИЯ (Проверка заглушки) ===
+            // === ГЛОБАЛЬНАЯ СЕССИЯ И КОНФИГ ===
             var session = Container.Resolve<GameSessionModel>();
-            
-            if (session.CurrentConfig == null) 
+            LevelConfig configToPlay;
+
+            try
             {
+                // Пытаемся собрать конфиг из нашего глобального маршрута
+                configToPlay = session.GetCurrentConfig();
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError($"Ошибка загрузки конфига: {ex.Message}\n{ex.StackTrace}");
+                Debug.LogWarning("Создаю тестовый конфиг 4x4.");
+                
+                // Если мы запустили игровую сцену в обход Главного Меню (для тестов)
                 Debug.LogWarning("Запуск сцены без меню! Создаю тестовый конфиг 4x4.");
-                // ИСПРАВЛЕНИЕ: Используем new вместо ScriptableObject.CreateInstance
-                session.CurrentConfig = new LevelConfig 
+                configToPlay = new LevelConfig 
                 {
+                    NodeName = "Тестовый уровень",
                     Columns = 4,
                     Rows = 4,
                     MinWordLength = 3,
@@ -53,8 +60,8 @@ namespace _1GameProject.Scripts.DI
                 };
             }
 
-            // Биндим конфиг из глобальной сессии!
-            Container.Bind<LevelConfig>().FromInstance(session.CurrentConfig).AsSingle();
+            // Биндим готовый конфиг! Теперь все, кому он нужен (Генератор, Презентеры), получат именно его.
+            Container.Bind<LevelConfig>().FromInstance(configToPlay).AsSingle();
 
             // === ИГРОВАЯ ДОСКА ===
             Container.Bind<BoardGenerator>().AsSingle();
@@ -62,7 +69,6 @@ namespace _1GameProject.Scripts.DI
             Container.BindInterfacesAndSelfTo<BoardPresenter>().AsSingle().NonLazy();
             
             // === ЛОКАЛЬНАЯ МОДЕЛЬ СЦЕНЫ ===
-            // ИСПРАВЛЕНО: BindInterfacesAndSelfTo, чтобы Zenject вызвал Initialize()
             Container.BindInterfacesAndSelfTo<GameplayModel>().AsSingle().NonLazy();
 
             // === НАРРАТИВ И ЖИЗНИ (ДЕД) ===
@@ -77,7 +83,6 @@ namespace _1GameProject.Scripts.DI
             // === ФОНАРИК ===
             Container.Bind<FlashlightView>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<HazardPresenter>().AsSingle();
-            
         }
     }
 }
