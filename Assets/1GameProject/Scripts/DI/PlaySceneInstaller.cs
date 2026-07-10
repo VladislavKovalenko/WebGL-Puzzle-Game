@@ -22,7 +22,8 @@ namespace _1GameProject.Scripts.DI
         [SerializeField] private GrandpaView _grandpaView;
         [SerializeField] private HealthBarView _healthBarView;
         
-        [SerializeField] private LevelEndWindowView _levelEndWindowView; 
+        [SerializeField] private LevelEndWindowView _levelEndWindowView;
+        [SerializeField] private IntroSlideView _introSlideView; 
         
         public override void InstallBindings()
         {
@@ -80,6 +81,10 @@ namespace _1GameProject.Scripts.DI
             Container.Bind<LevelEndWindowView>().FromInstance(_levelEndWindowView).AsSingle();
             Container.BindInterfacesTo<LevelEndPresenter>().AsSingle().NonLazy();
             
+            // === ИНТРО СЛАЙД ===
+            Container.Bind<IntroSlideView>().FromInstance(_introSlideView).AsSingle();
+            Container.BindInterfacesTo<IntroSlidePresenter>().AsSingle().NonLazy();
+
             // === ФОНАРИК ===
             Container.Bind<FlashlightView>().FromComponentInHierarchy().AsSingle();
             Container.BindInterfacesTo<HazardPresenter>().AsSingle();

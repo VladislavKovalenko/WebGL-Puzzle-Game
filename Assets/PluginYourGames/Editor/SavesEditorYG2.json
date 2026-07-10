@@ -3,6 +3,7 @@
         1
     ],
     "completedLevels": [],
+    "isIntroWatched": true,
     "fpsCount": 60,
     "gameVolume": 70,
     "intExample": 5,
@@ -13,5 +14,5 @@
         false,
         false
     ],
-    "idSave": 22
+    "idSave": 35
 }

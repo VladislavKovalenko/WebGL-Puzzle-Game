@@ -39,7 +39,7 @@ namespace _1GameProject.Scripts.Bootstrap
 
         private void OnServicesLoaded(AllServicesAreLoadedSignal signal)
         {
-            ShowReady("👆 Нажмите для старта");
+            ShowReady("Нажмите на экран для старта");
         }
 
         public void ShowReady(string promptMessage = "Нажмите для старта")

@@ -28,6 +28,7 @@ namespace _1GameProject.Scripts.GameData
         public void StartNewRun()
         {
             GlobalLives.Value = MaxLives;
+            CurrentLevelIndex = 0;
             ResetLevelFlags();
         }
 

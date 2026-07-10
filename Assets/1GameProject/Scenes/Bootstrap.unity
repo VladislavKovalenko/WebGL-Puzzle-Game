@@ -332,6 +332,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainOrchestrator
       objectReference: {fileID: 0}
+    - target: {fileID: 7598939451855821838, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

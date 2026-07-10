@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using _1GameProject.Scripts.Events;
 using _1GameProject.Scripts.GameData;
+using _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu;
 using UniRx;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,6 +15,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
     {
         [Inject] private SignalBus _signalBus;
         [Inject] private GameSessionModel _sessionModel;
+        [Inject] private LevelsModel _levelsModel;
         
         [Header("Кнопки открытия")]
         [SerializeField] private Button _settingsButton;
@@ -65,6 +68,8 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
 
         public void StartGame()
         {
+            int maxUnlockedLevel = _levelsModel.UnlockedLevels.Max();
+            _sessionModel.CurrentLevelIndex = maxUnlockedLevel - 1;
             SceneManager.LoadScene(SceneNames.Gameplay);
         }
         

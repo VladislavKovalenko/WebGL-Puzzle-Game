@@ -11,6 +11,8 @@ namespace YG
         public List<int> unlockedLevels = new List<int> { 1 }; 
         
         // Список ID пройденных уровней (чтобы понимать, когда мы прошли все 30)
-        public List<int> completedLevels = new List<int>(); 
+        public List<int> completedLevels = new List<int>();
+
+        public bool isIntroWatched = false; 
     }
 }

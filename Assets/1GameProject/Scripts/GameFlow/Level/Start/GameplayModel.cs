@@ -1,17 +1,18 @@
 using UniRx;
 using Zenject;
 using _1GameProject.Scripts.GameData;
+using YG;
 
 namespace _1GameProject.Scripts.GameFlow.Level.Start
 {
-    public enum GameState { Playing, Win, Lose, Pause }
+    public enum GameState { Intro, Playing, Win, Lose, Pause }
     public enum GrandpaState { Calm, Wary, Frowning, Angry, Furious, Defeated }
 
     public class GameplayModel : IInitializable
     {
         private readonly GameSessionModel _sessionModel;
 
-        public ReactiveProperty<GameState> CurrentState { get; } = new(GameState.Playing);
+        public ReactiveProperty<GameState> CurrentState { get; } = new(GameState.Intro);
         public ReactiveProperty<GrandpaState> CurrentGrandpaState { get; } = new(GrandpaState.Calm);
 
         public ReactiveProperty<int> WordsFound { get; } = new(0);
@@ -25,7 +26,7 @@ namespace _1GameProject.Scripts.GameFlow.Level.Start
 
         public void Initialize()
         {
-            CurrentState.Value = GameState.Playing;
+            CurrentState.Value = YG2.saves.isIntroWatched ? GameState.Playing : GameState.Intro;
             WordsFound.Value = 0;
             
             _sessionModel.ResetLevelFlags();
