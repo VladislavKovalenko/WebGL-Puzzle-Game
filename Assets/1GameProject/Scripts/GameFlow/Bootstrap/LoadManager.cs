@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using YG;
 using Zenject;
 
 namespace _1GameProject.Scripts.GameFlow.Bootstrap
@@ -34,10 +35,10 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
 
             Debug.Log("[LoadingFlow] User gesture detected. Starting game...");
             
+            YG2.GameReadyAPI();
+            
             SceneManager.LoadScene(SceneNames.MainMenu);
         }
-        
-        //тут нужно условие, что нажатия сработают только если получен сигнал 
 
         private async UniTask WaitForUserGestureAsync()
         {

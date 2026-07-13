@@ -16,12 +16,9 @@ namespace _1GameProject.Scripts.DI
     public class PlaySceneInstaller : MonoInstaller
     {
         [SerializeField] private TextAsset _wordsCsv;
-        
         [SerializeField] private BoardView _boardView; 
-        
         [SerializeField] private GrandpaView _grandpaView;
         [SerializeField] private HealthBarView _healthBarView;
-        
         [SerializeField] private LevelEndWindowView _levelEndWindowView;
         [SerializeField] private IntroSlideView _introSlideView; 
         
@@ -36,32 +33,8 @@ namespace _1GameProject.Scripts.DI
 
             // === ГЛОБАЛЬНАЯ СЕССИЯ И КОНФИГ ===
             var session = Container.Resolve<GameSessionModel>();
-            LevelConfig configToPlay;
+            LevelConfig configToPlay = session.GetCurrentConfig();
 
-            try
-            {
-                // Пытаемся собрать конфиг из нашего глобального маршрута
-                configToPlay = session.GetCurrentConfig();
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogError($"Ошибка загрузки конфига: {ex.Message}\n{ex.StackTrace}");
-                Debug.LogWarning("Создаю тестовый конфиг 4x4.");
-                
-                // Если мы запустили игровую сцену в обход Главного Меню (для тестов)
-                Debug.LogWarning("Запуск сцены без меню! Создаю тестовый конфиг 4x4.");
-                configToPlay = new LevelConfig 
-                {
-                    NodeName = "Тестовый уровень",
-                    Columns = 4,
-                    Rows = 4,
-                    MinWordLength = 3,
-                    MaxWordLength = 6,
-                    Hazard = LevelHazardType.None
-                };
-            }
-
-            // Биндим готовый конфиг! Теперь все, кому он нужен (Генератор, Презентеры), получат именно его.
             Container.Bind<LevelConfig>().FromInstance(configToPlay).AsSingle();
 
             // === ИГРОВАЯ ДОСКА ===

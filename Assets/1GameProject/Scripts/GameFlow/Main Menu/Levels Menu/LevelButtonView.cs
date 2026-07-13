@@ -32,12 +32,15 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
         
         public Image _frameImage;
         
+        [Header("Иконки статуса")]
+        [SerializeField] private GameObject _lockIcon;
+        [SerializeField] private GameObject _completedIcon;
+
         [Header("Настройки кнопки")]
         [Tooltip("Заполняется автоматически из имени объекта")]
         public int LevelIndex; 
         
         [SerializeField] private TextMeshProUGUI _levelText;
-        [SerializeField] private GameObject _lockIcon; 
 
         private Button _button;
 
@@ -67,12 +70,28 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
             SetupButtonFrame();
         }
 
-        public void SetUnlockedState(bool isUnlocked)
+        public void UpdateState(bool isUnlocked, bool isCompleted)
         {
             if (_button == null) _button = GetComponent<Button>();
-            
-            _button.interactable = isUnlocked;
-            if (_lockIcon != null) _lockIcon.SetActive(!isUnlocked);
+
+            if (isCompleted)
+            {
+                _button.interactable = false;
+                if (_lockIcon != null) _lockIcon.SetActive(false);
+                if (_completedIcon != null) _completedIcon.SetActive(true);
+            }
+            else if (isUnlocked)
+            {
+                _button.interactable = true;
+                if (_lockIcon != null) _lockIcon.SetActive(false);
+                if (_completedIcon != null) _completedIcon.SetActive(false);
+            }
+            else
+            {
+                _button.interactable = false;
+                if (_lockIcon != null) _lockIcon.SetActive(true);
+                if (_completedIcon != null) _completedIcon.SetActive(false);
+            }
         }
 
         /// <summary>

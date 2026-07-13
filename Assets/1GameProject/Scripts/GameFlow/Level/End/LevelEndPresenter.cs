@@ -6,6 +6,7 @@ using _1GameProject.Scripts.GameFlow.Level.Start;
 using _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu;
 using UniRx;
 using UnityEngine.SceneManagement;
+using YG;
 using Zenject;
 
 namespace _1GameProject.Scripts.GameFlow.Level.End
@@ -66,6 +67,7 @@ namespace _1GameProject.Scripts.GameFlow.Level.End
         private void ReturnToMenu(bool openLevelsMenu)
         {
             _sessionModel.AutoOpenLevelsMenu = openLevelsMenu;
+            YG2.InterstitialAdvShow();
             SceneManager.LoadScene(SceneNames.MainMenu);
         }
 

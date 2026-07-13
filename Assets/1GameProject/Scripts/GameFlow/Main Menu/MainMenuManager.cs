@@ -16,7 +16,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
         [Inject] private SignalBus _signalBus;
         [Inject] private GameSessionModel _sessionModel;
         [Inject] private LevelsModel _levelsModel;
-        
+
         [Header("Кнопки открытия")]
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _startGameButton;
@@ -26,7 +26,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
         [Header("Кнопки ЗАКРЫТИЯ (Назад в меню)")]
         [SerializeField] private Button _closeStoreButton;
         [SerializeField] private Button _closeLevelsButton;
-        
+
         [Header("Панели (Объекты)")]
         public GameObject MainMenu;
         public GameObject Levels;
@@ -34,22 +34,26 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
         public GameObject Settings;
         public GameObject MainMenuSelector;
 
+        private bool _isInputLocked = true;
+
         private void Start()
         {
-            _startGameButton.OnClickAsObservable().Subscribe(_ => StartGame()).AddTo(this);   
-            _openLevelsButton.OnClickAsObservable().Subscribe(_ => OpenLevels()).AddTo(this);
-            _openStoreButton.OnClickAsObservable().Subscribe(_ => OpenStore()).AddTo(this);
-            _settingsButton.OnClickAsObservable().Subscribe(_ => OpenSettings()).AddTo(this);
+            Observable.Timer(TimeSpan.FromSeconds(0.5f))
+                .Subscribe(_ => _isInputLocked = false)
+                .AddTo(this);
+
+            _startGameButton.OnClickAsObservable().Where(_ => !_isInputLocked).Subscribe(_ => StartGame()).AddTo(this);
+            _openLevelsButton.OnClickAsObservable().Where(_ => !_isInputLocked).Subscribe(_ => OpenLevels()).AddTo(this);
+            _openStoreButton.OnClickAsObservable().Where(_ => !_isInputLocked).Subscribe(_ => OpenStore()).AddTo(this);
+            _settingsButton.OnClickAsObservable().Where(_ => !_isInputLocked).Subscribe(_ => OpenSettings()).AddTo(this);
 
             if (_closeStoreButton != null)
-                _closeStoreButton.OnClickAsObservable().Subscribe(_ => BackToMainMenu()).AddTo(this);
-                
-            if (_closeLevelsButton != null)
-                _closeLevelsButton.OnClickAsObservable().Subscribe(_ => BackToMainMenu()).AddTo(this);
+                _closeStoreButton.OnClickAsObservable().Where(_ => !_isInputLocked).Subscribe(_ => BackToMainMenu()).AddTo(this);
 
-            _signalBus.GetStream<BackToMainMenuSignal>()
-                .Subscribe(_ => BackToMainMenu())
-                .AddTo(this);
+            if (_closeLevelsButton != null)
+                _closeLevelsButton.OnClickAsObservable().Where(_ => !_isInputLocked).Subscribe(_ => BackToMainMenu()).AddTo(this);
+
+            _signalBus.Subscribe<BackToMainMenuSignal>(BackToMainMenu);
 
             if (_sessionModel.AutoOpenLevelsMenu)
             {
@@ -61,9 +65,17 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
         private void Update()
         {
             bool isMainMenuActive = !Levels.activeSelf && !Store.activeSelf && !Settings.activeSelf;
-            
+
             _settingsButton.gameObject.SetActive(isMainMenuActive);
             MainMenuSelector.SetActive(isMainMenuActive);
+        }
+
+        private void OnDestroy()
+        {
+            if (_signalBus != null)
+            {
+                _signalBus.TryUnsubscribe<BackToMainMenuSignal>(BackToMainMenu);
+            }
         }
 
         public void StartGame()
@@ -72,7 +84,7 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu
             _sessionModel.CurrentLevelIndex = maxUnlockedLevel - 1;
             SceneManager.LoadScene(SceneNames.Gameplay);
         }
-        
+
         public void OpenLevels()
         {
             MainMenu.SetActive(false);

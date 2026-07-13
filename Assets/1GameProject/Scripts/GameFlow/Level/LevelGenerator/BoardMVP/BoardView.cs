@@ -47,5 +47,40 @@ namespace _1GameProject.Scripts.GameFlow.Level.LevelGenerator.BoardMVP
             }
             Cells.Clear();
         }
+
+        public Rect GetBoardScreenRect()
+        {
+            if (_gridContainer == null || _gridContainer.childCount == 0)
+                return new Rect(0, 0, Screen.width, Screen.height);
+
+            float minX = float.MaxValue, minY = float.MaxValue;
+            float maxX = float.MinValue, maxY = float.MinValue;
+
+            Camera cam = null;
+            var canvas = GetComponentInParent<Canvas>();
+            if (canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay)
+                cam = canvas.worldCamera;
+
+            foreach (Transform child in _gridContainer)
+            {
+                var rectTrans = child as RectTransform;
+                if (rectTrans == null) continue;
+
+                Vector3[] corners = new Vector3[4];
+                rectTrans.GetWorldCorners(corners);
+
+                for (int i = 0; i < 4; i++)
+                {
+                    Vector3 screenPos = RectTransformUtility.WorldToScreenPoint(cam, corners[i]);
+
+                    if (screenPos.x < minX) minX = screenPos.x;
+                    if (screenPos.x > maxX) maxX = screenPos.x;
+                    if (screenPos.y < minY) minY = screenPos.y;
+                    if (screenPos.y > maxY) maxY = screenPos.y;
+                }
+            }
+
+            return Rect.MinMaxRect(minX, minY, maxX, maxY);
+        }
     }
 }

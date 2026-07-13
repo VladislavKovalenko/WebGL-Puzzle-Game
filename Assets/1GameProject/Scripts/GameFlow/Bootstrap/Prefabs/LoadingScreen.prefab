@@ -86,8 +86,8 @@ GameObject:
   - component: {fileID: 6343049353515367740}
   - component: {fileID: 9069679986967764009}
   - component: {fileID: 8721123827481395691}
-  - component: {fileID: 3583043107116632882}
   - component: {fileID: 8213949107852620714}
+  - component: {fileID: 5388698159423113501}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -154,20 +154,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3583043107116632882
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498461117855133002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
-  m_AspectMode: 3
-  m_AspectRatio: 0.7
 --- !u!114 &8213949107852620714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +166,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308c34e0dbe042a2b94c40e3c7d0cf63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Bootstraper::_1GameProject.Scripts.Bootstrap.LoadingFlowHandler
+--- !u!114 &5388698159423113501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498461117855133002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.AspectRatioFitter
+  m_AspectMode: 3
+  m_AspectRatio: 0.5625
 --- !u!1 &1902102326403576642
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

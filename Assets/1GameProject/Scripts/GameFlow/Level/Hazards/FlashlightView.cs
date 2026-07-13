@@ -8,22 +8,29 @@ namespace _1GameProject.Scripts.GameFlow.Level.Hazards
     {
         [SerializeField] private Material _fogMaterial;
 
-        [Header("Follow Settings")]
-        [Tooltip("Скорость догоняния (больше = быстрее)")]
+        [Header("Follow Settings (Для ПК)")]
         [SerializeField] private float _followSpeed = 8f;
-
-        [Tooltip("Максимальная дистанция отставания в пикселях. " +
-                 "Если курсор уйдёт дальше — луч телепортируется ближе.")]
         [SerializeField] private float _maxLagDistance = 300f;
+
+        [Header("Auto-Move Settings (Для Мобилок)")]
+        [Tooltip("Ограничение движения по X (0 = левый край, 1 = правый)")]
+        [SerializeField, Range(0f, 1f)] private float _minXPercent = 0.2f;
+        [SerializeField, Range(0f, 1f)] private float _maxXPercent = 0.8f;
+
+        [Tooltip("Ограничение движения по Y (0 = низ экрана, 1 = верх)")]
+        [SerializeField, Range(0f, 1f)] private float _minYPercent = 0.3f;
+        [SerializeField, Range(0f, 1f)] private float _maxYPercent = 0.7f;
+
+        public float MinXPercent => _minXPercent;
+        public float MaxXPercent => _maxXPercent;
+        public float MinYPercent => _minYPercent;
+        public float MaxYPercent => _maxYPercent;
 
         private Image _image;
         private Material _materialInstance;
 
-        // Текущая сглаженная позиция фонарика
         private Vector2 _currentPosition;
-        // Целевая позиция (куда двигается курсор)
         private Vector2 _targetPosition;
-        // Инициализирована ли начальная позиция
         private bool _positionInitialized;
 
         private static readonly int FlashlightCenterID = Shader.PropertyToID("_FlashlightCenter");
@@ -49,31 +56,24 @@ namespace _1GameProject.Scripts.GameFlow.Level.Hazards
             gameObject.SetActive(false);
         }
 
-        /// <summary>
-        /// Вызывается каждый кадр из HazardPresenter.
-        /// screenPosition — Input.mousePosition или touch position.
-        /// </summary>
         public void UpdatePosition(Vector2 screenPosition)
         {
             if (_materialInstance == null) return;
 
             _targetPosition = screenPosition;
 
-            // Первый кадр — телепортируемся к курсору без задержки
             if (!_positionInitialized)
             {
                 _currentPosition = _targetPosition;
                 _positionInitialized = true;
             }
 
-            // Плавное следование (экспоненциальное сглаживание)
             _currentPosition = Vector2.Lerp(
                 _currentPosition,
                 _targetPosition,
                 1f - Mathf.Exp(-_followSpeed * Time.deltaTime)
             );
 
-            // Ограничение максимального отставания
             Vector2 diff = _targetPosition - _currentPosition;
             if (diff.magnitude > _maxLagDistance)
             {
@@ -84,7 +84,6 @@ namespace _1GameProject.Scripts.GameFlow.Level.Hazards
                 new Vector4(_currentPosition.x, _currentPosition.y, 0, 0));
         }
 
-        // Настройка из кода
         public void SetRadius(float pixels)
         {
             if (_materialInstance != null)
@@ -95,16 +94,6 @@ namespace _1GameProject.Scripts.GameFlow.Level.Hazards
         {
             if (_materialInstance != null)
                 _materialInstance.SetFloat(SoftnessID, pixels);
-        }
-
-        public void SetFollowSpeed(float speed)
-        {
-            _followSpeed = speed;
-        }
-
-        public void SetMaxLagDistance(float distance)
-        {
-            _maxLagDistance = distance;
         }
 
         private void OnDestroy()

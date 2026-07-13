@@ -38,8 +38,11 @@ namespace _1GameProject.Scripts.GameFlow.Main_Menu.Levels_Menu
             foreach (var btn in _levelButtons)
             {
                 bool isUnlocked = _levelsModel.IsLevelUnlocked(btn.LevelIndex);
+                bool isCompleted = _levelsModel.IsLevelCompleted(btn.LevelIndex);
+
                 btn.gameObject.SetActive(isUnlocked);
-                btn.SetUnlockedState(isUnlocked);
+
+                btn.UpdateState(isUnlocked, isCompleted);
             }
         }
 

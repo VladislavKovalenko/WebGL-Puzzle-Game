@@ -31,17 +31,5 @@ namespace _1GameProject.Scripts.Audio
             else
                 Debug.LogWarning($"[UISoundSettings] EventReference is null: {name}", this);
         }
-        
     }
 }
-
-// public void PlayHover()  => PlayOneShot(hover);
-// public void PlayClick()  => PlayOneShot(click);
-//
-// private void PlayOneShot(EventReference reference)
-// {
-//     if (!reference.IsNull)
-//         RuntimeManager.PlayOneShot(reference);
-//     else
-//         Debug.LogWarning($"[UISoundSettings] EventReference is null: {name}", this);
-// }

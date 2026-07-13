@@ -27,10 +27,7 @@ namespace _1GameProject.Scripts.UI.SettingsWindow
 
         public void Initialize()
         {
-            // Подписка на открытие окна
-            _signalBus.GetStream<SettingsMenuOpenSignal>()
-                .Subscribe(_ => OpenWindow())
-                .AddTo(_disposables);
+            _signalBus.Subscribe<SettingsMenuOpenSignal>(OpenWindow);
 
             // Подписки на кнопки UI
             _view.OnCloseClicked.Subscribe(_ => CloseWindow()).AddTo(_disposables);
@@ -100,6 +97,10 @@ namespace _1GameProject.Scripts.UI.SettingsWindow
             CloseWindow();
         }
 
-        public void Dispose() => _disposables.Dispose();
+        public void Dispose()
+        {
+            _signalBus.TryUnsubscribe<SettingsMenuOpenSignal>(OpenWindow);
+            _disposables.Dispose();
+        }
     }
 }

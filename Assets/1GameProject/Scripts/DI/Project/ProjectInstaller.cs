@@ -1,4 +1,4 @@
-﻿
+﻿using _1GameProject.Scripts.Audio;
 using _1GameProject.Scripts.Bootstrap;
 using _1GameProject.Scripts.Bootstrap.Interfaces_for_Services;
 using _1GameProject.Scripts.GameData;
@@ -13,8 +13,6 @@ namespace _1GameProject.Scripts.DI
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private GameObject audioManagerPrefab;
-        
-        //В целом сюда можно сразу биндить SO, так будет даже быстрее.
 
         public override void InstallBindings()
         {
@@ -22,21 +20,22 @@ namespace _1GameProject.Scripts.DI
                 .To<AnalyticsService>()
                 .AsSingle()
                 .NonLazy();
-            
-            //можно и без префаба, но настраивать FMOD будет неудобно
+
             Container.Bind<FMODBankLoader>()
                 .FromComponentInNewPrefab(audioManagerPrefab)
                 .AsSingle()
                 .NonLazy();
 
             Container.Bind<IAsyncInitService>().To<FMODBankLoader>().FromResolve();
-            
-            //Levels Model глобальная для проекта, потому что к ней нужен доступ и из главного меню и из игры при начале и завершении уровня.
-            Container.Bind<LevelsModel>().AsSingle();
-            
-            Container.Bind<GameSessionModel>().AsSingle().NonLazy();
-            
 
+            Container.Bind<FMODFocusHandler>()
+                .FromNewComponentOnNewGameObject()
+                .AsSingle()
+                .NonLazy();
+
+            Container.Bind<LevelsModel>().AsSingle();
+
+            Container.Bind<GameSessionModel>().AsSingle().NonLazy();
         }
     }
 }

@@ -33,14 +33,14 @@ Material:
     - _EdgeNoiseScale: 3
     - _EdgeNoiseSpeed: 1.5
     - _EdgeNoiseStrength: 30
-    - _LightFalloff: 0.68
-    - _LightIntensity: 0.71
+    - _LightFalloff: 1.83
+    - _LightIntensity: 0.85
     - _NoiseIntensity: 0.6
     - _NoiseOctaves: 3
     - _NoiseScale: 3
     - _Radius: 170
-    - _SmokeContrast: 6.26
-    - _SmokeDensity: 1.27
+    - _SmokeContrast: 4.74
+    - _SmokeDensity: 3.83
     - _SmokeScale: 1.5
     - _Softness: 89.7
     - _Stencil: 0

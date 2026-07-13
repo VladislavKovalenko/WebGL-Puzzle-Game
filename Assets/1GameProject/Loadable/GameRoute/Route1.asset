@@ -111,50 +111,50 @@ MonoBehaviour:
     Difficulty: 2
     Hazard: 1
   - InspectorName: "\u0423\u0440 19 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard"
+    Difficulty: 2
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 20 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
+      - Hard"
+    Difficulty: 2
+    Hazard: 0
+  - InspectorName: "\u0423\u0440 21 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
       - Hard + Flashlight"
     Difficulty: 2
     Hazard: 1
-  - InspectorName: "\u0423\u0440 20 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
-  - InspectorName: "\u0423\u0440 21 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
   - InspectorName: "\u0423\u0440 22 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
+      - Hard"
+    Difficulty: 2
     Hazard: 0
   - InspectorName: "\u0423\u0440 23 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
   - InspectorName: "\u0423\u0440 24 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
+      - Hard"
+    Difficulty: 2
     Hazard: 0
   - InspectorName: "\u0423\u0440 25 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
   - InspectorName: "\u0423\u0440 26 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
+      - Hard"
+    Difficulty: 2
     Hazard: 0
   - InspectorName: "\u0423\u0440 27 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
   - InspectorName: "\u0423\u0440 28 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
   - InspectorName: "\u0423\u0440 29 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
   - InspectorName: "\u0423\u0440 30 [\u0421\u043B\u043E\u0436\u043D\u044B\u0439 \u043F\u0443\u043B]
-      - Nightmare"
-    Difficulty: 3
-    Hazard: 0
+      - Hard + Flashlight"
+    Difficulty: 2
+    Hazard: 1
