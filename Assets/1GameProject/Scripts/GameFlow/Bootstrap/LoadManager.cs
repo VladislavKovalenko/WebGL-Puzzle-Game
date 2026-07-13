@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 using UnityEngine.SceneManagement;
 using YG;
 using Zenject;
@@ -21,7 +22,7 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
         {
             _signalBus.Unsubscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
         }
-        
+
         private void OnServicesLoaded(AllServicesAreLoadedSignal signal)
         {
             HandleServicesLoadedAsync().Forget();
@@ -30,32 +31,23 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
         private async UniTaskVoid HandleServicesLoadedAsync()
         {
             Debug.Log("[LoadingFlow] Services ready, waiting for user gesture...");
-            
+
             await WaitForUserGestureAsync();
 
             Debug.Log("[LoadingFlow] User gesture detected. Starting game...");
-            
+
             YG2.GameReadyAPI();
-            
+
             SceneManager.LoadScene(SceneNames.MainMenu);
         }
 
         private async UniTask WaitForUserGestureAsync()
         {
-            while (true)
-            {
-                if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
-                    return;
-                
-                if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-                    return;
-                
-                if (Touchscreen.current != null && 
-                    Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
-                    return;
+            bool isPressed = false;
 
-                await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            }
+            using var trace = InputSystem.onAnyButtonPress.CallOnce(ctrl => isPressed = true);
+
+            await UniTask.WaitUntil(() => isPressed);
         }
     }
 }

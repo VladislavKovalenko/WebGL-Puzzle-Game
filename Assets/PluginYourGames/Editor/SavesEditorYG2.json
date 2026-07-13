@@ -1,0 +1,22 @@
+{
+    "unlockedLevels": [
+        1,
+        4,
+        21
+    ],
+    "completedLevels": [
+        1
+    ],
+    "isIntroWatched": true,
+    "fpsCount": 60,
+    "gameVolume": 50,
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 6
+}
