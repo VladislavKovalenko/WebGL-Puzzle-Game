@@ -11,15 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Marketing.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Marketing/PocketPublisherTool.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Marketing/PocketPublisherTool.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/PlayMode/TrueFullscreenGameView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/PlayMode/TrueFullscreenGameView.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/GamePlay.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/GamePlay.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/FMOD/Resources/FMODStudioSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README-RU.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-RU.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,6 +174,8 @@
       <workItem from="1783810960357" duration="1671000" />
       <workItem from="1783868486329" duration="765000" />
       <workItem from="1783971693249" duration="5635000" />
+      <workItem from="1784021665684" duration="1966000" />
+      <workItem from="1784045231668" duration="638000" />
     </task>
     <servers />
   </component>
