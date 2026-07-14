@@ -1,11 +1,8 @@
 [🇷🇺 Читать на русском](README-RU.md)
 
-# Word Hunt — Unity Web Word Puzzle with Light Horror Elements
+# Vasily Ivanovich's Fillwords — Unity Web Word Puzzle with Light Horror Elements
 
-<!-- 
-  PLACEHOLDER: Cover image or gameplay GIF
-  ![Gameplay](docs/gameplay.gif)
--->
+<img width="1607" height="950" alt="image" src="https://github.com/user-attachments/assets/17c7870e-b32e-4943-ba78-8f0e56791105" />
 
 **Platform:** Web (Yandex Games) <!-- — [▶ Play](PLACEHOLDER_LINK) -->  
 **Genre:** Word Puzzle / Light Horror  
@@ -157,5 +154,4 @@ Scripts/
 
 ## Contact
 
-<!-- PLACEHOLDER: name, email, LinkedIn, Telegram -->
-```
+Vladislav, https://t.me/PureGenious
