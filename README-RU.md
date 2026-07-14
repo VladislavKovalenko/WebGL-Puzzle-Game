@@ -1,5 +1,8 @@
 # Word Hunt — Unity Web-пазл со словами и элементами легкого хоррора
 
+<img width="1607" height="950" alt="image" src="https://github.com/user-attachments/assets/f534edaa-696a-4bd8-9b2c-3082e8511bfb" />
+
+
 **Платформа:** Web (Яндекс Игры)  
 **Жанр:** Пазл со словами / Легкий хоррор  
 **Движок:** Unity  
@@ -141,5 +144,5 @@ Scripts/
 ---
 
 ## Контакты
-
+Vladislav, https://t.me/PureGenious
 
