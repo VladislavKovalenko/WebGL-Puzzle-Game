@@ -1954,7 +1954,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESET
+  m_text: "\u0421\u0411\u0420\u041E\u0421 \u041D\u0410\u0421\u0422\u0420\u041E\u0415\u041A"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 17b31c72c56b6a94984866ee47fe4362, type: 2}
   m_sharedMaterial: {fileID: 4718895199402713453, guid: 17b31c72c56b6a94984866ee47fe4362, type: 2}
@@ -1981,8 +1981,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60.43
-  m_fontSizeBase: 60.43
+  m_fontSize: 41.5
+  m_fontSizeBase: 41.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2333,7 +2333,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1706088203}
-  - component: {fileID: 1706088204}
   - component: {fileID: 1706088205}
   - component: {fileID: 1706088206}
   m_Layer: 0
@@ -2351,25 +2350,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706088201}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1216690560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1706088204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1706088201}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5333c0adb5717fb4fb74cf58b6cd7519, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Audio.MainMenuSoundtrack
 --- !u!114 &1706088205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2412,7 +2399,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41a9b2f034e38ca4f8e4fb96c8655f65, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FMODAudioManager
+  m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.Audio.FMODGameAudioManager
 --- !u!1 &1843524407
 GameObject:
   m_ObjectHideFlags: 0
@@ -2689,7 +2676,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1012277165}
     m_Modifications:
+    - target: {fileID: 665557470075977718, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_text
+      value: "\u0427\u0410\u0421\u0422\u041E\u0422\u0410 \u041A\u0410\u0414\u0420\u041E\u0412"
+      objectReference: {fileID: 0}
     - target: {fileID: 847869176918159924, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1128982018803638703, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -2757,6 +2752,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5668362123783877653, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5674094624994052902, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2817,6 +2816,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -7413979819777789378, guid: 485fe35602a43b24498b027d4ae7012d, type: 3}
+    - target: {fileID: 8158257902963590106, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8757258157593624608, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2896,6 +2899,22 @@ PrefabInstance:
     - target: {fileID: 8757258157593624608, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8783383019541574325, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 159.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 8783383019541574325, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 79.129
+      objectReference: {fileID: 0}
+    - target: {fileID: 8783383019541574325, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 79.988
+      objectReference: {fileID: 0}
+    - target: {fileID: 8783383019541574325, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8807973314076516618, guid: 1853334faac12f54c9ffb39bb0f52030, type: 3}
       propertyPath: m_Type

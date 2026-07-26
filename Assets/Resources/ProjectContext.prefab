@@ -109,5 +109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04423eab619343dcbbffca765f1b5b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.DI.ProjectInstaller
+  loadingScreenPrefab: {fileID: 7239426096194003045, guid: 9c6c64caeaf064d4b8ccfeb8acddf5c8, type: 3}
+  loadManagerPrefab: {fileID: 9187763850497318216, guid: c3d9af64dfdee374aa37c050289c6497, type: 3}
   audioManagerPrefab: {fileID: 1415570417500093334, guid: 9c55fbaf6c4121a4faed3b60028675e9, type: 3}
-  _mainCampaign: {fileID: 11400000, guid: 384bebf9cc130c1488706b75f03fa319, type: 2}

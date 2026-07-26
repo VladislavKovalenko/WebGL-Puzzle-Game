@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
@@ -8,20 +7,27 @@ namespace _1GameProject.Scripts.Audio
     public class UIButtonSoundService : MonoBehaviour
     {
         [Inject] private SoundLibrarySO _soundLibrary;
-        private Canvas _canvas;
 
         void Start()
         {
-            _canvas = Object.FindObjectOfType<Canvas>();
+            // Получаем все корневые объекты ТОЛЬКО в текущей сцене (Главное Меню)
+            var rootObjects = gameObject.scene.GetRootGameObjects();
 
-            foreach (var button in _canvas.GetComponentsInChildren<Button>(true))
+            foreach (var root in rootObjects)
             {
-
-                var buttonSound = button.gameObject.AddComponent<UIButtonSound>();
+                // Ищем все кнопки, даже выключенные (Store, Settings, Levels)
+                var buttons = root.GetComponentsInChildren<Button>(true);
                 
-                buttonSound.Init(_soundLibrary);
+                foreach (var button in buttons)
+                {
+                    // Проверяем, чтобы не повесить звук дважды на одну кнопку
+                    if (button.GetComponent<UIButtonSound>() == null)
+                    {
+                        var buttonSound = button.gameObject.AddComponent<UIButtonSound>();
+                        buttonSound.Init(_soundLibrary);
+                    }
+                }
             }
         }
-
     }
 }

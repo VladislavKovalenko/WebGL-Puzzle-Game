@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 1030031063954451947}
   - component: {fileID: 3185060041505181020}
   - component: {fileID: 6887506786375735490}
-  - component: {fileID: 1071353659723580688}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -256,21 +255,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1071353659723580688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1902102326403576642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e27ead734fb44778891fca35c7d61afb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Bootstraper::_1GameProject.Scripts.Bootstrap.LoadingScreenUgui
-  spinnerObject: {fileID: 1902102326403576642}
-  statusText: {fileID: 7434367198343373715}
-  spinDuration: 2
 --- !u!1 &4204809531242356655
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +320,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u0417\u0410\u0413\u0420\u0423\u0417\u041A\u0410..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 17b31c72c56b6a94984866ee47fe4362, type: 2}
   m_sharedMaterial: {fileID: 4718895199402713453, guid: 17b31c72c56b6a94984866ee47fe4362, type: 2}
@@ -558,8 +542,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27ead734fb44778891fca35c7d61afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Bootstraper::_1GameProject.Scripts.Bootstrap.LoadingScreenManager
-  spinnerObject: {fileID: 0}
-  statusText: {fileID: 0}
+  spinnerObject: {fileID: 1902102326403576642}
+  statusText: {fileID: 7434367198343373715}
   spinDuration: 2
 --- !u!1 &7938828456616603881
 GameObject:
@@ -578,7 +562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8044494239008809151
 Transform:
   m_ObjectHideFlags: 0

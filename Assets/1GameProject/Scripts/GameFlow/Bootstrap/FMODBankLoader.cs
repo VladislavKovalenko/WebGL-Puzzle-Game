@@ -27,14 +27,9 @@ namespace Audio
         {
             foreach (string b in banks)
             {
-                FMODUnity.RuntimeManager.LoadBank(b,true);
+                FMODUnity.RuntimeManager.LoadBank(b, true);
                 Debug.Log("Loaded bank " + b);
             }
-            
-            //For Chrome / Safari browsers / WebGL.  Reset audio on response to user interaction (LoadBanks is called from a button press), to allow audio to be heard.
-            
-            FMODUnity.RuntimeManager.CoreSystem.mixerSuspend();
-            FMODUnity.RuntimeManager.CoreSystem.mixerResume();
         }
         
 

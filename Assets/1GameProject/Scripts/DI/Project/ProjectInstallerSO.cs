@@ -12,7 +12,7 @@ public class ProjectInstallerSO : ScriptableObjectInstaller<ProjectInstallerSO>
     
     public override void InstallBindings()
     {
-        Container.BindInstance(SoundLibrary).IfNotBound();
-        Container.BindInstance(MainCampaign).IfNotBound();
+        Container.BindInstance(SoundLibrary).IfNotBound(); //библиотека звуков
+        Container.BindInstance(MainCampaign).IfNotBound(); //игровой rogue-like маршрут
     }
 }

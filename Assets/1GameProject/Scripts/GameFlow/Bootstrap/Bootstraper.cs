@@ -3,27 +3,21 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
-using _1GameProject.Scripts.Events;
 using _1GameProject.Scripts.Bootstrap.Interfaces_for_Services;
+using _1GameProject.Scripts.GameFlow.Bootstrap;
 
 namespace _1GameProject.Scripts.Bootstrap
 {
     public class Bootstraper : MonoBehaviour
     {
-        //DI
-        [Inject] private DiContainer _container; //для проверки UI, но спорно
-        [Inject] private SignalBus _signalBus;
+        [Inject] private LoadManager _loadManager;
         
         //все наши сервисы
         [Inject] private List<IAsyncInitService> _asyncInitServices;
         
-        
-        [Header("UI")]
-        [SerializeField] private GameObject loadingScreenPrefab;
-        [Inject] private LoadingScreenManager _loadingUI;
+        [Inject] private LoadingScreenManager _bootstrapScreenManager;
         
         
-
         private async UniTaskVoid Start()
         {
             try
@@ -36,10 +30,10 @@ namespace _1GameProject.Scripts.Bootstrap
             }
         }
         
-
+        
         private async UniTask InitializeBootstrap()
         {
-            _loadingUI.UpdateProgress(0f, "Загрузка...");
+            _bootstrapScreenManager.UpdateProgress("ЗАГРУЗКА...");
             
             //перебираем все сервисы
             var tasks = new List<UniTask>();
@@ -51,9 +45,7 @@ namespace _1GameProject.Scripts.Bootstrap
             
             await UniTask.WhenAll(tasks);
             
-            _loadingUI.UpdateProgress(1f, "Готово!");
-            
-            _signalBus.Fire(new AllServicesAreLoadedSignal());
+            _loadManager.OnServicesReady();
         }
 
         private async UniTask SafeInitialize(UniTask task, string serviceName)

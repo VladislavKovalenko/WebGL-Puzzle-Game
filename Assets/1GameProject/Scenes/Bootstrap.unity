@@ -215,7 +215,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 162164806}
-  - {fileID: 2108802182}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &413695006
@@ -244,11 +243,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 413695006}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69186e9b787f4f1699160ed79cb6a3c7, type: 3}
+  m_Script: {fileID: 11500000, guid: b6acbc5c7aa3414c82b5a19f223ed0be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_1GameProject.Scripts.DI.BootstrapSceneInstaller
-  LoadingScreenManagerPrefab: {fileID: 7239426096194003045, guid: 9c6c64caeaf064d4b8ccfeb8acddf5c8, type: 3}
-  LoadManagerPrefab: {fileID: 9187763850497318216, guid: c3d9af64dfdee374aa37c050289c6497, type: 3}
 --- !u!4 &413695008
 Transform:
   m_ObjectHideFlags: 0
@@ -270,15 +267,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 252730940}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1626204004821419161, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -945.6993
+      value: -0.16912842
       objectReference: {fileID: 0}
     - target: {fileID: 1626204004821419161, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -433.06262
+      value: 0.05078125
       objectReference: {fileID: 0}
     - target: {fileID: 1626204004821419161, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
       propertyPath: m_LocalPosition.z
@@ -341,13 +338,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
---- !u!4 &2108802182 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1626204004821419161, guid: 63a1246ee570c764da7878d3b2570f39, type: 3}
-  m_PrefabInstance: {fileID: 2108802181}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2108802181}
   - {fileID: 252730940}

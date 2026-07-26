@@ -11,9 +11,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1e888167-56d1-4f78-b630-4610773e54c0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapperSceneContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapperSceneContext.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Puzzle-Game/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README-RU.md" beforeDir="false" afterPath="$PROJECT_DIR$/README-RU.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Art/UI/Fonts/GLIWA TYPE/GLIWA TYPE SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Bootstrap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Bootstrap.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scenes/Main Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/FMODGameAudioManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/FMODGameAudioManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSoundService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/UIButtonSoundService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapSceneInstaller.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapSceneInstaller.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/MainMenuInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/ProjectInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/ProjectInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/ProjectInstallerSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/ProjectInstallerSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Marketing/PocketPublisherTool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/Marketing/PocketPublisherTool.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/BootstrapSignalsList.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/BootstrapSignalsList.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignalsList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/GameSignalsList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/MainMenuSignalsList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/Events/MainMenuSignalsList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Bootstraper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Bootstraper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/FMODBankLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/FMODBankLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadingScreenManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/LoadingScreenManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/LoadingScreen.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/1GameProject/Scripts/GameFlow/Bootstrap/Prefabs/LoadingScreen.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/BuildLogYG2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/BuildLogYG2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PluginYourGames/Editor/SavesEditorYG2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/ProjectContext.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/ProjectContext.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Plugins/lib_burst_generated.wasm" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Plugins/lib_burst_generated.wasm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +50,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Audio/GameLetterSounds.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/BootstrapperSceneContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/DI/Project/SOProjectInstaller.asset" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/ObjectSnap.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/1GameProject/Scripts/Editor/2D/Scale Calculator 2D.cs" root0="FORCE_HIGHLIGHTING" />
@@ -46,9 +72,6 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Internal/Log.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Signals/Main/SignalBus.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.svermeulen.extenject@36f51bae0ae2/Runtime/Zenject.asmdef" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@0c18adc4ff89/Runtime/UniversalRenderPipeline.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@4f9b15fd1386/Runtime/UGUI/EventSystem/EventInterfaces.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@4f9b15fd1386/Runtime/UGUI/UI/Core/Image.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -79,7 +102,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.5.0f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.5.4f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-projectPath D:\Work\DotUnity\Fillword\Puzzle-Game -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Work\DotUnity\Fillword\Puzzle-Game" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -89,7 +112,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.5.0f1\Editor\Unity.exe" />
+      <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\6000.5.4f1\Editor\Unity.exe" />
       <option name="PROGRAM_PARAMETERS" value="-runTests -batchmode -projectPath D:\Work\DotUnity\Fillword\Puzzle-Game -testResults Logs/results.xml -logFile Logs/Editor.log -testPlatform EditMode -debugCodeOptimization" />
       <option name="WORKING_DIRECTORY" value="D:\Work\DotUnity\Fillword\Puzzle-Game" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -176,6 +199,9 @@
       <workItem from="1783971693249" duration="5635000" />
       <workItem from="1784021665684" duration="1966000" />
       <workItem from="1784045231668" duration="638000" />
+      <workItem from="1784931574330" duration="4932000" />
+      <workItem from="1784980009626" duration="10081000" />
+      <workItem from="1785083963968" duration="6598000" />
     </task>
     <servers />
   </component>

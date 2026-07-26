@@ -1,4 +1,5 @@
-﻿using _1GameProject.Scripts.Events;
+﻿using _1GameProject.Scripts.Audio;
+using _1GameProject.Scripts.Events;
 using _1GameProject.Scripts.Settings;
 using _1GameProject.Scripts.UI.SettingsWindow;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace _1GameProject.Scripts.DI
         
         public override void InstallBindings()
         {
-            SignalBusInstaller.Install(Container);
+            
             
             Container.DeclareSignal<BackToMainMenuSignal>();
             Container.DeclareSignal<SettingsMenuOpenSignal>();
@@ -28,6 +29,10 @@ namespace _1GameProject.Scripts.DI
 
             // Биндим Presenter (он сам вызовет свой Initialize)
             Container.BindInterfacesTo<SettingsPresenter>().AsSingle();
+            
+             Container.Bind<FMODGameAudioManager>().FromComponentInHierarchy().AsSingle();
+             
+             Container.Bind<UIButtonSoundService>().FromComponentInHierarchy().AsSingle();
 
         }
     }

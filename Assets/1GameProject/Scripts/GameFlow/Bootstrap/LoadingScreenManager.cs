@@ -3,7 +3,6 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 using Zenject;
-using _1GameProject.Scripts.Events;
 
 namespace _1GameProject.Scripts.Bootstrap
 {
@@ -11,47 +10,49 @@ namespace _1GameProject.Scripts.Bootstrap
     {
         [SerializeField] private GameObject spinnerObject;
         [SerializeField] private TextMeshProUGUI statusText;
-        
         [SerializeField] private float spinDuration = 2f;
 
         private Tween _spinTween;
-        
-        [Inject] private SignalBus _signalBus;
+        private Tween _textTween; // Ссылка на анимацию текста
+
+        private void Awake()
+        {
+            var canvas = GetComponent<Canvas>();
+            if (canvas != null) canvas.sortingOrder = 100;
+        }
 
         private void OnEnable()
         {
-            _signalBus.Subscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
-
             if (spinnerObject != null)
             {
                 _spinTween = spinnerObject.transform.DORotate(new Vector3(0, 0, 360), spinDuration, RotateMode.FastBeyond360)
-                    .SetLoops(-1, LoopType.Restart);
+                    .SetLoops(-1, LoopType.Restart)
+                    .SetLink(spinnerObject); // Связываем анимацию с объектом
             }
-            
         }
 
         private void OnDisable()
         {
-            _signalBus.Unsubscribe<AllServicesAreLoadedSignal>(OnServicesLoaded);
-            
+            // Очищаем анимации при выключении
             if (_spinTween != null) _spinTween.Kill();
+            if (_textTween != null) _textTween.Kill();
         }
 
-        private void OnServicesLoaded(AllServicesAreLoadedSignal signal)
+        public void ShowReady(string promptMessage = "НАЖМИТЕ ЛЮБУЮ КНОПКУ")
         {
-            ShowReady("Нажмите на экран для старта");
-        }
+            Debug.Log($"[LoadingScreen] ShowReady: {promptMessage}");
 
-        public void ShowReady(string promptMessage = "Нажмите для старта")
-        {
             if (statusText != null)
             {
                 statusText.text = promptMessage;
-                statusText.transform.DOPunchScale(Vector3.one * 0.1f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+                
+                // Добавили SetLink(statusText.gameObject), чтобы анимация умерла вместе с текстом
+                _textTween = statusText.transform.DOPunchScale(Vector3.one * 0.1f, 0.5f)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .SetLink(statusText.gameObject); 
             }
             
             if (_spinTween != null) _spinTween.timeScale = 0.5f;
-            
         }
 
         public void Hide()
@@ -59,10 +60,9 @@ namespace _1GameProject.Scripts.Bootstrap
             gameObject.SetActive(false);
         }
         
-        public void UpdateProgress(float progress, string msg)
+        public void UpdateProgress(string msg)
         {
              if (statusText != null && !string.IsNullOrEmpty(msg)) statusText.text = msg;
-                 
         }
     }
 }
