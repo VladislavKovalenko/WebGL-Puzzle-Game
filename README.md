@@ -203,9 +203,9 @@ Scripts/
 ## How to Run
 
 - Unity version: `6000.5.4f1`
-- Install Extenject: (https://github.com/Mathijs-Bakker/Extenject#installation-)
-- Install Unitask: (https://github.com/cysharp/unitask#getting-started)
-- If build errors persist, this might be needed: (https://github.com/Mathijs-Bakker/Extenject#unirx-integration)
+- Install [Extenject](https://github.com/Mathijs-Bakker/Extenject#installation-)
+- Install [Unitask](https://github.com/cysharp/unitask#getting-started)
+- If build errors persist, this might be needed [UniRX integration](https://github.com/Mathijs-Bakker/Extenject#unirx-integration)
 - Open the `Bootstrap` scene and press Play. This is the entry point.
 - The bootstrap flow initializes registered services, loads FMOD banks, displays the ready prompt, and waits for the first user interaction before continuing to the Main Menu.
 
