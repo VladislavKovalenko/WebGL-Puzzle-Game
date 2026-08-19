@@ -47,6 +47,7 @@ namespace _1GameProject.Scripts.GameFlow.Bootstrap
                 var masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
                 if (masterBus.isValid())
                 {
+                    masterBus.setPaused(false);
                     masterBus.setMute(false);
                 }
                 Debug.Log("[LoadManager] Клик получен! FMOD разбужен.");

@@ -54,16 +54,16 @@ MonoBehaviour:
     loadSceneIfSDKLate: 0
     loadSceneIndex: 0
     initDelaySimulation: 0
-    buildNumber: 14
+    buildNumber: 20
   Simulation:
-    device: 1
+    device: 0
     language: ru
     enableInterAdv: 1
     advIntervalSimulation: 60
     durationAdv: 0.5
     loadAdv: 0
     testFailAds: 0
-    pauseOnFocusGame: 0
+    pauseOnFocusGame: 1
   Templates:
     logoImageFormat: 0
     backgroundImgFormat: 0

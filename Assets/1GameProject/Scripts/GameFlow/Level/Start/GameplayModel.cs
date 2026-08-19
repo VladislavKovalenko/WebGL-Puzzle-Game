@@ -31,6 +31,11 @@ namespace _1GameProject.Scripts.GameFlow.Level.Start
             
             _sessionModel.ResetLevelFlags();
 
+            if (CurrentState.Value == GameState.Playing)
+            {
+                YG2.GameplayStart();
+            }
+
             // Дед и проигрыш реагируют на глобальные жизни
             _sessionModel.GlobalLives.Subscribe(lives =>
             {
@@ -39,6 +44,7 @@ namespace _1GameProject.Scripts.GameFlow.Level.Start
                 if (lives <= 0 && CurrentState.Value == GameState.Playing)
                 {
                     CurrentState.Value = GameState.Lose;
+                    YG2.GameplayStop();
                 }
             });
         }
@@ -57,6 +63,7 @@ namespace _1GameProject.Scripts.GameFlow.Level.Start
             if (WordsFound.Value >= TotalWords)
             {
                 CurrentState.Value = GameState.Win;
+                YG2.GameplayStop();
                 
                 if (!_sessionModel.TookDamageThisLevel)
                 {
